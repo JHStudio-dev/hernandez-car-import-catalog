@@ -1,7 +1,5 @@
 
-/* ============================================================
-   JH Studio — App Logic (BEM Refactored)
-============================================================ */
+/* JH Studio — App Logic */
 
 document.getElementById('currentYear').textContent = new Date().getFullYear();
 
@@ -80,6 +78,7 @@ function updateCounts() {
   document.getElementById('count-suv').textContent = VEHICULOS.filter(v => v.tipo === 'suv').length;
   document.getElementById('count-sedan').textContent = VEHICULOS.filter(v => v.tipo === 'sedan').length;
   document.getElementById('count-pickup').textContent = VEHICULOS.filter(v => v.tipo === 'pickup').length;
+  document.getElementById('count-todoterreno').textContent = VEHICULOS.filter(v => v.tipo === 'todoterreno').length;
   
 }
 
