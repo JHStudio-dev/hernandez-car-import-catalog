@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hernández Car Import — Catálogo Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+  <!-- SVG SYMBOLS FOR ICONS -->
+  <svg style="display: none;">
+    <symbol id="icon-phone" viewBox="0 0 24 24">
+      <path
+        d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+    </symbol>
+    <symbol id="icon-whatsapp" viewBox="0 0 24 24">
+      <path
+        d="M12.031 21.002h-.001c-1.579 0-3.125-.425-4.482-1.229l-.321-.19-3.332.873.888-3.249-.208-.33a8.91 8.91 0 01-1.37-4.872c0-4.94 4.02-8.96 8.96-8.96 2.394 0 4.643.933 6.333 2.625A8.915 8.915 0 0121 12.004c0 4.939-4.02 8.958-8.96 8.958zM7.054 18.067c1.354.802 2.915 1.225 4.976 1.225 3.993 0 7.243-3.25 7.243-7.244 0-1.937-.754-3.757-2.122-5.127-1.37-1.369-3.19-2.122-5.123-2.122-3.993 0-7.243 3.25-7.243 7.243 0 2.059.544 4.043 1.578 5.8l-.517 1.892 1.942-.509zM16.038 14.51c-.22-.11-1.306-.644-1.508-.718-.202-.073-.35-.11-.497.11-.148.22-.572.718-.702.865-.13.147-.26.165-.48.055-.22-.11-.933-.344-1.777-1.096-.658-.585-1.101-1.308-1.231-1.528-.13-.22-.014-.339.096-.448.1-.099.22-.257.33-.386.11-.129.147-.22.22-.368.073-.147.037-.276-.018-.386-.055-.11-.497-1.199-.68-1.642-.18-.432-.363-.374-.497-.38-.13-.007-.279-.007-.427-.007s-.386.055-.588.276c-.202.22-.772.754-.772 1.84s.79 2.133.9 2.28c.11.147 1.554 2.373 3.763 3.326.526.227.936.362 1.256.464.529.168 1.01.144 1.391.087.428-.063 1.306-.533 1.49-1.049.184-.515.184-.956.13-1.049-.055-.092-.202-.147-.422-.258z" />
+    </symbol>
+    <symbol id="icon-email" viewBox="0 0 24 24">
+      <path
+        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+    </symbol>
+    <symbol id="icon-location" viewBox="0 0 24 24">
+      <path
+        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+    </symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24">
+      <path
+        d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+      <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+    </symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24">
+      <path
+        d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
+    </symbol>
+    <symbol id="icon-car" viewBox="0 0 24 24">
+      <path
+        d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z" />
+    </symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24">
+      <path
+        d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+    </symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24">
+      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+    </symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24">
+      <path
+        d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59c.39-.39.39-1.02 0-1.41l-6.58-6.6a.996.996 0 10-1.41 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z" />
+    </symbol>
+    <symbol id="icon-gas" viewBox="0 0 24 24">
+      <path
+        d="M19.77 8.73l2 2-1.42 1.42-2-2c-.52.52-1.37.52-1.88 0-.52-.52-.52-1.37 0-1.88l2-2 1.42 1.42-2 2c.11.11.31.11.42 0 .11-.11.11-.31 0-.42l1.46-1.54zM16 11V5c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2v16h12v-7h-2v2H6V5h8v6h2zm-2-2h-2V7h2v2zm-4 0H8V7h2v2z" />
+    </symbol>
+    <symbol id="icon-gear" viewBox="0 0 24 24">
+      <path
+        d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+    </symbol>
+  </svg>
+
+  <!-- ===== MENU DE NAVEGACION ===== -->
+  <header class="jh-topbar" id="header">
+    <div class="jh-topbar__container">
+      <a class="jh-topbar__brand" href="#">
+        <img src="Fotos/logo.png" alt="Hernández Car Import Logo"
+          style="height: 60px; width: auto; object-fit: contain;">
+      </a>
+
+      <nav>
+        <ul class="jh-topbar__nav">
+          <li><a href="#catalogo">Inventario</a></li>
+          <li><a href="#beneficios">Beneficios</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <div class="jh-topbar__actions">
+        <a class="jh-btn jh-btn--outline" href="tel:+50499990000">
+          <svg class="icon-sm">
+            <use href="#icon-phone"></use>
+          </svg> Llámanos
+        </a>
+        <button class="jh-topbar__menu-toggle" id="menuToggle" aria-label="Menú">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== CARRUSEL PRINCIPAL ===== -->
+  <section class="jh-showroom-stage">
+    <div class="jh-showroom-stage__carousel" id="heroCarousel">
+      <!-- Generado dinámicamente -->
+    </div>
+    <div class="jh-showroom-stage__controls">
+      <button class="jh-showroom-stage__arrow" id="heroPrev"><svg class="icon">
+          <use href="#icon-arrow-right"></use>
+        </svg></button>
+      <button class="jh-showroom-stage__arrow" id="heroNext"><svg class="icon">
+          <use href="#icon-arrow-right"></use>
+        </svg></button>
+    </div>
+  </section>
+
+
+  <!--  CATALOGO DE LOS CARROS  -->
+  <section class="jh-stock-section" id="catalogo">
+    <div class="jh-section-header jh-reveal">
+      <div class="jh-section-header__title-wrap">
+        <div class="jh-section-header__label">Inventario Exclusivo</div>
+        <h2 class="jh-section-header__title">Encuentra Tu<br>Próximo Vehículo</h2>
+      </div>
+    </div>
+
+    <div class="jh-stock-toolbar jh-reveal">
+      <div class="jh-stock-toolbar__search">
+        <svg class="icon"><use href="#icon-search"></use></svg>
+        <input type="text" id="searchInput" placeholder="Buscar por marca, modelo o año…" autocomplete="off">
+      </div>
+      <div class="jh-stock-toolbar__filters" id="filtersContainer">
+        <button class="jh-filter-chip jh-filter-chip--active" data-filter="todos">Todos <span class="jh-filter-chip__count" id="count-todos">0</span></button>
+        <button class="jh-filter-chip" data-filter="suv">SUV <span class="jh-filter-chip__count" id="count-suv">0</span></button>
+        <button class="jh-filter-chip" data-filter="sedan">Sedán <span class="jh-filter-chip__count" id="count-sedan">0</span></button>
+        <button class="jh-filter-chip" data-filter="pickup">Pick-up <span class="jh-filter-chip__count" id="count-pickup">0</span></button>
+        <button class="jh-filter-chip" data-filter="pickup">Todoterreno <span class="jh-filter-chip__count" id="count-pickup">0</span></button>
+      </div>
+    </div>
+
+    <div class="jh-stock-display" id="catalogGrid">
+      <!-- Autos renderizados aquí -->
+    </div>
+  </section>
+
+  <!-- SECCION DE BENEFICIOS (Falta pulir) -->
+  <section class="jh-assurance-section" id="beneficios">
+    <div class="jh-assurance-section__inner jh-reveal">
+      <div class="jh-section-header__label">¿Por qué elegirnos?</div>
+      <h2 class="jh-section-header__title">Nuestro Proceso</h2>
+
+      <div class="jh-assurance-grid">
+        <div class="jh-assurance-card">
+          <div class="jh-assurance-card__step">01</div>
+          <div class="jh-assurance-card__icon"><svg class="icon">
+              <use href="#icon-shield"></use>
+            </svg></div>
+          <h3 class="jh-assurance-card__title">Calidad Garantizada</h3>
+          <p class="jh-assurance-card__desc">Cada vehículo pasa por una rigurosa inspección mecánica y estructural antes de llegar a
+            nuestro inventario para asegurar tu tranquilidad.</p>
+        </div>
+        <div class="jh-assurance-card">
+          <div class="jh-assurance-card__step">02</div>
+          <div class="jh-assurance-card__icon"><svg class="icon">
+              <use href="#icon-check"></use>
+            </svg></div>
+          <h3 class="jh-assurance-card__title">Trámites Listos</h3>
+          <p class="jh-assurance-card__desc">Nos encargamos de toda la documentación legal, internación y aduanas. Te entregamos las
+            llaves sin dolores de cabeza.</p>
+        </div>
+        <div class="jh-assurance-card">
+          <div class="jh-assurance-card__step">03</div>
+          <div class="jh-assurance-card__icon"><svg class="icon">
+              <use href="#icon-car"></use>
+            </svg></div>
+          <h3 class="jh-assurance-card__title">Importación Directa</h3>
+          <p class="jh-assurance-card__desc">Compramos directamente en EE.UU. seleccionando los mejores ejemplares para asegurar los
+            precios más competitivos del mercado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clientes satisfechos (Aun tengo que editar las fotos para que no se vean cortadas en el carousel) -->
+  <section class="jh-showcase-section" id="entregas">
+    <div class="jh-section-header jh-reveal" style="padding: 0 40px; max-width: 1440px; margin: 0 auto 40px auto;">
+      <div class="jh-section-header__title-wrap">
+        <div class="jh-section-header__label">Confianza Comprobada</div>
+        <h2 class="jh-section-header__title">Clientes Satisfechos</h2>
+      </div>
+    </div>
+    <div class="jh-showcase__wrapper">
+      <div class="jh-showcase__track" id="deliveryGrid">
+        <!-- Entregas renderizadas aquí -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonios de clientes para mas credibilidad -->
+  <section class="jh-reviews-section" id="testimonios">
+    <div class="jh-section-header jh-reveal"
+      style="padding: 0 40px; max-width: 1440px; margin: 0 auto 40px auto; text-align: center; display: flex; flex-direction: column; align-items: center;">
+      <div class="jh-section-header__label" style="justify-content: center;">Nuestra Reputación</div>
+      <h2 class="jh-section-header__title">Lo Que Dicen De Nosotros</h2>
+    </div>
+    <div class="jh-reviews-grid" id="testimonialGrid">
+      <!-- Testimonios renderizados aquí -->
+    </div>
+  </section>
+
+  <!-- Para que contacten a la empresa -->
+  <section class="jh-contact-section" id="contacto">
+    <div class="jh-contact-section__bg"></div>
+    <div class="jh-contact-section__inner jh-reveal">
+      <div>
+        <div class="jh-section-header__label">Atención Personalizada</div>
+        <h2 class="jh-section-header__title">Hablemos De<br>Tu Nuevo Auto</h2>
+
+        <div class="jh-contact-grid">
+          <a class="jh-contact-card" href="tel:+50499990000">
+            <div class="jh-contact-card__icon"><svg class="icon">
+                <use href="#icon-phone"></use>
+              </svg></div>
+            <div>
+              <div class="jh-contact-card__label">Teléfono</div>
+              <div class="jh-contact-card__value">+504 9999-0000</div>
+            </div>
+          </a>
+          <a class="jh-contact-card" href="https://wa.me/50499990000" target="_blank">
+            <div class="jh-contact-card__icon"><svg class="icon">
+                <use href="#icon-whatsapp"></use>
+              </svg></div>
+            <div>
+              <div class="jh-contact-card__label">WhatsApp</div>
+              <div class="jh-contact-card__value">+504 3346-5918</div>
+            </div>
+          </a>
+          <a class="jh-contact-card" href="mailto:info@hernandezcarimport.com">
+            <div class="jh-contact-card__icon"><svg class="icon">
+                <use href="#icon-email"></use>
+              </svg></div>
+            <div>
+              <div class="jh-contact-card__label">Correo Electrónico</div>
+              <div class="jh-contact-card__value" style="font-size: 18px;">info@hernandezcarimport.com</div>
+            </div>
+          </a>
+          <div class="jh-contact-card">
+            <div class="jh-contact-card__icon"><svg class="icon">
+                <use href="#icon-clock"></use>
+              </svg></div>
+            <div>
+              <div class="jh-contact-card__label">Horario</div>
+              <div class="jh-contact-card__value" style="font-size: 18px;">Lunes a Sábado · 8:00 AM - 6:00 PM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="jh-map-embed">
+          <svg class="icon">
+            <use href="#icon-location"></use>
+          </svg>
+          <p>Tegucigalpa, Honduras</p>
+          <span style="font-size:12px; color:var(--gris-cla); margin-top:8px;">(Insertar mapa de Google aquí)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER  -->
+  <footer class="jh-footer">
+    <div class="jh-footer__brand">
+      <img src="Fotos/logo.png" alt="Hernández Car Import Logo"
+        style="height: 100px; width: auto; object-fit: contain;">
+    </div>
+    <div class="jh-footer__legal">
+      © <span id="currentYear"></span> · Calidad e importación directa · Tegucigalpa, Honduras
+    </div>
+  </footer>
+
+  <!--  MODAL DE DETALLES DEL VEHICULO-->
+  <div class="jh-vehicle-modal" id="detailModal">
+    <div class="jh-vehicle-modal__backdrop" id="detailOverlay"></div>
+    <div class="jh-vehicle-modal__panel">
+      <button class="jh-vehicle-modal__close" id="detailClose"><svg class="icon">
+          <use href="#icon-arrow-right"></use>
+        </svg></button>
+
+      <!-- Left: Image Gallery -->
+      <div class="jh-gallery">
+        <div class="jh-gallery__container">
+          <div class="jh-gallery__viewport" id="detailMainImgWrap">
+            <!-- Main images injected here -->
+          </div>
+          <button class="jh-gallery__nav jh-gallery__nav--prev" id="galleryPrev"><svg class="icon">
+              <use href="#icon-arrow-right"></use>
+            </svg></button>
+          <button class="jh-gallery__nav jh-gallery__nav--next" id="galleryNext"><svg class="icon">
+              <use href="#icon-arrow-right"></use>
+            </svg></button>
+          <button class="jh-gallery__fit-toggle" id="galleryFitToggle" title="Ajustar imagen"><svg class="icon-sm">
+              <use href="#icon-search"></use>
+            </svg></button>
+        </div>
+        <div class="jh-gallery__thumbstrip" id="detailThumbs">
+          <!-- Thumbnails injected here -->
+        </div>
+      </div>
+
+      <!-- Right: Vehicle Info -->
+      <div class="jh-vehicle-detail">
+        <div class="jh-vehicle-detail__header">
+          <div class="jh-vehicle-detail__marque" id="dBrand"></div>
+          <h2 class="jh-vehicle-detail__model" id="dTitle"></h2>
+          <div class="jh-vehicle-detail__subtitle" id="dSubtitle"></div>
+          <div class="jh-vehicle-detail__price" id="dPrice"></div>
+        </div>
+
+        <div class="jh-vehicle-detail__highlights" id="dHighlights">
+          <!-- Highlights injected here -->
+        </div>
+
+        <div class="jh-vehicle-detail__tabs">
+          <button class="jh-vehicle-detail__tab jh-vehicle-detail__tab--active" data-target="specsTab">Especificaciones</button>
+          <button class="jh-vehicle-detail__tab" data-target="descTab">Descripción</button>
+        </div>
+
+        <div class="jh-vehicle-detail__tab-panel jh-vehicle-detail__tab-panel--active" id="specsTab">
+          <div class="jh-specs-grid" id="dSpecs">
+            <!-- Specs injected here -->
+          </div>
+        </div>
+
+        <div class="jh-vehicle-detail__tab-panel" id="descTab">
+          <div class="jh-vehicle-detail__description" id="dDesc"></div>
+        </div>
+
+        <div class="jh-vehicle-detail__actions">
+          <a href="#" class="jh-btn--whatsapp" id="dBtnWa" target="_blank">
+            <svg class="icon">
+              <use href="#icon-whatsapp"></use>
+            </svg> Consultar
+          </a>
+          <a href="#" class="jh-btn--call" id="dBtnTel">
+            <svg class="icon">
+              <use href="#icon-phone"></use>
+            </svg> Llamar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating WA -->
+  <a href="https://wa.me/50499990000" class="jh-fab-whatsapp" target="_blank">
+    <svg class="icon">
+      <use href="#icon-whatsapp"></use>
+    </svg>
+  </a>
+
+  <!-- ===== SCRIPTS Y DATOS ===== -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
