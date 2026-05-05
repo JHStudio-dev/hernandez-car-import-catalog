@@ -1,6 +1,4 @@
-    /* ============================================================
-   HERNÁNDEZ CAR IMPORT — CATÁLOGO PREMIUM
-   ============================================================ */
+    /*HERNÁNDEZ CAR IMPORT — CATÁLOGO*/
 
     :root {
       --rojo: #CC0000;
@@ -17,8 +15,9 @@
       --glass: rgba(18, 18, 18, 0.85);
       --glass-red: rgba(204, 0, 0, 0.15);
 
-      --font-display: 'Barlow Condensed', sans-serif;
-      --font-body: 'Barlow', sans-serif;
+      --font-display: 'Montserrat', sans-serif;
+      --font-body: 'Montserrat', sans-serif;
+      --font-mono: 'Montserrat', sans-serif;
     }
 
     *,
@@ -60,7 +59,7 @@
       background: var(--rojo);
     }
 
-    /* ── SVG ICONS ── */
+    /* ICONOS*/
     svg.icon {
       width: 24px;
       height: 24px;
@@ -73,7 +72,7 @@
       fill: currentColor;
     }
 
-    /* ── ANIMATIONS ── */
+    /* ANIMACIONES */
     @keyframes fadeIn {
       from {
         opacity: 0;
@@ -141,7 +140,7 @@
       transform: translateY(0);
     }
 
-    /* HEADER  */
+    /* Header, Para mi del futuro: no volver a tocar; problemas ya resueltosxdd*/
     .jh-topbar {
       position: fixed;
       top: 0;
@@ -178,12 +177,12 @@
       text-decoration: none;
     }
 
-    .logo-shield {
+    .jh-topbar__logo-shield {
       width: 44px;
       height: auto;
     }
 
-    .logo-text .l1 {
+    .jh-topbar__logo-text .l1 {
       font-family: var(--font-display);
       font-weight: 900;
       font-size: 24px;
@@ -193,7 +192,7 @@
       line-height: 1;
     }
 
-    .logo-text .l2 {
+    .jh-topbar__logo-text .l2 {
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 11px;
@@ -224,6 +223,27 @@
     .jh-topbar__nav a:hover {
       color: var(--blanco);
     }
+
+    /* Menu de hamburguesa para celular (Para evitar la barra de navegacion que se muestra en la version de pc)*/
+    .jh-topbar__menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 200;
+    }
+    .jh-topbar__menu-toggle span {
+      width: 24px;
+      height: 2px;
+      background: var(--blanco);
+      transition: all 0.3s;
+    }
+    .jh-topbar__menu-toggle--active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .jh-topbar__menu-toggle--active span:nth-child(2) { opacity: 0; }
+    .jh-topbar__menu-toggle--active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
     .jh-topbar__actions {
       display: flex;
@@ -342,27 +362,27 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: var(--glass-red);
-      border: 1px solid rgba(204, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       padding: 6px 16px;
-      border-radius: 50px;
+      border-radius: 100px;
       margin-bottom: 24px;
       backdrop-filter: blur(4px);
     }
 
-    .jh-showroom-stage__badge .dot {
+    .jh-showroom-stage__badge .jh-showroom-stage__pulse {
       width: 8px;
       height: 8px;
-      background: var(--rojo-vivo);
+      background: whitesmoke;
       border-radius: 50%;
       animation: pulse 2s infinite;
     }
 
     .jh-showroom-stage__badge span {
       font-family: var(--font-display);
-      font-size: 13px;
+      font-size: 10px;
       font-weight: 700;
-      letter-spacing: 2px;
+      letter-spacing: 0.5em;
       text-transform: uppercase;
       color: var(--blanco);
     }
@@ -379,12 +399,14 @@
     }
 
     .jh-showroom-stage__title .jh-showroom-stage__marque {
-      color: transparent;
-      -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.7);
-      display: block;
-      font-size: 0.6em;
-      margin-bottom: 5px;
-      letter-spacing: 2px;
+      color:  var(--rojo-vivo);
+      -webkit-text-stroke: 1.5px rgba(117, 11, 11, 0.185);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 1.5rem;
+      margin-bottom: 2px;
+      letter-spacing: 0.3em;
     }
 
     .jh-showroom-stage__price {
@@ -394,6 +416,30 @@
       color: var(--rojo);
       margin-bottom: 30px;
       letter-spacing: 1px;
+    }
+
+    .jh-showroom-stage__tagline {
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: var(--gris-cla);
+      font-weight: 300;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .jh-showroom-stage__counter {
+      position: absolute;
+      bottom: 50px;
+      left: 40px;
+      z-index: 10;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--gris-cla);
+      letter-spacing: 2px;
+    }
+    .jh-showroom-stage__counter .jh-showroom-stage__counter-current {
+      color: var(--blanco);
+      font-weight: 700;
     }
 
     .jh-showroom-stage__specs {
@@ -452,7 +498,7 @@
       transform: scaleX(-1);
     }
 
-    /* SEARCH SECTION */
+    /* ─────────────────── SEARCH SECTION ─────────────────── */
     .search-section {
       background: var(--rojo);
       border-top: 1px solid var(--rojo-vivo);
@@ -504,7 +550,7 @@
       border-radius: 6px;
     }
 
-    /*  CATALOG SECTION  */
+    /* ─────────────────── CATALOG SECTION ─────────────────── */
     .jh-stock-section {
       padding: 100px 40px;
       max-width: 1440px;
@@ -605,6 +651,49 @@
     }
 
     /* Grid */
+    .jh-stock-toolbar {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 40px;
+      padding: 0 40px;
+      max-width: 1440px;
+    }
+    .jh-stock-toolbar__search {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+      padding: 10px 16px;
+      flex: 1;
+      min-width: 200px;
+      transition: border-color 0.3s;
+    }
+    .jh-stock-toolbar__search:focus-within {
+      border-color: var(--rojo);
+      box-shadow: 0 0 20px rgba(204,0,0,0.1);
+    }
+    .jh-stock-toolbar__search .icon {
+      color: var(--gris-med);
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+    .jh-stock-toolbar__search input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--blanco);
+      font-family: var(--font-body);
+      font-size: 15px;
+      width: 100%;
+    }
+    .jh-stock-toolbar__search input::placeholder {
+      color: var(--gris-med);
+    }
     .jh-stock-display {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -728,29 +817,24 @@
       text-transform: uppercase;
       color: var(--blanco);
       line-height: 1.1;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
-
-    .jh-unit-card-specs {
+    .jh-unit-card__trim {
+      font-weight: 400;
+      color: var(--gris-cla);
+      font-size: 0.7em;
+    }
+    .jh-unit-card__tech-line {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--gris-cla);
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
       display: flex;
-      gap: 16px;
-      margin-bottom: 24px;
+      gap: 6px;
       flex-wrap: wrap;
     }
-
-    .jh-unit-card-spec {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: var(--gris-cla);
-    }
-
-    .jh-unit-card-spec svg {
-      width: 14px;
-      height: 14px;
-      color: var(--rojo);
-    }
+    .jh-unit-card__separator { color: var(--gris-med); }
 
     .jh-unit-card__footer {
       margin-top: auto;
@@ -759,14 +843,6 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-    }
-
-    .jh-unit-card__price-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--gris-med);
-      margin-bottom: 4px;
     }
 
     .jh-unit-card__price {
@@ -818,7 +894,7 @@
       text-transform: uppercase;
     }
 
-    /*  TRUST SECTION  */
+    /* ─────────────────── TRUST SECTION ─────────────────── */
     .jh-assurance-section {
       padding: 100px 40px;
       background: var(--negro-2);
@@ -845,6 +921,16 @@
       transition: all 0.3s;
       position: relative;
       overflow: hidden;
+    }
+    .jh-assurance-card__step {
+      font-family: var(--font-mono);
+      font-size: 64px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.04);
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      line-height: 1;
     }
 
     .jh-assurance-card::before {
@@ -903,7 +989,7 @@
       line-height: 1.6;
     }
 
-    /*  CONTACT & FOOTER  */
+    /* ─────────────────── CONTACT & FOOTER ─────────────────── */
     .jh-contact-section {
       padding: 100px 40px;
       background: var(--negro);
@@ -1047,7 +1133,7 @@
       letter-spacing: 1px;
     }
 
-    /*  FULL PAGE DETAIL MODAL  */
+    /* ─────────────────── FULL PAGE DETAIL MODAL ─────────────────── */
     .jh-vehicle-modal {
       position: fixed;
       inset: 0;
@@ -1492,7 +1578,7 @@
       height: 32px;
     }
 
-    /*  DELIVERIES SECTION  */
+    /* ─────────────────── DELIVERIES SECTION ─────────────────── */
     .jh-showcase-section {
       padding: 80px 0;
       background: var(--negro-2);
@@ -1573,7 +1659,7 @@
       font-size: 13px;
     }
 
-    /*  TESTIMONIALS SECTION  */
+    /* ─────────────────── TESTIMONIALS SECTION ─────────────────── */
     .jh-reviews-section {
       padding: 80px 0;
       background: var(--negro);
@@ -1658,7 +1744,7 @@
       color: #53bdeb;
     }
 
-    /*  RESPONSIVE  */
+    /* ─────────────────── RESPONSIVE ─────────────────── */
     @media (max-width: 1200px) {
       .jh-vehicle-modal__panel {
         grid-template-columns: 50% 50%;
@@ -1700,7 +1786,32 @@
         padding: 0 20px;
       }
 
+      .jh-topbar__menu-toggle {
+        display: flex;
+      }
+
       .jh-topbar__nav {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(10,10,10,0.97);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+        z-index: 150;
+      }
+      .jh-topbar__nav--open {
+        display: flex;
+      }
+      .jh-topbar__nav--open a {
+        font-size: 24px;
+      }
+
+      .jh-topbar__actions .jh-btn--outline {
         display: none;
       }
 
@@ -1712,6 +1823,10 @@
       .jh-assurance-section,
       .jh-contact-section {
         padding: 60px 20px;
+      }
+
+      .jh-stock-toolbar {
+        padding: 0 20px;
       }
 
       .jh-stock-display {
@@ -1730,3 +1845,20 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /*aqui va el rollo del mapa*/
+    .jh-map-embed {
+    width: 100%;
+    height: 100%;
+    min-height: 400px; 
+    overflow: hidden;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.jh-map-embed iframe {
+    width: 100%;
+    height: 100%;
+    filter: grayscale(100%) invert(92%) contrast(83%);
+}
+

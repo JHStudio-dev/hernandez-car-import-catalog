@@ -80,6 +80,7 @@ function updateCounts() {
   document.getElementById('count-suv').textContent = VEHICULOS.filter(v => v.tipo === 'suv').length;
   document.getElementById('count-sedan').textContent = VEHICULOS.filter(v => v.tipo === 'sedan').length;
   document.getElementById('count-pickup').textContent = VEHICULOS.filter(v => v.tipo === 'pickup').length;
+  
 }
 
 function renderList(filtered, emptyMsg) {

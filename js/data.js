@@ -5,7 +5,7 @@
       whatsapp: "https://wa.me/50499990000",
     };
 
-    // Apartado de Carros para mostrar en el catalogo
+    // Carros para mostrar en el catalogo
     const VEHICULOS = [
       {
         id: 1,
@@ -19,9 +19,9 @@
         unit_condition: "Recien ingresado",
         tipo: "suv",
         is_featured_unit: true,
-        fechaIngreso: "2026-04-20",
-        thumb_preview: "Fotos/Render explorer 2018.png", // Imagen para el catalogo (afuera)
-        // Imágenes múltiples 
+        intake_date: "2026-04-20",
+        thumb_preview: "Fotos/Render explorer 20181.png", // Imagen para el catalogo (afuera)
+        // Imágenes múltiples (paths locales o URLs)
         gallery_assets: [
           "Fotos/Explorer 3.jpeg",
           "Fotos/explorer 4.jpeg"
@@ -50,8 +50,8 @@
         tipo: "Todoterreno",
         is_featured_unit: true,
 
-        fechaIngreso: "2026-04-10",
-        thumb_preview: "Fotos/Render jeep 2008.png",
+        intake_date: "2026-04-10",
+        thumb_preview: "Fotos/Render jeep 20081.png",
         gallery_assets: [
           "Fotos/JP 2008.png"
         ],
@@ -72,32 +72,35 @@
         modelo: "Explorer",
         trim: "Limited",
         anio: 2012,
-        km: "55,000 km",
-        precio: "$33,800",
+        km: "185,000 Millas",
+        precio: "L.189,000",
         estado: "disponible",
         unit_condition: "usado",
-        tipo: "pickup",
+        tipo: "SUV",
         is_featured_unit: true,
-        thumb_preview: "Fotos/exp negra.png",
+        thumb_preview: "Fotos/Exp negra1.png",
         gallery_assets: [
-          "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"
+          "Fotos/Explorer limited/2.jpeg",
+          "Fotos/Explorer limited/1.jpeg",
+          "Fotos/Explorer limited/3.jpeg",
+          "Fotos/Explorer limited/4.jpeg"
         ],
-        feature_tags: ["4x4", "Diésel", "Todo Terreno"],
-        unit_description: "Pick-up de trabajo ideal para terrenos difíciles. Motor diésel de alto torque, estado mecánico impecable. Perfecta para campo y ciudad.",
+        feature_tags: ["4x4", "v6", "Techo panoramico"],
+        unit_description: "Ford explorer 2012 limited, motor 3.5 v6 4x4, techo panoramico, Luces HDI, 3 filas de asientos, encendido push button, sistema de sonido premium, asientos de cuero, Rines #20.",
         tech_specs: {
-          "Motor": "2.8L Diesel 204hp",
-          "Transmisión": "Manual 6vel",
-          "Combustible": "Diésel",
+          "Motor": "3.5 V6",
+          "Transmisión": "Automatica",
+          "Combustible": "Gasolina",
           "Tracción": "4x4",
-          "Color": "Gris Plata",
-          "Asientos": "5 pasajeros",
+          "Color": "Negro",
+          "Asientos": "7 pasajeros",
         }
       },
       {
         id: 4,
-        marca: "Hyundai",
-        modelo: "Elantra",
-        
+        marca: "Bmw",
+        modelo: "X3",
+        trim: "Turbo",
         anio: 2018,
         km: "12,000 km",
         precio: "$28,500",
@@ -105,7 +108,7 @@
         unit_condition: "nuevo",
         tipo: "suv",
         is_featured_unit: true,
-        thumb_preview: "Fotos/Elantra render.png",
+        thumb_preview: "Fotos/bmw.png",
         gallery_assets: [
           "https://images.unsplash.com/photo-1617886322168-72b886573c35?w=800&q=80",
           "https://images.unsplash.com/photo-1617886322207-6b45f1b1c34a?w=800&q=80"
@@ -113,27 +116,27 @@
         feature_tags: ["AWD", "Techo Panorámico", "N-Line"],
         unit_description: "SUV compacta vanguardista con acabados deportivos N-Line. Techo solar panorámico, asientos calefaccionados, cargador inalámbrico.",
         tech_specs: {
-          "Motor": "1.6L Turbo 178hp",
+          "Motor": "2.0 TURBO",
           "Transmisión": "DCT 7vel",
           "Combustible": "Gasolina",
           "Tracción": "AWD",
-          "Color": "Negro Onyx",
+          "Color": "Rojo",
           "Asientos": "5 pasajeros",
         }
       },
       {
         id: 5,
-        marca: "Mercury",
-        modelo: "Mariner",
+        marca: "Honda",
+        modelo: "CRV",
         
-        anio: 2009,
+        anio: 2016,
         km: "12,000 km",
         precio: "$28,500",
         estado: "disponible",
         unit_condition: "nuevo",
         tipo: "suv",
         is_featured_unit: true,
-        thumb_preview: "Fotos/mercury render.png",
+        thumb_preview: "Fotos/Crv 2016.png",
         gallery_assets: [
           "https://images.unsplash.com/photo-1617886322168-72b886573c35?w=800&q=80",
           "https://images.unsplash.com/photo-1617886322207-6b45f1b1c34a?w=800&q=80"
@@ -159,9 +162,9 @@
         precio: "$28,500",
         estado: "disponible",
         unit_condition: "nuevo",
-        tipo: "suv",
+        tipo: "todoterreno",
         is_featured_unit: true,
-        thumb_preview: "Fotos/jeep 1999.png",
+        thumb_preview: "Fotos/Jeep 19991.png",
         gallery_assets: [
           "https://images.unsplash.com/photo-1617886322168-72b886573c35?w=800&q=80",
           "https://images.unsplash.com/photo-1617886322207-6b45f1b1c34a?w=800&q=80"
@@ -177,9 +180,178 @@
           "Asientos": "5 pasajeros",
         }
       },
+      {
+        id: 7,
+        marca: "Hyundai",
+        modelo: "Elantra",
+        
+        anio: 2018,
+        km: "12,000 km",
+        precio: "$28,500",
+        estado: "disponible",
+        unit_condition: "nuevo",
+        tipo: "sedan",
+        is_featured_unit: true,
+        thumb_preview: "Fotos/Elantra render (1).png",
+        gallery_assets: [
+          "https://images.unsplash.com/photo-1617886322168-72b886573c35?w=800&q=80",
+          "https://images.unsplash.com/photo-1617886322207-6b45f1b1c34a?w=800&q=80"
+        ],
+        feature_tags: ["AWD", "Techo Panorámico", "N-Line"],
+        unit_description: "SUV compacta vanguardista con acabados deportivos N-Line. Techo solar panorámico, asientos calefaccionados, cargador inalámbrico.",
+        tech_specs: {
+          "Motor": "2.0",
+          "Transmisión": "DCT 7vel",
+          "Combustible": "Gasolina",
+          "Tracción": "AWD",
+          "Color": "Negro Onyx",
+          "Asientos": "5 pasajeros",
+        }
+      },
+      {
+        id: 8,
+        marca: "Ford",
+        modelo: "Explorer",
+        trim: "XLT",
+        anio: 2012,
+        km: "12,000 km",
+        precio: "$28,500",
+        estado: "disponible",
+        unit_condition: "nuevo",
+        tipo: "suv",
+        is_featured_unit: true,
+        thumb_preview: "Fotos/explorer k.png",
+        gallery_assets: [
+          "https://images.unsplash.com/photo-1617886322168-72b886573c35?w=800&q=80",
+          "https://images.unsplash.com/photo-1617886322207-6b45f1b1c34a?w=800&q=80"
+        ],
+        feature_tags: ["AWD", "Techo Panorámico", "N-Line"],
+        unit_description: "SUV compacta vanguardista con acabados deportivos N-Line. Techo solar panorámico, asientos calefaccionados, cargador inalámbrico.",
+        tech_specs: {
+          "Motor": "3.5 V6",
+          "Transmisión": "DCT 7vel",
+          "Combustible": "Gasolina",
+          "Tracción": "4X4",
+          "Color": "Negro Onyx",
+          "Asientos": "5 pasajeros",
+        }
+      },
+       {
+        id: 9,
+        marca: "Jeep",
+        modelo: "Compass",
+        trim: "",
+        anio: 2017,
+        km: "12,000 km",
+        precio: "$28,500",
+        estado: "disponible",
+        unit_condition: "nuevo",
+        tipo: "suv",
+        is_featured_unit: true,
+        thumb_preview: "Fotos/jeep che.png",
+        gallery_assets: [
+          "Fotos/Jeep/1.jpeg",
+          "Fotos/Jeep/2.jpeg",
+          "Fotos/Jeep/3.jpeg"
+        ],
+        feature_tags: ["AWD", "Techo Panorámico", "N-Line"],
+        unit_description: "SUV compacta vanguardista con acabados deportivos N-Line. Techo solar panorámico, asientos calefaccionados, cargador inalámbrico.",
+        tech_specs: {
+          "Motor": "2,4",
+          "Transmisión": "DCT 7vel",
+          "Combustible": "Gasolina",
+          "Tracción": "AWD",
+          "Color": "Negro Onyx",
+          "Asientos": "5 pasajeros",
+        }
+      },
+      {
+        id: 10,
+        marca: "Jeep",
+        modelo: "Renegade",
+        trim: "",
+        anio: 2015,
+        km: "12,000 km",
+        precio: "$28,500",
+        estado: "disponible",
+        unit_condition: "nuevo",
+        tipo: "suv",
+        is_featured_unit: true,
+        thumb_preview: "Fotos/renegade.png",
+        gallery_assets: [
+          "https://images.unsplash.com/photo-1617886322168-72b886573c35?w=800&q=80",
+          "https://images.unsplash.com/photo-1617886322207-6b45f1b1c34a?w=800&q=80"
+        ],
+        feature_tags: ["AWD", "Techo Panorámico", "N-Line"],
+        unit_description: "SUV compacta vanguardista con acabados deportivos N-Line. Techo solar panorámico, asientos calefaccionados, cargador inalámbrico.",
+        tech_specs: {
+          "Motor": "2.4",
+          "Transmisión": "DCT 7vel",
+          "Combustible": "Gasolina",
+          "Tracción": "AWD",
+          "Color": "Negro Onyx",
+          "Asientos": "5 pasajeros",
+        }
+      },
+      {
+        id: 11,
+        marca: "Honda",
+        modelo: "CRV",
+        
+        anio: 2009,
+        km: "12,000 km",
+        precio: "$28,500",
+        estado: "disponible",
+        unit_condition: "nuevo",
+        tipo: "suv",
+        is_featured_unit: true,
+        thumb_preview: "Fotos/Crv 2008.png",
+        gallery_assets: [
+          "https://images.unsplash.com/photo-1617886322168-72b886573c35?w=800&q=80",
+          "https://images.unsplash.com/photo-1617886322207-6b45f1b1c34a?w=800&q=80"
+        ],
+        feature_tags: ["AWD", "Techo Panorámico", "N-Line"],
+        unit_description: "SUV compacta vanguardista con acabados deportivos N-Line. Techo solar panorámico, asientos calefaccionados, cargador inalámbrico.",
+        tech_specs: {
+          "Motor": "2.4",
+          "Transmisión": "DCT 7vel",
+          "Combustible": "Gasolina",
+          "Tracción": "4X4",
+          "Color": "Negro Onyx",
+          "Asientos": "5 pasajeros",
+        }
+      },
+      {
+        id: 12,
+        marca: "Mercury",
+        modelo: "Mariner",
+        
+        anio: 2009,
+        km: "12,000 km",
+        precio: "$28,500",
+        estado: "disponible",
+        unit_condition: "nuevo",
+        tipo: "suv",
+        is_featured_unit: true,
+        thumb_preview: "Fotos/mercury render1.png",
+        gallery_assets: [
+          "https://images.unsplash.com/photo-1617886322168-72b886573c35?w=800&q=80",
+          "https://images.unsplash.com/photo-1617886322207-6b45f1b1c34a?w=800&q=80"
+        ],
+        feature_tags: ["AWD", "Techo Panorámico", "N-Line"],
+        unit_description: "SUV compacta vanguardista con acabados deportivos N-Line. Techo solar panorámico, asientos calefaccionados, cargador inalámbrico.",
+        tech_specs: {
+          "Motor": "4 cilindros",
+          "Transmisión": "DCT 7vel",
+          "Combustible": "Gasolina",
+          "Tracción": "4x4",
+          "Color": "Negro Onyx",
+          "Asientos": "5 pasajeros",
+        }
+      },
     ];
 
-    // Arreglo de entregas exitosas
+    //entregas
     const ENTREGAS = [
       {
         id: 1,
@@ -237,7 +409,7 @@
       },
     ];
 
-    // apartado de testimonios de clientes
+    // testimonios de clientes
     const TESTIMONIOS = [
       {
         id: 1,
