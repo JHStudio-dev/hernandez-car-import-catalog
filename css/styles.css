@@ -1831,18 +1831,21 @@
       }
 
       .jh-topbar__nav {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(10,10,10,0.97);
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 32px;
-        z-index: 150;
+        display: none; 
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 10, 10, 0.98); 
+    backdrop-filter: blur(15px);
+    z-index: 150;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 35px; 
+    padding: 0;
+    margin: 0;
         
       }
       .jh-topbar__nav--open {
