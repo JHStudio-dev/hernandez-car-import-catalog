@@ -1,8 +1,8 @@
     // Informacion de contacto para la pagina
     const EMPRESA = {
-      telefono: "+504 3346-5918",
-      tel_link: "tel:+50433465918",
-      whatsapp: "https://wa.me/50499990000",
+      telefono: "+504 3213-6000",
+      tel_link: "tel:+50432136000",
+      whatsapp: "https://wa.me/50432136000",
     };
 
     // Carros para mostrar en el catalogo
