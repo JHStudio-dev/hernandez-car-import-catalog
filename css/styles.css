@@ -1,5 +1,14 @@
     /*HERNÁNDEZ CAR IMPORT — CATÁLOGO*/
 
+   /*Evitar scroll horizontal y problemas de ancho en dispositivos móviles*/
+    html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+    
+    
     :root {
       --rojo: #CC0000;
       --rojo-vivo: #E60000;
