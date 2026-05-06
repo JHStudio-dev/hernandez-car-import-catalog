@@ -1775,18 +1775,28 @@
 
       .jh-vehicle-modal__panel {
         grid-template-columns: 1fr;
-        grid-template-rows: 40% 60%;
+        grid-template-rows: auto 1fr;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .jh-gallery {
+        height: 55vw;
+        min-height: 280px;
+        max-height: 420px;
+        flex-shrink: 0;
       }
 
       .jh-vehicle-modal__close {
-        top: 20px;
-        right: 20px;
-        background: rgba(0, 0, 0, 0.5);
-        border: none;
+        top: 16px;
+        right: 16px;
+        background: rgba(0, 0, 0, 0.65);
+        border: 1px solid rgba(255,255,255,0.2);
       }
 
       .jh-vehicle-detail {
-        padding: 40px 30px;
+        padding: 32px 24px;
+        overflow-y: visible;
       }
     }
 
