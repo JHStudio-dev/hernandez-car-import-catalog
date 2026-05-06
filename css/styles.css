@@ -1808,7 +1808,7 @@
 
     @media (max-width: 768px) {
       .jh-topbar__container {
-        padding: 0 20px;
+        padding: 0 16px;
       }
 
       .jh-topbar__menu-toggle {
@@ -1840,34 +1840,137 @@
         display: none;
       }
 
+      /* Hero */
+      .jh-showroom-stage {
+        min-height: 100svh;
+      }
       .jh-showroom-stage__content {
         padding: 0 20px;
+        align-items: flex-start;
+        justify-content: flex-end;
+        padding-bottom: 100px;
+      }
+      .jh-showroom-stage__title {
+        font-size: clamp(38px, 10vw, 64px);
+        letter-spacing: -1px;
+      }
+      .jh-showroom-stage__price {
+        font-size: clamp(26px, 7vw, 40px);
+        margin-bottom: 20px;
+      }
+      .jh-showroom-stage__tagline {
+        font-size: 13px;
+      }
+      .jh-showroom-stage__badge {
+        margin-bottom: 16px;
+      }
+      .jh-showroom-stage__controls {
+        bottom: 30px;
+        right: 20px;
+      }
+      .jh-showroom-stage__counter {
+        bottom: 30px;
+        left: 20px;
+      }
+      .jh-showroom-stage__arrow {
+        width: 40px;
+        height: 40px;
       }
 
-      .jh-stock-section,
-      .jh-assurance-section,
-      .jh-contact-section {
-        padding: 60px 20px;
+      /* Catalog */
+      .jh-stock-section {
+        padding: 60px 16px;
       }
-
       .jh-stock-toolbar {
-        padding: 0 20px;
+        padding: 0;
+        flex-direction: column;
+        align-items: stretch;
+        margin-bottom: 24px;
       }
-
+      .jh-stock-toolbar__search {
+        min-width: unset;
+        width: 100%;
+      }
+      .jh-stock-toolbar__filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 6px;
+        gap: 8px;
+      }
+      .jh-stock-toolbar__filters::-webkit-scrollbar {
+        display: none;
+      }
+      .jh-filter-chip {
+        flex-shrink: 0;
+        font-size: 13px;
+        padding: 10px 16px;
+      }
       .jh-stock-display {
         grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .jh-unit-card__media {
+        height: 200px;
       }
 
+      /* Benefits */
+      .jh-assurance-section {
+        padding: 60px 16px;
+      }
       .jh-assurance-grid {
         grid-template-columns: 1fr;
+        margin-top: 40px;
       }
 
+      /* Contact */
+      .jh-contact-section {
+        padding: 60px 16px;
+      }
+
+      /* Modal */
       .jh-specs-grid {
         grid-template-columns: 1fr;
+        gap: 12px;
       }
-
       .jh-vehicle-detail__actions {
         grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .jh-vehicle-detail__model {
+        font-size: clamp(28px, 8vw, 48px);
+      }
+      .jh-vehicle-detail__price {
+        font-size: clamp(28px, 8vw, 40px);
+      }
+
+      /* Misc */
+      .jh-showcase__wrapper {
+        padding: 0 16px;
+      }
+      .jh-reviews-grid {
+        padding: 0 16px;
+        grid-template-columns: 1fr;
+      }
+      .jh-footer {
+        padding: 32px 16px;
+      }
+      .jh-fab-whatsapp {
+        bottom: 20px;
+        right: 16px;
+        width: 52px;
+        height: 52px;
+      }
+    }
+
+    @media (max-width: 375px) {
+      .jh-showroom-stage__title {
+        font-size: clamp(30px, 9vw, 48px);
+      }
+      .jh-filter-chip {
+        font-size: 12px;
+        padding: 8px 12px;
       }
     }
 
