@@ -232,6 +232,20 @@
     .jh-topbar__nav a:hover {
       color: var(--blanco);
     }
+    
+    nav {
+  position: relative;
+}
+
+.jh-nav-pill {
+  position: absolute;
+  background: rgba(204, 0, 0, 0.15);
+  border: 1px solid rgba(204, 0, 0, 0.3);
+  border-radius: 6px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  opacity: 0;
+}
 
     /* Menu de hamburguesa para celular (Para evitar la barra de navegacion que se muestra en la version de pc)*/
     .jh-topbar__menu-toggle {

@@ -449,3 +449,25 @@ updateCounts();
 renderCatalog();
 renderEntregas();
 renderTestimonios();
+
+
+// Para el pill
+
+const pill = document.getElementById('navPill');
+const navItems = document.querySelectorAll('.jh-topbar__nav a');
+
+navItems.forEach(link => {
+  link.addEventListener('mouseenter', () => {
+    const rect = link.getBoundingClientRect();
+    const navRect = link.closest('nav').getBoundingClientRect();
+    pill.style.opacity = '1';
+    pill.style.width = rect.width + 16 + 'px';
+    pill.style.height = rect.height + 8 + 'px';
+    pill.style.left = (rect.left - navRect.left - 8) + 'px';
+    pill.style.top = (rect.top - navRect.top - 4) + 'px';
+  });
+});
+
+document.querySelector('nav').addEventListener('mouseleave', () => {
+  pill.style.opacity = '0';
+});
