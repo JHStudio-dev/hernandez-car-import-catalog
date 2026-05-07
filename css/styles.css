@@ -2074,7 +2074,7 @@
     /* 500vh = sección como para 4 caps */
     height: 500vh;
     background: var(--negro);
-    margin-top: 80px;
+    margin-top: 50px;
 }
 
 /*  Stage sticky*/
@@ -2339,7 +2339,7 @@
         padding: 0;
     }
 
-    /* En mobile: mostrar todos los capítulos apilados */
+    /* mostrar todos los capítulos apilados */
     .jh-hs-chapter {
         position: relative;
         inset: auto;
@@ -2359,6 +2359,109 @@
 
 
 /*Pantalla de carga prueba*/
+
+.jh-splash-screen {
+    position: fixed; 
+    inset: 0;        
+    background: #0A0A0A; 
+    z-index: 10000;  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease, visibility 0.6s;
+}
+
+.jh-splash-screen--hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.jh-splash-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+#loader-logo {
+    width: 250px;
+    height: 250px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(40px); 
+    will-change: transform, opacity; 
+    transition: 
+        opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
+        transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.jh-element-reveal {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) scale(1) !important;
+}
+.element-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: scale(1) translateY(0) !important;
+}
+
+.jh-loader-bar {
+    width: 200px;
+    height: 2px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.jh-bar-fill {
+    height: 100%;
+    width: 0%; /* Empieza en 0 */
+    background: var(--rojo);
+    box-shadow: 0 0 15px var(--rojo);
+    transition: width 0.3s ease;
+}
+
+.jh-loader-text {
+    font-family: var(--font-display);
+    color: var(--gris-cla);
+    letter-spacing: 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+.jh-btn-enter {
+    background: transparent;
+    color: var(--blanco);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    padding: 15px 40px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 3px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    opacity: 0; 
+    transform: translateY(20px);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(40px); 
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+.jh-btn-enter--ready {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.jh-btn-enter:hover {
+    background: var(--blanco);
+    color: var(--negro);
+    border-color: var(--blanco);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
 @keyframes pulse {
     0%, 100% { 
         opacity: 1; 

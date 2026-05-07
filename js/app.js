@@ -473,26 +473,45 @@ document.querySelector('nav').addEventListener('mouseleave', () => {
 });
 
 // prueba pantalla de carga
-window.addEventListener('load', () => {
-    const loader = document.getElementById('loading-screen');
-    const bar = document.getElementById('loading-bar');
-    
+window.addEventListener('load', function() {
+    const bar = document.getElementById('jh-bar-fill');
+    const logo = document.getElementById('loader-logo');
+    const btn = document.getElementById('btn-entrar');
+    const barContainer = document.querySelector('.jh-loader-bar');
+    const loaderText = document.querySelector('.jh-loader-text');
 
-    bar.style.width = '100%';
     
-    setTimeout(() => {
-        loader.style.opacity = '0';
-        loader.style.visibility = 'hidden';
-        
-        document.querySelectorAll('.jh-reveal').forEach((el, i) => {
+    if (bar) bar.style.width = '100%';
+
+    
+    logo.addEventListener('model-visibility', (evt) => {
+        if (evt.detail.visible) {
+            
             setTimeout(() => {
-                el.classList.add('jh-reveal--visible');
-            }, i * 150); 
+                
+                if (barContainer) barContainer.style.opacity = '0';
+                if (loaderText) loaderText.style.opacity = '0';
+
+                
+                setTimeout(() => {
+                    logo.classList.add('jh-element-reveal');
+                    
+                    setTimeout(() => {
+                        btn.classList.add('jh-element-reveal');
+                    }, 400); 
+                }, 400); 
+            }, 600);
+        }
+    });
+
+    
+    btn.addEventListener('click', () => {
+        document.getElementById('jh-loader').classList.add('jh-splash-screen--hidden');
+        document.querySelectorAll('.jh-reveal').forEach((el, i) => {
+            setTimeout(() => el.classList.add('jh-reveal--visible'), i * 150);
         });
-    }, 1000); 
+    });
 });
-
-
 /*HISTORIA SECTION  */
 
 (function () {
