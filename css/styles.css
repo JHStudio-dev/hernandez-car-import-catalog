@@ -1,11 +1,11 @@
 /*HERNÁNDEZ CAR IMPORT — CATÁLOGO*/
 
-   /*Evitar scroll horizontal y problemas de ancho en dispositivos móviles*/
+   /*Para evitar scroll horizontal y problemas de ancho en dispositivos móviles*/
     html, body {
-    max-width: 100vw;
-    overflow-x: hidden;
-    margin: 0;
-    padding: 0;
+  max-width: 100%;
+  overflow-x: clip; /* asi mejor porque no rompe sticky */
+  margin: 0;
+  padding: 0;
 }
     
     
@@ -46,7 +46,7 @@
       background: var(--negro);
       color: var(--blanco);
       min-height: 100vh;
-      overflow-x: hidden;
+    
       -webkit-font-smoothing: antialiased;
     }
 
@@ -734,6 +734,7 @@
       position: relative;
       display: flex;
       flex-direction: column;
+      
     }
 
     .jh-unit-card:hover {
@@ -1846,6 +1847,8 @@
     gap: 35px; 
     padding: 0;
     margin: 0;
+    background: rgba(10, 10, 10, 0.85) !important;
+    backdrop-filter: blur(25px) saturate(150%);
         
       }
       .jh-topbar__nav--open {
@@ -2059,4 +2062,329 @@
     height: 100% !important;
     border: 0;
     filter: grayscale(100%) invert(92%) contrast(83%);
+}
+
+
+
+/* HISTORIA SECTION */
+
+/* ── Sección contenedor */
+.jh-history-section {
+    position: relative;
+    /* 500vh = sección como para 4 caps */
+    height: 500vh;
+    background: var(--negro);
+    margin-top: 80px;
+}
+
+/*  Stage sticky*/
+.jh-hs-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    overflow: hidden;
+    background: radial-gradient(
+        ellipse 55% 60% at 15% 50%,
+        rgba(204, 0, 0, 0.07) 0%,
+        transparent 70%
+    );
+}
+
+/*
+   COLUMNA IZQUIERDA
+*/
+.jh-hs-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    height: 100%;
+    padding: 40px;
+}
+
+/* Wrap del model-viewer */
+.jh-hs-logo-wrap {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mi logo 3D */
+#logo-scroll {
+    width: 100%;
+    height: 42vh;
+    /* La transición se aplica desde JS */
+    transition: transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform-origin: center center;
+}
+
+/* Badge del año activo */
+.jh-hs-year {
+    background: var(--rojo);
+    color: var(--blanco);
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    padding: 5px 20px;
+    /* Forma de paralelogramo */
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: opacity 0.4s ease;
+}
+
+/* Track de progreso vertical */
+.jh-hs-track {
+    position: relative;
+    width: 2px;
+    height: 110px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
+.jh-hs-track__fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background: var(--rojo);
+    border-radius: 2px;
+    box-shadow: 0 0 8px rgba(204, 0, 0, 0.6);
+    /* JS actualiza height con transition inline */
+    transition: height 0.12s linear;
+}
+
+/* Nodos del timeline */
+.jh-hs-track__nodes {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.jh-hs-node {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;
+}
+
+.jh-hs-node.jh-hs-node--done {
+    background: var(--rojo-osc);
+    border-color: var(--rojo-osc);
+}
+
+.jh-hs-node.jh-hs-node--active {
+    background: var(--rojo);
+    border-color: var(--rojo);
+    transform: scale(1.4);
+    box-shadow: 0 0 10px rgba(204, 0, 0, 0.7);
+}
+
+/* COLUMNA DERECHA */
+.jh-hs-right {
+    position: relative;
+    height: 100%;
+    padding: 40px 8% 40px 4%;
+    overflow: hidden;
+}
+
+/* Cada capítulo: todos apilados y absolutos,
+   solo el activo es opacity:1 y translateY(0) */
+.jh-hs-chapter {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 8% 40px 4%;
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none;
+}
+
+.jh-hs-chapter.jh-hs-chapter--active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Etiqueta de sección */
+.jh-hs-chapter__label {
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--rojo);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.jh-hs-chapter__label::before {
+    content: '';
+    display: inline-block;
+    width: 26px;
+    height: 2px;
+    background: var(--rojo);
+    flex-shrink: 0;
+}
+
+/* Título grande */
+.jh-hs-chapter__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 6vw, 4.8rem);
+    font-weight: 900;
+    line-height: 0.93;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--blanco);
+    margin-bottom: 24px;
+}
+
+/* Párrafo de descripción */
+.jh-hs-chapter__text {
+    font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+    color: var(--gris-cla);
+    line-height: 1.75;
+    max-width: 460px;
+    margin-bottom: 32px;
+}
+
+/* Tarjeta de estadística */
+.jh-hs-stat {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px 22px;
+    border-left: 3px solid var(--rojo);
+    background: rgba(204, 0, 0, 0.06);
+    max-width: 360px;
+}
+
+.jh-hs-stat__num {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 900;
+    color: var(--rojo);
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.jh-hs-stat__lbl {
+    font-size: 0.8rem;
+    color: var(--gris-cla);
+    line-height: 1.5;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* RESPONSIVE — mobile*/
+@media (max-width: 768px) {
+    .jh-history-section {
+        height: auto;
+    }
+
+    .jh-hs-stage {
+        position: relative;
+        height: auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
+
+    .jh-hs-left {
+        padding: 50px 24px 16px;
+    }
+
+    #logo-scroll {
+        height: 28vh;
+    }
+
+    .jh-hs-track {
+        display: none;
+    }
+
+    .jh-hs-right {
+        position: relative;
+        height: auto;
+        padding: 0;
+    }
+
+    /* En mobile: mostrar todos los capítulos apilados */
+    .jh-hs-chapter {
+        position: relative;
+        inset: auto;
+        opacity: 1 !important;
+        transform: none !important;
+        padding: 32px 24px;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        pointer-events: auto;
+    }
+
+    .jh-hs-chapter:last-child {
+        border-bottom: none;
+    }
+}
+
+
+
+
+/*Pantalla de carga prueba*/
+@keyframes pulse {
+    0%, 100% { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+    50% { 
+        opacity: 0.7; 
+        transform: scale(0.95); 
+    }
+}
+
+.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s;
+}
+
+/*  el culpable era el marquee de entregas */
+.jh-showcase__wrapper {
+  overflow: hidden;   
+}
+
+/* Aqui arregle el overflow mobile */
+.jh-topbar,
+.jh-topbar__container {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.jh-showcase__wrapper {
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .jh-stock-toolbar__filters {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
 }

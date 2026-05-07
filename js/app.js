@@ -471,3 +471,103 @@ navItems.forEach(link => {
 document.querySelector('nav').addEventListener('mouseleave', () => {
   pill.style.opacity = '0';
 });
+
+// prueba pantalla de carga
+window.addEventListener('load', () => {
+    const loader = document.getElementById('loading-screen');
+    const bar = document.getElementById('loading-bar');
+    
+
+    bar.style.width = '100%';
+    
+    setTimeout(() => {
+        loader.style.opacity = '0';
+        loader.style.visibility = 'hidden';
+        
+        document.querySelectorAll('.jh-reveal').forEach((el, i) => {
+            setTimeout(() => {
+                el.classList.add('jh-reveal--visible');
+            }, i * 150); 
+        });
+    }, 1000); 
+});
+
+
+/*HISTORIA SECTION  */
+
+(function () {
+
+  /* Total de capítulos */
+  var TOTAL = 4;
+
+  function initHistoria() {
+    var section  = document.getElementById('historia-section');
+    if (!section) return;
+
+    var logo     = document.getElementById('logo-scroll');
+    var track    = document.getElementById('jhHsTrack');
+    var yearEl   = document.getElementById('jhHsYear');
+    var chapters = section.querySelectorAll('.jh-hs-chapter');
+    var nodes    = section.querySelectorAll('.jh-hs-node');
+
+    if (!logo || chapters.length === 0) return;
+
+    var ticking = false;
+
+    function tick() {
+      ticking = false;
+
+      var sectionTop = section.offsetTop;
+      var sectionH   = section.offsetHeight;
+      var wh         = window.innerHeight;
+
+      /* Progreso global de 0 a 1 dentro de la sección */
+      var scrolled = window.scrollY - sectionTop;
+      var maxScroll = sectionH - wh;
+      var p = Math.min(Math.max(scrolled / maxScroll, 0), 1);
+
+      /* ── Logo: crece suavemente de 1× a 1.3× ── */
+      logo.style.transform = 'scale(' + (1 + p * 0.3) + ')';
+
+      /* ── Barra de progreso ── */
+      if (track) track.style.height = (p * 100) + '%';
+
+      /* ── Capítulo activo (zona = 1/TOTAL del recorrido) ── */
+      var zone = 1 / TOTAL;
+      var idx  = Math.min(Math.floor(p / zone), TOTAL - 1);
+
+      chapters.forEach(function (ch, i) {
+        ch.classList.toggle('jh-hs-chapter--active', i === idx);
+      });
+
+      /*  Nodos del timeline  */
+      nodes.forEach(function (nd, i) {
+        nd.classList.remove('jh-hs-node--active', 'jh-hs-node--done');
+        if      (i === idx) nd.classList.add('jh-hs-node--active');
+        else if (i  <  idx) nd.classList.add('jh-hs-node--done');
+      });
+
+      /*  Badge de año  */
+      if (yearEl && chapters[idx]) {
+        yearEl.textContent = chapters[idx].dataset.year || '';
+      }
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(tick);
+      }
+    }, { passive: true });
+
+    
+    tick();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHistoria);
+  } else {
+    initHistoria();
+  }
+
+})();
