@@ -173,14 +173,14 @@
     <div class="jh-hs-left">
       <div class="jh-hs-logo-wrap">
         <model-viewer
-          id="logo-scroll"
-          src="Modelos/LOGO 3D.glb"
-          autoplay
-          auto-rotate
-          environment-image="neutral"
-          exposure="1.6"
-          interaction-prompt="none">
-        </model-viewer>
+  id="logo-scroll"
+  src="Modelos/LOGO 3D.glb"
+  autoplay
+  environment-image="neutral"
+  exposure="1.6"
+  interaction-prompt="none"
+  camera-orbit="180deg 90deg auto">
+</model-viewer>
       </div>
  
       <div class="jh-hs-year" id="jhHsYear">2019</div>
@@ -251,6 +251,10 @@
   </div>
 </section>
 
+<div class="jh-hs-logo-wrap" style="perspective: 800px;">
+  <model-viewer id="logo-scroll" ...>
+  </model-viewer>
+</div>
  
 
   

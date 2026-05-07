@@ -496,8 +496,6 @@ window.addEventListener('load', () => {
 /*HISTORIA SECTION  */
 
 (function () {
-
-  /* Total de capítulos */
   var TOTAL = 4;
 
   function initHistoria() {
@@ -512,27 +510,72 @@ window.addEventListener('load', () => {
 
     if (!logo || chapters.length === 0) return;
 
+    // ── Mouse tracking ──
+    var targetX = 0, targetY = 0;
+    var currentX = 0, currentY = 0;
+    var mouseInSection = false;
+    var rafMouse;
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    function animateMouse() {
+      currentX = lerp(currentX, targetX, 0.06);
+      currentY = lerp(currentY, targetY, 0.06);
+      logo.style.transform = 
+        'rotateY(' + currentX + 'deg) rotateX(' + (-currentY) + 'deg)';
+      rafMouse = requestAnimationFrame(animateMouse);
+    }
+
+    section.addEventListener('mouseenter', function () {
+      mouseInSection = true;
+      animateMouse();
+    });
+
+    section.addEventListener('mouseleave', function () {
+      mouseInSection = false;
+      targetX = 0;
+      targetY = 0;
+      cancelAnimationFrame(rafMouse);
+      // Vuelve suavemente al centro
+      logo.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      logo.style.transform = 'rotateY(0deg) rotateX(0deg)';
+      setTimeout(function() {
+        logo.style.transition = '';
+      }, 800);
+    });
+
+    section.addEventListener('mousemove', function (e) {
+  var rect = section.getBoundingClientRect();
+  var x = ((e.clientX - rect.left) / rect.width  - 0.5) * 2;
+  var y = ((e.clientY - rect.top)  / rect.height - 0.5) * 2;
+
+  // camera-orbit controla la cámara nativa del model-viewer
+  var theta = 0 - (x * 20); 
+  var phi   = 90  - (y * 10); 
+  logo.setAttribute('camera-orbit', theta + 'deg ' + phi + 'deg auto');
+});
+
+section.addEventListener('mouseleave', function () {
+  // Vuelve a la posición por defecto
+  logo.setAttribute('camera-orbit', '180deg 90deg auto');
+});
+
+    // ── Scroll logic (igual que antes) ──
     var ticking = false;
 
     function tick() {
       ticking = false;
-
       var sectionTop = section.offsetTop;
       var sectionH   = section.offsetHeight;
       var wh         = window.innerHeight;
-
-      /* Progreso global de 0 a 1 dentro de la sección */
-      var scrolled = window.scrollY - sectionTop;
-      var maxScroll = sectionH - wh;
+      var scrolled   = window.scrollY - sectionTop;
+      var maxScroll  = sectionH - wh;
       var p = Math.min(Math.max(scrolled / maxScroll, 0), 1);
+      var scale = 1 + p * 0.25;
+logo.style.setProperty('--logo-scale', scale);
 
-      /* ── Logo: crece suavemente de 1× a 1.3× ── */
-      logo.style.transform = 'scale(' + (1 + p * 0.3) + ')';
-
-      /* ── Barra de progreso ── */
       if (track) track.style.height = (p * 100) + '%';
 
-      /* ── Capítulo activo (zona = 1/TOTAL del recorrido) ── */
       var zone = 1 / TOTAL;
       var idx  = Math.min(Math.floor(p / zone), TOTAL - 1);
 
@@ -540,27 +583,21 @@ window.addEventListener('load', () => {
         ch.classList.toggle('jh-hs-chapter--active', i === idx);
       });
 
-      /*  Nodos del timeline  */
       nodes.forEach(function (nd, i) {
         nd.classList.remove('jh-hs-node--active', 'jh-hs-node--done');
         if      (i === idx) nd.classList.add('jh-hs-node--active');
         else if (i  <  idx) nd.classList.add('jh-hs-node--done');
       });
 
-      /*  Badge de año  */
       if (yearEl && chapters[idx]) {
         yearEl.textContent = chapters[idx].dataset.year || '';
       }
     }
 
     window.addEventListener('scroll', function () {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(tick);
-      }
+      if (!ticking) { ticking = true; requestAnimationFrame(tick); }
     }, { passive: true });
 
-    
     tick();
   }
 
@@ -569,5 +606,4 @@ window.addEventListener('load', () => {
   } else {
     initHistoria();
   }
-
 })();
