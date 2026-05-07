@@ -2320,11 +2320,13 @@
     }
 
     .jh-hs-left {
-        padding: 50px 24px 16px;
+        padding: 40px 20px;
+        background: linear-gradient(to bottom, rgba(204, 0, 0, 0.05), transparent);
     }
 
     #logo-scroll {
-        height: 28vh;
+        height: 35vh;
+        margin-bottom: 20px;
     }
 
     .jh-hs-track {

@@ -509,6 +509,14 @@ window.addEventListener('load', () => {
     var nodes    = section.querySelectorAll('.jh-hs-node');
 
     if (!logo || chapters.length === 0) return;
+    if (!logo || chapters.length === 0) return;
+
+    // --- Configuración  para el cel  ---
+    if (window.innerWidth <= 768) {
+      logo.setAttribute('auto-rotate', '');
+      logo.setAttribute('rotation-per-second', '60deg');
+      logo.setAttribute('interaction-prompt', 'none');
+    }
 
     // ── Mouse tracking ──
     var targetX = 0, targetY = 0;
@@ -526,6 +534,7 @@ window.addEventListener('load', () => {
       rafMouse = requestAnimationFrame(animateMouse);
     }
 
+
     section.addEventListener('mouseenter', function () {
       mouseInSection = true;
       animateMouse();
@@ -536,7 +545,6 @@ window.addEventListener('load', () => {
       targetX = 0;
       targetY = 0;
       cancelAnimationFrame(rafMouse);
-      // Vuelve suavemente al centro
       logo.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
       logo.style.transform = 'rotateY(0deg) rotateX(0deg)';
       setTimeout(function() {
@@ -548,6 +556,19 @@ window.addEventListener('load', () => {
   var rect = section.getBoundingClientRect();
   var x = ((e.clientX - rect.left) / rect.width  - 0.5) * 2;
   var y = ((e.clientY - rect.top)  / rect.height - 0.5) * 2;
+  if (!logo || chapters.length === 0) return;
+
+    // --- Control responsivo del giro 3D (HCI) ---
+    if (window.innerWidth <= 768) {
+      // Configuración para Móvil: Gira solo
+      logo.setAttribute('auto-rotate', '');
+      logo.setAttribute('rotation-per-second', '60deg');
+      logo.setAttribute('interaction-prompt', 'none');
+    } else {
+      // Configuración para PC: Estático (esperando al mouse)
+      logo.removeAttribute('auto-rotate');
+      logo.setAttribute('rotation-per-second', '0deg');
+    }
 
   // camera-orbit controla la cámara nativa del model-viewer
   var theta = 0 - (x * 20); 
@@ -556,8 +577,7 @@ window.addEventListener('load', () => {
 });
 
 section.addEventListener('mouseleave', function () {
-  // Vuelve a la posición por defecto
-  logo.setAttribute('camera-orbit', '180deg 90deg auto');
+  logo.setAttribute('camera-orbit', '0deg 90deg auto');
 });
 
     // ── Scroll logic (igual que antes) ──
