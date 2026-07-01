@@ -2502,3 +2502,52 @@
     box-sizing: border-box;
   }
 }
+
+/* ─────────────── FASE 1 · Loader, scroll y entrada ─────────────── */
+
+/* Mientras el loader está activo: nada de scroll de fondo (desktop y móvil) */
+html.loader-active,
+body.loader-active {
+  overflow: hidden;
+}
+
+/* El overlay del loader no transfiere gestos de scroll al fondo */
+.jh-splash-screen {
+  touch-action: none;
+  overscroll-behavior: none;
+}
+
+/* Ocultado suave de barra y texto */
+.jh-loader-bar {
+  transition: opacity 0.5s ease;
+}
+
+/* Botón de entrada: mismo look en mayúsculas que el resto del sitio */
+.jh-btn-enter {
+  text-transform: uppercase;
+}
+
+/* Fallback visual si el modelo 3D no carga (poster / error del .glb) */
+.jh-loader-fallback {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 24px;
+}
+
+/* Respeta a quien prefiere menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .jh-reveal {
+    transition-duration: 0.01ms;
+    transform: none;
+  }
+  #loader-logo,
+  .jh-btn-enter {
+    transition-duration: 0.2s;
+    transform: none;
+  }
+  .jh-splash-screen {
+    transition-duration: 0.2s;
+  }
+}

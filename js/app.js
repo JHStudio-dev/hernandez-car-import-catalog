@@ -472,46 +472,73 @@ document.querySelector('nav').addEventListener('mouseleave', () => {
   pill.style.opacity = '0';
 });
 
-// prueba pantalla de carga
-window.addEventListener('load', function() {
-    const bar = document.getElementById('jh-bar-fill');
-    const logo = document.getElementById('loader-logo');
-    const btn = document.getElementById('btn-entrar');
-    const barContainer = document.querySelector('.jh-loader-bar');
-    const loaderText = document.querySelector('.jh-loader-text');
+// ---- LOADER / PANTALLA DE CARGA ----
+(function initLoader() {
+  const loader = document.getElementById('jh-loader');
+  if (!loader) return;
 
-    
-    if (bar) bar.style.width = '100%';
+  const bar = document.getElementById('jh-bar-fill');
+  const logo = document.getElementById('loader-logo');
+  const btn = document.getElementById('btn-entrar');
+  const barContainer = loader.querySelector('.jh-loader-bar');
+  const loaderText = loader.querySelector('.jh-loader-text');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    
-    logo.addEventListener('model-visibility', (evt) => {
-        if (evt.detail.visible) {
-            
-            setTimeout(() => {
-                
-                if (barContainer) barContainer.style.opacity = '0';
-                if (loaderText) loaderText.style.opacity = '0';
+  // Empezar siempre arriba del todo, sin restaurar scroll viejo
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
 
-                
-                setTimeout(() => {
-                    logo.classList.add('jh-element-reveal');
-                    
-                    setTimeout(() => {
-                        btn.classList.add('jh-element-reveal');
-                    }, 400); 
-                }, 400); 
-            }, 600);
-        }
+  // Bloquea el scroll táctil de fondo mientras el loader está visible
+  loader.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
+
+  // Barra de progreso decorativa
+  if (bar) requestAnimationFrame(function () { bar.style.width = '100%'; });
+
+  // Revela el logo 3D y el botón de entrada (una sola vez)
+  let revealed = false;
+  function revealEntry() {
+    if (revealed) return;
+    revealed = true;
+    if (barContainer) barContainer.style.opacity = '0';
+    if (loaderText) loaderText.style.opacity = '0';
+    if (logo) logo.classList.add('jh-element-reveal');
+    if (btn) {
+      setTimeout(function () { btn.classList.add('jh-element-reveal'); }, reduceMotion ? 0 : 300);
+    }
+  }
+
+  if (logo) {
+    // Cuando el modelo 3D se hace visible, revelamos la entrada
+    logo.addEventListener('model-visibility', function (evt) {
+      if (evt.detail && evt.detail.visible) revealEntry();
+    });
+    // Si el modelo falla, mostramos el fallback y no dejamos atrapado al usuario
+    logo.addEventListener('error', function () {
+      loader.classList.add('jh-loader--no-model');
+      revealEntry();
+    });
+  }
+
+  // Red de seguridad: el botón SIEMPRE aparece, aunque el 3D tarde o falle
+  setTimeout(revealEntry, reduceMotion ? 400 : 3500);
+
+  // Entrada al catálogo
+  function enterSite() {
+    loader.classList.add('jh-splash-screen--hidden');
+    document.documentElement.classList.remove('loader-active');
+    document.body.classList.remove('loader-active');
+    window.scrollTo(0, 0);
+
+    document.querySelectorAll('.jh-reveal').forEach(function (el, i) {
+      setTimeout(function () { el.classList.add('jh-reveal--visible'); }, reduceMotion ? 0 : i * 120);
     });
 
-    
-    btn.addEventListener('click', () => {
-        document.getElementById('jh-loader').classList.add('jh-splash-screen--hidden');
-        document.querySelectorAll('.jh-reveal').forEach((el, i) => {
-            setTimeout(() => el.classList.add('jh-reveal--visible'), i * 150);
-        });
-    });
-});
+    // Quitamos el loader del DOM para que no bloquee nada después de entrar
+    setTimeout(function () { if (loader.parentNode) loader.remove(); }, 700);
+  }
+
+  if (btn) btn.addEventListener('click', enterSite);
+})();
 /*HISTORIA SECTION  */
 
 (function () {

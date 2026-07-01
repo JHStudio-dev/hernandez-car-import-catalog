@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="loader-active">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    // Evita que el navegador restaure una posición de scroll antigua al recargar
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  </script>
   <title>Hernández Car Import — Catálogo Premium</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,34 +18,33 @@
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 </head>
 
-<body>
+<body class="loader-active">
 
-  <!-- prueba pantalla de carga -->
+  <!-- Pantalla de carga -->
   <div id="jh-loader" class="jh-splash-screen">
     <div class="jh-splash-content">
-        <model-viewer id="loader-logo" 
-    src="Modelos/LOGO 3D.glb" 
-    loading="eager" 
-    autoplay 
-    auto-rotate 
-    rotation-per-second="90deg"
-    interaction-prompt="none"
-    camera-orbit="0deg 90deg auto"
-    exposure="1.4"> 
-  </model-viewer>
-        
-        <div class="jh-loader-bar" style="transition: opacity 0.5s;">
-            <div id="jh-bar-fill" class="jh-bar-fill"></div>
-        </div>
+      <model-viewer id="loader-logo"
+        src="Modelos/LOGO 3D.glb"
+        loading="eager"
+        reveal="auto"
+        autoplay
+        auto-rotate
+        rotation-per-second="90deg"
+        interaction-prompt="none"
+        camera-orbit="0deg 90deg auto"
+        exposure="1.4"
+        aria-hidden="true">
+        <img class="jh-loader-fallback" slot="poster" src="Fotos/logo.png" alt="Hernández Car Import">
+      </model-viewer>
 
-        <button id="btn-entrar" class="jh-btn-enter">ENTRAR AL CATALOGO</button>
-        <p class="jh-loader-text">HERNÁNDEZ CAR IMPORT CATALOG</p>
+      <div class="jh-loader-bar">
+        <div id="jh-bar-fill" class="jh-bar-fill"></div>
+      </div>
+
+      <button id="btn-entrar" class="jh-btn-enter" type="button">Entrar al catálogo</button>
+      <p class="jh-loader-text">Hernández Car Import · Catálogo</p>
     </div>
-</div>
-        
-        <p class="jh-loader-text">HERNÁNDEZ CAR IMPORT CATALOG</p>
-    </div>
-</div>
+  </div>
 
   <!-- SVG SYMBOLS FOR ICONS -->
   <svg style="display: none;">
