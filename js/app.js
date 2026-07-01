@@ -41,7 +41,7 @@ function renderHero() {
           <h1 class="jh-showroom-stage__title"><span class="jh-showroom-stage__marque">${auto.marca}</span> ${auto.modelo}</h1>
           <p class="jh-showroom-stage__tagline">Ingeniería global, entregada en tu puerta.</p>
           <div class="jh-showroom-stage__price">${auto.precio}</div>
-          <button class="jh-btn jh-btn--primary" onclick="openDetail(${auto.id})">Ver Detalles</button>
+          <button class="jh-btn jh-btn--primary" type="button" data-id="${auto.id}">Ver Detalles</button>
         </div>
       </div>
       <div class="jh-showroom-stage__counter"><span class="jh-showroom-stage__counter-current">${i + 1}</span> / ${destacados.length}</div>
@@ -56,6 +56,12 @@ function renderHero() {
   document.getElementById('heroNext').addEventListener('click', () => {
     nextSlide(1);
     resetInterval();
+  });
+
+  // Abrir detalle desde el botón "Ver Detalles" del hero (delegación)
+  heroCarousel.addEventListener('click', (e) => {
+    const btn = e.target.closest('.jh-btn--primary[data-id]');
+    if (btn) openDetail(parseInt(btn.dataset.id, 10));
   });
 
   startInterval();
@@ -94,7 +100,7 @@ function renderList(filtered, emptyMsg) {
   }
 
   grid.innerHTML = filtered.map((auto, i) => `
-    <div class="jh-unit-card jh-reveal" style="transition-delay: ${i * 0.08}s" onclick="openDetail(${auto.id})">
+    <div class="jh-unit-card jh-reveal" style="transition-delay: ${i * 0.08}s" data-id="${auto.id}" role="button" tabindex="0" aria-label="Ver detalles: ${auto.marca} ${auto.modelo} ${auto.anio}">
       <div class="jh-unit-card__media">
         <img src="${auto.thumb_preview || auto.gallery_assets[0] || ''}" class="jh-unit-card__photo" alt="${auto.modelo}" loading="lazy">
         <div class="jh-unit-card__badges">
@@ -142,6 +148,20 @@ document.querySelectorAll('.jh-filter-chip').forEach(btn => {
   });
 });
 
+// Abrir detalle al hacer clic o con Enter/Espacio en una tarjeta (delegación)
+const catalogGrid = document.getElementById('catalogGrid');
+if (catalogGrid) {
+  catalogGrid.addEventListener('click', (e) => {
+    const card = e.target.closest('.jh-unit-card[data-id]');
+    if (card) openDetail(parseInt(card.dataset.id, 10));
+  });
+  catalogGrid.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const card = e.target.closest('.jh-unit-card[data-id]');
+    if (card) { e.preventDefault(); openDetail(parseInt(card.dataset.id, 10)); }
+  });
+}
+
 // Search logic
 const searchInput = document.getElementById('searchInput');
 
@@ -168,15 +188,16 @@ if (searchInput) {
 const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.querySelector('.jh-topbar__nav');
 if (menuToggle && navLinks) {
+  const setMenu = (open) => {
+    menuToggle.classList.toggle('jh-topbar__menu-toggle--active', open);
+    navLinks.classList.toggle('jh-topbar__nav--open', open);
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
   menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('jh-topbar__menu-toggle--active');
-    navLinks.classList.toggle('jh-topbar__nav--open');
+    setMenu(!navLinks.classList.contains('jh-topbar__nav--open'));
   });
   navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      menuToggle.classList.remove('jh-topbar__menu-toggle--active');
-      navLinks.classList.remove('jh-topbar__nav--open');
-    });
+    link.addEventListener('click', () => setMenu(false));
   });
 }
 
@@ -247,7 +268,7 @@ function renderGallery() {
 
   if (currentGalleryImages.length > 1) {
     thumbsWrap.innerHTML = currentGalleryImages.map((src, i) =>
-      `<div class="jh-gallery__thumb ${i === 0 ? 'jh-gallery__thumb--active' : ''}" onclick="setMainImage(${i})"><img src="${src}"></div>`
+      `<div class="jh-gallery__thumb ${i === 0 ? 'jh-gallery__thumb--active' : ''}" data-index="${i}"><img src="${src}" alt=""></div>`
     ).join('');
     thumbsWrap.style.display = 'flex';
     navBtns.forEach(btn => btn.style.display = 'flex');
@@ -283,6 +304,15 @@ document.getElementById('galleryNext').addEventListener('click', () => {
   let newIndex = (currentImageIndex + 1) % currentGalleryImages.length;
   setMainImage(newIndex);
 });
+
+// Seleccionar imagen desde las miniaturas (delegación)
+const detailThumbs = document.getElementById('detailThumbs');
+if (detailThumbs) {
+  detailThumbs.addEventListener('click', (e) => {
+    const thumb = e.target.closest('.jh-gallery__thumb[data-index]');
+    if (thumb) setMainImage(parseInt(thumb.dataset.index, 10));
+  });
+}
 
 // Fit toggle
 document.getElementById('galleryFitToggle').addEventListener('click', () => {

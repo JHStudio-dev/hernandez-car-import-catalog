@@ -251,11 +251,15 @@
     .jh-topbar__menu-toggle {
       display: none;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
       gap: 5px;
       background: none;
       border: none;
       cursor: pointer;
-      padding: 8px;
+      padding: 10px;
+      min-width: 44px;
+      min-height: 44px;
       z-index: 200;
     }
     .jh-topbar__menu-toggle span {
@@ -289,6 +293,7 @@
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: pointer;
       border: none;
+      min-height: 44px;
     }
 
     .jh-btn--primary {
@@ -650,6 +655,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      min-height: 44px;
     }
 
     .jh-filter-chip .jh-filter-chip__count {
@@ -1305,8 +1311,8 @@
       position: absolute;
       top: 20px;
       left: 20px;
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: rgba(10, 10, 10, 0.6);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1446,7 +1452,7 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--gris-med);
-      padding-bottom: 12px;
+      padding: 8px 0 12px;
       cursor: pointer;
       position: relative;
       transition: color 0.3s;
@@ -2525,6 +2531,8 @@ body.loader-active {
 /* Botón de entrada: mismo look en mayúsculas que el resto del sitio */
 .jh-btn-enter {
   text-transform: uppercase;
+  justify-content: center;
+  min-height: 48px;
 }
 
 /* Fallback: logo estático que se muestra SOLO si el modelo 3D falla */
@@ -2570,4 +2578,39 @@ body.loader-active {
 /* El logo 3D no debe capturar el scroll táctil en móvil */
 #logo-scroll {
   touch-action: pan-y;
+}
+
+/* ─────────────── FASE 3 · Foco, hitbox y estados ─────────────── */
+
+/* Anillo de foco visible solo con teclado (no molesta al usar mouse) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+.jh-unit-card:focus-visible,
+.jh-vehicle-detail__tab:focus-visible,
+.jh-gallery__thumb:focus-visible {
+  outline: 2px solid var(--rojo-vivo);
+  outline-offset: 3px;
+}
+
+/* La tarjeta resalta su borde al enfocar con teclado */
+.jh-unit-card:focus-visible {
+  outline-offset: 0;
+  border-color: var(--rojo);
+}
+
+/* Feedback al presionar */
+.jh-btn--primary:active,
+.jh-btn--outline:active,
+.jh-btn--whatsapp:active,
+.jh-btn--call:active,
+.jh-filter-chip:active,
+.jh-btn-enter:active {
+  transform: translateY(1px);
+}
+
+/* Los degradados decorativos nunca deben bloquear clics */
+.jh-showroom-stage__gradient,
+.jh-unit-card__gradient {
+  pointer-events: none;
 }
