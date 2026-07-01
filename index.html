@@ -186,16 +186,18 @@
     <div class="jh-hs-left">
       <div class="jh-hs-logo-wrap">
         <model-viewer
-  id="logo-scroll"
-  src="Modelos/LOGO 3D.glb"
-  autoplay
-  environment-image="neutral"
-  exposure="1.6"
-  interaction-prompt="none"
-  camera-orbit="180deg 90deg auto"
-  interpolation-decay="200"
-  autoplay auto-rotate>
-</model-viewer>
+          id="logo-scroll"
+          src="Modelos/LOGO 3D.glb"
+          autoplay
+          auto-rotate
+          environment-image="neutral"
+          exposure="1.6"
+          interaction-prompt="none"
+          camera-orbit="180deg 90deg auto"
+          interpolation-decay="200"
+          aria-hidden="true">
+          <img class="jh-model-poster" slot="poster" src="Fotos/logo.png" alt="Hernández Car Import">
+        </model-viewer>
       </div>
  
       <div class="jh-hs-year" id="jhHsYear">2019</div>

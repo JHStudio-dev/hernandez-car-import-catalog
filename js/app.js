@@ -555,76 +555,52 @@ document.querySelector('nav').addEventListener('mouseleave', () => {
     var nodes    = section.querySelectorAll('.jh-hs-node');
 
     if (!logo || chapters.length === 0) return;
-    if (!logo || chapters.length === 0) return;
 
-    // --- Configuración  para el cel  ---
-    if (window.innerWidth <= 768) {
-      logo.setAttribute('auto-rotate', '');
-      logo.setAttribute('rotation-per-second', '60deg');
-      logo.setAttribute('interaction-prompt', 'none');
-    }
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function isMobile() { return window.innerWidth <= 768; }
 
-    // ── Mouse tracking ──
-    var targetX = 0, targetY = 0;
-    var currentX = 0, currentY = 0;
-    var mouseInSection = false;
-    var rafMouse;
-
-    function lerp(a, b, t) { return a + (b - a) * t; }
-
-    function animateMouse() {
-      currentX = lerp(currentX, targetX, 0.06);
-      currentY = lerp(currentY, targetY, 0.06);
-      logo.style.transform = 
-        'rotateY(' + currentX + 'deg) rotateX(' + (-currentY) + 'deg)';
-      rafMouse = requestAnimationFrame(animateMouse);
-    }
-
-
-    section.addEventListener('mouseenter', function () {
-      mouseInSection = true;
-      animateMouse();
+    // Fallback: si el modelo 3D falla, el poster (logo) queda como imagen limpia
+    logo.addEventListener('error', function () {
+      section.classList.add('jh-hs--no-model');
     });
 
-    section.addEventListener('mouseleave', function () {
-      mouseInSection = false;
-      targetX = 0;
-      targetY = 0;
-      cancelAnimationFrame(rafMouse);
-      logo.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-      logo.style.transform = 'rotateY(0deg) rotateX(0deg)';
-      setTimeout(function() {
-        logo.style.transition = '';
-      }, 800);
+    // Interacción del logo según dispositivo:
+    // móvil o reduced-motion => autorrotación ligera; desktop => sigue el mouse.
+    function applyMode() {
+      if (isMobile() || reduceMotion) {
+        logo.setAttribute('auto-rotate', '');
+        logo.setAttribute('rotation-per-second', reduceMotion ? '0deg' : '45deg');
+        logo.setAttribute('camera-orbit', '180deg 90deg auto');
+      } else {
+        logo.removeAttribute('auto-rotate');
+      }
+    }
+    applyMode();
+
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(applyMode, 200);
     });
 
-    section.addEventListener('mousemove', function (e) {
-  var rect = section.getBoundingClientRect();
-  var x = ((e.clientX - rect.left) / rect.width  - 0.5) * 2;
-  var y = ((e.clientY - rect.top)  / rect.height - 0.5) * 2;
-  if (!logo || chapters.length === 0) return;
+    // Mouse tracking suave (solo desktop) usando la cámara nativa (camera-orbit).
+    // Se parte de 180deg para no saltar respecto a la orientación inicial.
+    if (!reduceMotion) {
+      section.addEventListener('mousemove', function (e) {
+        if (isMobile()) return;
+        var rect = section.getBoundingClientRect();
+        var x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+        var y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+        var theta = 180 - (x * 22);
+        var phi = 90 - (y * 10);
+        logo.setAttribute('camera-orbit', theta + 'deg ' + phi + 'deg auto');
+      });
 
-    // --- Control responsivo del giro 3D (HCI) ---
-    if (window.innerWidth <= 768) {
-      // Configuración para Móvil: Gira solo
-      logo.setAttribute('auto-rotate', '');
-      logo.setAttribute('rotation-per-second', '60deg');
-      logo.setAttribute('interaction-prompt', 'none');
-    } else {
-      // Configuración para PC: Estático (esperando al mouse)
-      logo.removeAttribute('auto-rotate');
-      logo.setAttribute('rotation-per-second', '0deg');
+      section.addEventListener('mouseleave', function () {
+        if (isMobile()) return;
+        logo.setAttribute('camera-orbit', '180deg 90deg auto');
+      });
     }
-
-  // camera-orbit controla la cámara nativa del model-viewer
-  var theta = 0 - (x * 20); 
-  var phi   = 90  - (y * 10); 
-  logo.setAttribute('camera-orbit', theta + 'deg ' + phi + 'deg auto');
-});
-
-section.addEventListener('mouseleave', function () {
-  logo.setAttribute('camera-orbit', '0deg 90deg auto');
-});
 
     // ── Scroll logic (igual que antes) ──
     var ticking = false;
@@ -634,11 +610,11 @@ section.addEventListener('mouseleave', function () {
       var sectionTop = section.offsetTop;
       var sectionH   = section.offsetHeight;
       var wh         = window.innerHeight;
-      var scrolled   = window.scrollY - sectionTop;
       var maxScroll  = sectionH - wh;
+      if (maxScroll <= 0) return; // sección no sticky (p. ej. móvil): sin cálculo de scroll
+      var scrolled   = window.scrollY - sectionTop;
       var p = Math.min(Math.max(scrolled / maxScroll, 0), 1);
-      var scale = 1 + p * 0.25;
-logo.style.setProperty('--logo-scale', scale);
+      logo.style.setProperty('--logo-scale', 1 + p * 0.25);
 
       if (track) track.style.height = (p * 100) + '%';
 

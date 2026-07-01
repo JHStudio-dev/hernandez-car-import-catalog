@@ -2551,3 +2551,17 @@ body.loader-active {
     transition-duration: 0.2s;
   }
 }
+
+/* ─────────────── FASE 2 · Modelo 3D (Historia) ─────────────── */
+
+/* El logo 3D no debe capturar el scroll táctil en móvil */
+#logo-scroll {
+  touch-action: pan-y;
+}
+
+/* Poster / fallback limpio del modelo 3D (loader e Historia) */
+.jh-model-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
