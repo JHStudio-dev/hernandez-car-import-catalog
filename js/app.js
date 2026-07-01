@@ -22,6 +22,17 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.jh-reveal').forEach(el => observer.observe(el));
 
+// Fallback de imágenes: si una foto no carga, mostramos el logo (sin romper la tarjeta).
+// Usamos captura (true) porque el evento 'error' de <img> no burbujea.
+document.addEventListener('error', function (e) {
+  const img = e.target;
+  if (img && img.tagName === 'IMG' && !img.dataset.fallbackApplied) {
+    img.dataset.fallbackApplied = '1';
+    img.src = 'Fotos/logo.png';
+    img.classList.add('jh-img-fallback');
+  }
+}, true);
+
 // ---- HERO CAROUSEL ----
 const destacados = VEHICULOS.filter(v => v.is_featured_unit);
 const heroCarousel = document.getElementById('heroCarousel');
@@ -79,13 +90,34 @@ function startInterval() { slideInterval = setInterval(() => nextSlide(1), 6000)
 function resetInterval() { clearInterval(slideInterval); startInterval(); }
 
 // ---- CATALOG RENDER & FILTER ----
+
+// Helpers de datos (tolerantes con mayúsculas y campos vacíos)
+function normTipo(v) { return (v && v.tipo ? String(v.tipo) : '').toLowerCase().trim(); }
+function orTBC(x) {
+  const s = (x == null ? '' : String(x)).trim();
+  return s ? s : 'Por confirmar';
+}
+function deaccent(s) { return String(s).normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+function vehicleSearchText(v) {
+  const s = v.tech_specs || {};
+  const raw = [
+    v.marca, v.modelo, v.trim, v.anio, v.precio, v.km, v.tipo,
+    s['Motor'], s['Transmisión'], s['Tracción'], s['Combustible'], s['Color'], s['Asientos'],
+    ...(v.feature_tags || [])
+  ].filter(Boolean).join(' ');
+  return deaccent(raw).toLowerCase();
+}
+
 function updateCounts() {
-  document.getElementById('count-todos').textContent = VEHICULOS.length;
-  document.getElementById('count-suv').textContent = VEHICULOS.filter(v => v.tipo === 'suv').length;
-  document.getElementById('count-sedan').textContent = VEHICULOS.filter(v => v.tipo === 'sedan').length;
-  document.getElementById('count-pickup').textContent = VEHICULOS.filter(v => v.tipo === 'pickup').length;
-  document.getElementById('count-todoterreno').textContent = VEHICULOS.filter(v => v.tipo === 'todoterreno').length;
-  
+  const counts = { todos: VEHICULOS.length, suv: 0, sedan: 0, pickup: 0, todoterreno: 0 };
+  VEHICULOS.forEach(v => {
+    const t = normTipo(v);
+    if (t && t !== 'todos' && t in counts) counts[t]++;
+  });
+  Object.keys(counts).forEach(k => {
+    const el = document.getElementById('count-' + k);
+    if (el) el.textContent = counts[k];
+  });
 }
 
 function renderList(filtered, emptyMsg) {
@@ -95,6 +127,7 @@ function renderList(filtered, emptyMsg) {
       <div class="jh-stock-display__empty">
         <svg><use href="#icon-search"></use></svg>
         <p>${emptyMsg}</p>
+        <span class="jh-stock-display__empty-hint">Prueba con otra marca, modelo o año — o escríbenos y lo conseguimos por encargo.</span>
       </div>`;
     return;
   }
@@ -117,7 +150,7 @@ function renderList(filtered, emptyMsg) {
           <span class="jh-unit-card__separator">·</span>
           <span>${auto.km || '—'}</span>
           <span class="jh-unit-card__separator">·</span>
-          <span>${auto.tech_specs['Motor']}</span>
+          <span>${(auto.tech_specs && auto.tech_specs['Motor']) || '—'}</span>
         </div>
         <div class="jh-unit-card__footer">
           <div class="jh-unit-card__price">${auto.precio}</div>
@@ -134,8 +167,9 @@ function renderList(filtered, emptyMsg) {
 }
 
 function renderCatalog(filter = 'todos') {
-  const filtered = filter === 'todos' ? VEHICULOS : VEHICULOS.filter(v => v.tipo === filter);
-  renderList(filtered, 'No hay vehículos en esta categoría');
+  const f = (filter || 'todos').toLowerCase();
+  const filtered = f === 'todos' ? VEHICULOS : VEHICULOS.filter(v => normTipo(v) === f);
+  renderList(filtered, 'No hay vehículos en esta categoría.');
 }
 
 // Filters logic
@@ -167,17 +201,13 @@ const searchInput = document.getElementById('searchInput');
 
 function performSearch() {
   if (!searchInput) return;
-  const term = searchInput.value.toLowerCase().trim();
-  if (!term) { renderCatalog('todos'); return; }
+  const raw = searchInput.value.trim();
+  if (!raw) { renderCatalog('todos'); return; }
   document.querySelectorAll('.jh-filter-chip').forEach(b => b.classList.remove('jh-filter-chip--active'));
 
-  const filtered = VEHICULOS.filter(v =>
-    v.marca.toLowerCase().includes(term) ||
-    v.modelo.toLowerCase().includes(term) ||
-    v.anio.toString().includes(term) ||
-    (v.tipo && v.tipo.toLowerCase().includes(term))
-  );
-  renderList(filtered, 'No se encontraron resultados para "' + term + '"');
+  const term = deaccent(raw).toLowerCase();
+  const filtered = VEHICULOS.filter(v => vehicleSearchText(v).includes(term));
+  renderList(filtered, 'No se encontraron resultados para "' + raw + '".');
 }
 
 if (searchInput) {
@@ -211,23 +241,25 @@ function openDetail(id) {
   const auto = VEHICULOS.find(v => v.id === id);
   if (!auto) return;
 
-  document.getElementById('dBrand').textContent = auto.marca;
-  document.getElementById('dTitle').textContent = auto.modelo;
-  document.getElementById('dSubtitle').textContent = `${auto.anio} · ${auto.trim || ''} · ${auto.km}`;
-  document.getElementById('dPrice').textContent = auto.precio;
-  document.getElementById('dDesc').textContent = auto.unit_description;
+  document.getElementById('dBrand').textContent = auto.marca || '';
+  document.getElementById('dTitle').textContent = auto.modelo || '';
+  document.getElementById('dSubtitle').textContent =
+    [auto.anio, auto.trim, auto.km].filter(Boolean).join(' · ');
+  document.getElementById('dPrice').textContent = orTBC(auto.precio);
+  document.getElementById('dDesc').textContent = orTBC(auto.unit_description);
 
-  // Highlights
-  const highlightsHTML = (auto.feature_tags || []).map(h =>
-    `<div class="jh-vehicle-detail__highlight"><svg class="icon-sm"><use href="#icon-check"></use></svg>${h}</div>`
-  ).join('');
+  // Highlights (se ignoran las etiquetas vacías)
+  const highlightsHTML = (auto.feature_tags || [])
+    .filter(h => h && String(h).trim())
+    .map(h => `<div class="jh-vehicle-detail__highlight"><svg class="icon-sm"><use href="#icon-check"></use></svg>${h}</div>`)
+    .join('');
   document.getElementById('dHighlights').innerHTML = highlightsHTML;
 
-  // Specs
-  const specsHTML = Object.entries(auto.tech_specs).map(([k, v]) => `
+  // Specs (muestra "Por confirmar" en lo que falte)
+  const specsHTML = Object.entries(auto.tech_specs || {}).map(([k, v]) => `
     <div class="jh-specs-grid__item">
       <div class="jh-specs-grid__label">${k}</div>
-      <div class="jh-specs-grid__value">${v}</div>
+      <div class="jh-specs-grid__value">${orTBC(v)}</div>
     </div>
   `).join('');
   document.getElementById('dSpecs').innerHTML = specsHTML;

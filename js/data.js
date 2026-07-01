@@ -5,7 +5,31 @@
       whatsapp: "https://wa.me/50432136000",
     };
 
-    // Carros para mostrar en el catalogo
+    // Carros para mostrar en el catalogo.
+    //
+    // Para agregar un vehículo: copia la plantilla de abajo y complétala.
+    // - No inventes datos: deja "" o "Por confirmar" en lo que no sepas todavía.
+    // - "tipo" debe ser uno de: "suv" | "sedan" | "pickup" | "todoterreno" (en minúsculas).
+    // - "is_featured_unit: true" hace que el auto salga en el carrusel del inicio.
+    /*
+      {
+        id: 13,                              // número único
+        marca: "", modelo: "", trim: "",
+        anio: 2020, km: "", precio: "",
+        estado: "disponible",                // disponible | reservado | vendido
+        unit_condition: "usado",             // nuevo | usado
+        tipo: "suv",
+        is_featured_unit: false,
+        thumb_preview: "Fotos/portada.png",  // imagen de la tarjeta
+        gallery_assets: ["Fotos/foto1.jpeg"],// fotos del detalle
+        feature_tags: ["", "", ""],          // etiquetas cortas (se ignoran las vacías)
+        unit_description: "",
+        tech_specs: {
+          "Motor": "", "Transmisión": "", "Combustible": "Gasolina",
+          "Tracción": "", "Color": "", "Asientos": ""
+        }
+      },
+    */
     const VEHICULOS = [
       {
         id: 1,
@@ -47,7 +71,7 @@
         precio: "$278,000",
         estado: "disponible",
         unit_condition: "nuevo",
-        tipo: "Todoterreno",
+        tipo: "todoterreno",
         is_featured_unit: true,
 
         intake_date: "2026-04-10",
@@ -76,7 +100,7 @@
         precio: "L.189,000",
         estado: "disponible",
         unit_condition: "usado",
-        tipo: "SUV",
+        tipo: "suv",
         is_featured_unit: true,
         thumb_preview: "Fotos/Exp negra1.png",
         gallery_assets: [

@@ -2614,3 +2614,26 @@ input:focus-visible,
 .jh-unit-card__gradient {
   pointer-events: none;
 }
+
+/* ─────────────── FASE 4 · Catálogo, filtros y búsqueda ─────────────── */
+
+/* Sub-mensaje del estado "sin resultados" */
+.jh-stock-display__empty-hint {
+  display: block;
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--gris-med);
+  letter-spacing: 0.5px;
+  text-transform: none;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
+
+/* Imagen de respaldo cuando una foto no carga: logo centrado sobre fondo oscuro */
+.jh-img-fallback {
+  object-fit: contain !important;
+  background: var(--negro-3);
+  padding: 12%;
+}
