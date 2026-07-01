@@ -512,9 +512,9 @@ document.querySelector('nav').addEventListener('mouseleave', () => {
     logo.addEventListener('model-visibility', function (evt) {
       if (evt.detail && evt.detail.visible) revealEntry();
     });
-    // Si el modelo falla, mostramos el fallback y no dejamos atrapado al usuario
+    // Si el modelo falla, mostramos el logo de respaldo y no dejamos atrapado al usuario
     logo.addEventListener('error', function () {
-      loader.classList.add('jh-loader--no-model');
+      if (logo.parentElement) logo.parentElement.classList.add('jh-model-failed');
       revealEntry();
     });
   }
@@ -559,21 +559,22 @@ document.querySelector('nav').addEventListener('mouseleave', () => {
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function isMobile() { return window.innerWidth <= 768; }
 
-    // Fallback: si el modelo 3D falla, el poster (logo) queda como imagen limpia
+    // Fallback: si el modelo 3D falla, mostramos el logo como imagen limpia
     logo.addEventListener('error', function () {
-      section.classList.add('jh-hs--no-model');
+      if (logo.parentElement) logo.parentElement.classList.add('jh-model-failed');
     });
 
-    // Interacción del logo según dispositivo:
-    // móvil o reduced-motion => autorrotación ligera; desktop => sigue el mouse.
+    // Comportamiento del logo:
+    // - En reposo gira suave (así siempre se ve con luz, no una silueta oscura).
+    // - En desktop, al pasar el mouse sigue el cursor; al salir, retoma el giro.
     function applyMode() {
-      if (isMobile() || reduceMotion) {
-        logo.setAttribute('auto-rotate', '');
-        logo.setAttribute('rotation-per-second', reduceMotion ? '0deg' : '45deg');
-        logo.setAttribute('camera-orbit', '180deg 90deg auto');
-      } else {
+      if (reduceMotion) {
         logo.removeAttribute('auto-rotate');
+        logo.setAttribute('camera-orbit', '0deg 90deg auto');
+        return;
       }
+      logo.setAttribute('rotation-per-second', isMobile() ? '45deg' : '30deg');
+      logo.setAttribute('auto-rotate', '');
     }
     applyMode();
 
@@ -583,22 +584,23 @@ document.querySelector('nav').addEventListener('mouseleave', () => {
       resizeTimer = setTimeout(applyMode, 200);
     });
 
-    // Mouse tracking suave (solo desktop) usando la cámara nativa (camera-orbit).
-    // Se parte de 180deg para no saltar respecto a la orientación inicial.
+    // Seguimiento suave del mouse (solo desktop) con la cámara nativa.
+    // Parte de 0deg (cara frontal, bien iluminada).
     if (!reduceMotion) {
       section.addEventListener('mousemove', function (e) {
         if (isMobile()) return;
+        logo.removeAttribute('auto-rotate'); // pausa el giro para seguir el cursor
         var rect = section.getBoundingClientRect();
         var x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
         var y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-        var theta = 180 - (x * 22);
+        var theta = 0 - (x * 22);
         var phi = 90 - (y * 10);
         logo.setAttribute('camera-orbit', theta + 'deg ' + phi + 'deg auto');
       });
 
       section.addEventListener('mouseleave', function () {
         if (isMobile()) return;
-        logo.setAttribute('camera-orbit', '180deg 90deg auto');
+        logo.setAttribute('auto-rotate', ''); // retoma el giro suave
       });
     }
 

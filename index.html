@@ -26,16 +26,15 @@
       <model-viewer id="loader-logo"
         src="Modelos/LOGO 3D.glb"
         loading="eager"
-        reveal="auto"
         autoplay
         auto-rotate
         rotation-per-second="90deg"
         interaction-prompt="none"
         camera-orbit="0deg 90deg auto"
         exposure="1.4"
-        aria-hidden="true">
-        <img class="jh-loader-fallback" slot="poster" src="Fotos/logo.png" alt="Hernández Car Import">
-      </model-viewer>
+        aria-hidden="true"></model-viewer>
+      <img id="loaderFallback" class="jh-model-fallback" src="Fotos/logo.png" alt="Hernández Car Import">
+
 
       <div class="jh-loader-bar">
         <div id="jh-bar-fill" class="jh-bar-fill"></div>
@@ -190,14 +189,14 @@
           src="Modelos/LOGO 3D.glb"
           autoplay
           auto-rotate
+          auto-rotate-delay="0"
           environment-image="neutral"
           exposure="1.6"
           interaction-prompt="none"
-          camera-orbit="180deg 90deg auto"
+          camera-orbit="0deg 90deg auto"
           interpolation-decay="200"
-          aria-hidden="true">
-          <img class="jh-model-poster" slot="poster" src="Fotos/logo.png" alt="Hernández Car Import">
-        </model-viewer>
+          aria-hidden="true"></model-viewer>
+        <img id="historyFallback" class="jh-model-fallback" src="Fotos/logo.png" alt="Hernández Car Import">
       </div>
  
       <div class="jh-hs-year" id="jhHsYear">2019</div>
