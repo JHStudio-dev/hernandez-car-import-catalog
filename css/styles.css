@@ -104,40 +104,6 @@
       }
     }
 
-    @keyframes slideRight {
-      from {
-        opacity: 0;
-        transform: translateX(-40px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes marquee {
-      0% {
-        transform: translateX(0);
-      }
-
-      100% {
-        transform: translateX(-50%);
-      }
-    }
-
-    @keyframes pulse {
-
-      0%,
-      100% {
-        opacity: 1;
-      }
-
-      50% {
-        opacity: 0.6;
-      }
-    }
-
     .jh-reveal {
       opacity: 0;
       transform: translateY(30px);
@@ -184,32 +150,6 @@
       align-items: center;
       gap: 16px;
       text-decoration: none;
-    }
-
-    .jh-topbar__logo-shield {
-      width: 44px;
-      height: auto;
-    }
-
-    .jh-topbar__logo-text .l1 {
-      font-family: var(--font-display);
-      font-weight: 900;
-      font-size: 24px;
-      letter-spacing: 2px;
-      color: var(--blanco);
-      text-transform: uppercase;
-      line-height: 1;
-    }
-
-    .jh-topbar__logo-text .l2 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 5px;
-      color: var(--rojo);
-      text-transform: uppercase;
-      margin-top: 4px;
-      line-height: 1;
     }
 
     .jh-topbar__nav {
@@ -470,29 +410,6 @@
       font-weight: 700;
     }
 
-    .jh-showroom-stage__specs {
-      display: flex;
-      gap: 24px;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-    }
-
-    .jh-showroom-stage__spec-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .jh-showroom-stage__spec-item svg {
-      color: var(--gris-cla);
-    }
-
-    .jh-showroom-stage__spec-item span {
-      font-size: 15px;
-      color: var(--blanco);
-      font-weight: 500;
-    }
-
     .jh-showroom-stage__controls {
       position: absolute;
       bottom: 50px;
@@ -524,58 +441,6 @@
 
     #heroPrev svg {
       transform: scaleX(-1);
-    }
-
-    /* ─────────────────── SEARCH SECTION ─────────────────── */
-    .search-section {
-      background: var(--rojo);
-      border-top: 1px solid var(--rojo-vivo);
-      border-bottom: 1px solid var(--rojo-osc);
-      padding: 30px 40px;
-      display: flex;
-      justify-content: center;
-      position: relative;
-    }
-
-    .search-container {
-      width: 100%;
-      max-width: 800px;
-    }
-
-    .search-input-wrap {
-      display: flex;
-      align-items: center;
-      background: var(--blanco);
-      border-radius: 8px;
-      padding: 6px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
-
-    .search-input-wrap .icon {
-      color: var(--gris-med);
-      margin: 0 16px;
-      width: 24px;
-      height: 24px;
-    }
-
-    #searchInput {
-      flex-grow: 1;
-      border: none;
-      outline: none;
-      padding: 12px 0;
-      font-size: 16px;
-      font-family: var(--font-body);
-      color: var(--negro);
-      background: transparent;
-    }
-
-    #searchInput::placeholder {
-      color: var(--gris-med);
-    }
-
-    .search-input-wrap .jh-btn {
-      padding: 12px 32px;
-      border-radius: 6px;
     }
 
     /* ─────────────────── CATALOG SECTION ─────────────────── */
@@ -793,27 +658,9 @@
       color: var(--blanco);
     }
 
-    .jh-badge--used {
-      background: rgba(0, 0, 0, 0.7);
-      color: var(--blanco);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
     .jh-badge--status {
       background: rgba(255, 255, 255, 0.9);
       color: var(--negro);
-    }
-
-    .jh-unit-card__year {
-      position: absolute;
-      bottom: 16px;
-      right: 16px;
-      font-family: var(--font-display);
-      font-size: 32px;
-      font-weight: 900;
-      color: rgba(255, 255, 255, 0.3);
-      line-height: 1;
-      z-index: 2;
     }
 
     .jh-unit-card__gradient {
@@ -1147,15 +994,6 @@
     .jh-footer__brand svg {
       width: 32px;
       height: auto;
-    }
-
-    .jh-footer__name {
-      font-family: var(--font-display);
-      font-size: 24px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--blanco);
     }
 
     .jh-footer__legal {
@@ -2129,15 +1967,6 @@
   transition: scale 0.15s ease-out;
 }
 
-@keyframes logo-float {
-  0%, 100% {
-    transform: translateY(0px) rotate(-5deg) rotateY(var(--logo-ry, 0deg));
-  }
-  50% {
-    transform: translateY(-14px) rotate(5deg) rotateY(var(--logo-ry, 0deg));
-  }
-}
-
 /* Badge del año activo */
 .jh-hs-year {
     background: var(--rojo);
@@ -2405,11 +2234,6 @@
     visibility: visible !important;
     transform: translateY(0) scale(1) !important;
 }
-.element-visible {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: scale(1) translateY(0) !important;
-}
 
 .jh-loader-bar {
     width: 200px;
@@ -2457,11 +2281,6 @@
 }
 
 
-.jh-btn-enter--ready {
-    opacity: 1;
-    transform: translateY(0);
-}
-
 .jh-btn-enter:hover {
     background: var(--blanco);
     color: var(--negro);
@@ -2479,12 +2298,6 @@
     }
 }
 
-.fade-out {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.8s ease, visibility 0.8s;
-}
-
 /*  el culpable era el marquee de entregas */
 .jh-showcase__wrapper {
   overflow: hidden;   
@@ -2496,10 +2309,6 @@
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
-}
-
-.jh-showcase__wrapper {
-  overflow: hidden;
 }
 
 @media (max-width: 768px) {
@@ -2685,4 +2494,4 @@ section[id] {
   .jh-showcase__track {
     animation: none;
   }
-}
+}

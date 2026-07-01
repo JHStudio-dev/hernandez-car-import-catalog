@@ -485,23 +485,6 @@ function renderEntregas() {
   setTimeout(() => {
     document.querySelectorAll('#deliveryGrid .jh-reveal').forEach(el => observer.observe(el));
   }, 50);
-
-  // Toggle Fit logic remains
-  const toggleFitBtn = document.getElementById('toggleDeliveryFit');
-  let isDeliveryFitContain = false;
-  if (toggleFitBtn) {
-    // Remove old listeners to prevent duplicates if called multiple times
-    const newBtn = toggleFitBtn.cloneNode(true);
-    toggleFitBtn.parentNode.replaceChild(newBtn, toggleFitBtn);
-    
-    newBtn.addEventListener('click', () => {
-      isDeliveryFitContain = !isDeliveryFitContain;
-      document.querySelectorAll('.jh-showcase-card').forEach(card => {
-        if (isDeliveryFitContain) card.classList.add('jh-showcase-card--fit');
-        else card.classList.remove('jh-showcase-card--fit');
-      });
-    });
-  }
 }
 
 // ---- TESTIMONIOS (WhatsApp Style) ----
