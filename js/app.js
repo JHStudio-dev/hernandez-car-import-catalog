@@ -50,7 +50,7 @@ function renderHero() {
         <div class="jh-showroom-stage__text">
           <div class="jh-showroom-stage__badge"><div class="jh-showroom-stage__pulse"></div><span>Disponible</span></div>
           <h1 class="jh-showroom-stage__title"><span class="jh-showroom-stage__marque">${auto.marca}</span> ${auto.modelo}</h1>
-          <p class="jh-showroom-stage__tagline">Ingeniería global, entregada en tu puerta.</p>
+          <p class="jh-showroom-stage__tagline">Importación directa de EE.UU., con trámites incluidos.</p>
           <div class="jh-showroom-stage__price">${auto.precio}</div>
           <button class="jh-btn jh-btn--primary" type="button" data-id="${auto.id}">Ver Detalles</button>
         </div>
