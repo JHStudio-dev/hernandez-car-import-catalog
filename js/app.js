@@ -236,10 +236,13 @@ const modal = document.getElementById('detailModal');
 let currentGalleryImages = [];
 let currentImageIndex = 0;
 let isFitContain = false;
+let lastFocused = null;
 
 function openDetail(id) {
   const auto = VEHICULOS.find(v => v.id === id);
   if (!auto) return;
+
+  lastFocused = document.activeElement;
 
   document.getElementById('dBrand').textContent = auto.marca || '';
   document.getElementById('dTitle').textContent = auto.modelo || '';
@@ -265,7 +268,9 @@ function openDetail(id) {
   document.getElementById('dSpecs').innerHTML = specsHTML;
 
   // CTAs
-  const msgWa = encodeURIComponent(`Hola, me interesa el ${auto.marca} ${auto.modelo} ${auto.anio} (${auto.precio}). ¿Sigue disponible?`);
+  const nombreAuto = [auto.marca, auto.modelo, auto.anio].filter(Boolean).join(' ');
+  const precioAuto = auto.precio ? ` (${auto.precio})` : '';
+  const msgWa = encodeURIComponent(`Hola, me interesa el ${nombreAuto}${precioAuto}. ¿Sigue disponible?`);
   document.getElementById('dBtnTel').href = EMPRESA.tel_link;
   document.getElementById('dBtnWa').href = EMPRESA.whatsapp + '?text=' + msgWa;
 
@@ -278,6 +283,10 @@ function openDetail(id) {
   // Show
   modal.classList.add('jh-vehicle-modal--active');
   lockScroll();
+  requestAnimationFrame(() => {
+    const closeBtn = document.getElementById('detailClose');
+    if (closeBtn) closeBtn.focus({ preventScroll: true });
+  });
 }
 
 function renderGallery() {
@@ -406,13 +415,26 @@ function unlockScroll() {
 }
 
 function closeModal() {
+  if (!modal.classList.contains('jh-vehicle-modal--active')) return;
   modal.classList.remove('jh-vehicle-modal--active');
   unlockScroll();
+  if (lastFocused && lastFocused.focus) { lastFocused.focus({ preventScroll: true }); lastFocused = null; }
 }
 
 document.getElementById('detailClose').addEventListener('click', closeModal);
 document.getElementById('detailOverlay').addEventListener('click', closeModal);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// Teclado dentro del modal: Escape cierra; flechas navegan la galería
+document.addEventListener('keydown', (e) => {
+  if (!modal.classList.contains('jh-vehicle-modal--active')) return;
+  if (e.key === 'Escape') { closeModal(); return; }
+  if (currentGalleryImages.length <= 1) return;
+  if (e.key === 'ArrowLeft') {
+    setMainImage((currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length);
+  } else if (e.key === 'ArrowRight') {
+    setMainImage((currentImageIndex + 1) % currentGalleryImages.length);
+  }
+});
 
 // Detail Tabs
 document.querySelectorAll('.jh-vehicle-detail__tab').forEach(tab => {

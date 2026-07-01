@@ -2637,3 +2637,12 @@ input:focus-visible,
   background: var(--negro-3);
   padding: 12%;
 }
+
+/* ─────────────── FASE 5 · Modal de detalles ─────────────── */
+
+/* En móvil, respiro extra abajo para que el último botón no quede pegado al borde */
+@media (max-width: 992px) {
+  .jh-vehicle-detail {
+    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+  }
+}
