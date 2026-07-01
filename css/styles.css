@@ -24,9 +24,9 @@
       --glass: rgba(18, 18, 18, 0.85);
       --glass-red: rgba(204, 0, 0, 0.15);
 
-      --font-display: 'Montserrat', sans-serif;
-      --font-body: 'Montserrat', sans-serif;
-      --font-mono: 'Montserrat', sans-serif;
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body: 'Barlow', sans-serif;
+      --font-mono: 'Barlow Condensed', sans-serif;
     }
 
     *,
@@ -223,7 +223,7 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      font-family: var(--font-display);
+      font-family: var(--font-body);
       font-size: 15px;
       font-weight: 700;
       letter-spacing: 1.5px;
@@ -361,7 +361,7 @@
       font-size: clamp(60px, 8vw, 110px);
       line-height: 0.85;
       text-transform: uppercase;
-      letter-spacing: -2px;
+      letter-spacing: -1px;
       color: var(--blanco);
       margin-bottom: 16px;
     }
@@ -488,7 +488,7 @@
       font-size: clamp(40px, 5vw, 64px);
       font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: -1px;
+      letter-spacing: -0.5px;
       color: var(--blanco);
       line-height: 0.9;
     }
@@ -703,7 +703,7 @@
     }
     .jh-unit-card__tech-line {
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 13px;
       color: var(--gris-cla);
       letter-spacing: 0.5px;
       margin-bottom: 20px;
@@ -1234,7 +1234,7 @@
       line-height: 0.9;
       color: var(--blanco);
       margin-bottom: 16px;
-      letter-spacing: -1px;
+      letter-spacing: -0.5px;
     }
 
     .jh-vehicle-detail__subtitle {
@@ -1380,7 +1380,7 @@
       padding: 16px;
       border-radius: 6px;
       text-align: center;
-      font-family: var(--font-display);
+      font-family: var(--font-body);
       font-size: 18px;
       font-weight: 700;
       letter-spacing: 1.5px;
@@ -1406,7 +1406,7 @@
       padding: 16px;
       border-radius: 6px;
       text-align: center;
-      font-family: var(--font-display);
+      font-family: var(--font-body);
       font-size: 18px;
       font-weight: 700;
       letter-spacing: 1.5px;
@@ -2098,7 +2098,7 @@
     font-size: clamp(2.8rem, 6vw, 4.8rem);
     font-weight: 900;
     line-height: 0.93;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     text-transform: uppercase;
     color: var(--blanco);
     margin-bottom: 24px;
@@ -2265,9 +2265,9 @@
     backdrop-filter: blur(5px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     padding: 15px 40px;
-    font-family: var(--font-display);
+    font-family: var(--font-body);
     font-weight: 700;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     cursor: pointer;
     display: flex;
     align-items: center;
