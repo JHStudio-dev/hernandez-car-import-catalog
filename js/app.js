@@ -221,6 +221,7 @@ if (menuToggle && navLinks) {
     menuToggle.classList.toggle('jh-topbar__menu-toggle--active', open);
     navLinks.classList.toggle('jh-topbar__nav--open', open);
     menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.style.overflow = open ? 'hidden' : '';
   };
   menuToggle.addEventListener('click', () => {
     setMenu(!navLinks.classList.contains('jh-topbar__nav--open'));
@@ -236,12 +237,14 @@ let currentGalleryImages = [];
 let currentImageIndex = 0;
 let isFitContain = false;
 let lastFocused = null;
+let currentVehicleName = '';
 
 function openDetail(id) {
   const auto = VEHICULOS.find(v => v.id === id);
   if (!auto) return;
 
   lastFocused = document.activeElement;
+  currentVehicleName = [auto.marca, auto.modelo, auto.anio].filter(Boolean).join(' ');
 
   document.getElementById('dBrand').textContent = auto.marca || '';
   document.getElementById('dTitle').textContent = auto.modelo || '';
@@ -303,7 +306,7 @@ function renderGallery() {
   mainWrap.innerHTML = currentGalleryImages.map((src, i) => {
     const objFit = isFitContain ? 'contain' : 'cover';
     const bg = isFitContain ? '#000' : 'transparent';
-    return `<img src="${src}" class="jh-gallery__slide ${i === 0 ? 'jh-gallery__slide--active' : ''}" id="mainImg-${i}" style="object-fit: ${objFit}; background-color: ${bg};">`;
+    return `<img src="${src}" class="jh-gallery__slide ${i === 0 ? 'jh-gallery__slide--active' : ''}" id="mainImg-${i}" alt="${currentVehicleName}" style="object-fit: ${objFit}; background-color: ${bg};">`;
   }).join('');
 
   if (currentGalleryImages.length > 1) {
