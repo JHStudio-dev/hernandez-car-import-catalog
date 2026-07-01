@@ -22,8 +22,7 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.jh-reveal').forEach(el => observer.observe(el));
 
-// Fallback de imágenes: si una foto no carga, mostramos el logo (sin romper la tarjeta).
-// Usamos captura (true) porque el evento 'error' de <img> no burbujea.
+// si una imagen falla, mostrar el logo
 document.addEventListener('error', function (e) {
   const img = e.target;
   if (img && img.tagName === 'IMG' && !img.dataset.fallbackApplied) {
@@ -69,7 +68,7 @@ function renderHero() {
     resetInterval();
   });
 
-  // Abrir detalle desde el botón "Ver Detalles" del hero (delegación)
+  // boton del hero
   heroCarousel.addEventListener('click', (e) => {
     const btn = e.target.closest('.jh-btn--primary[data-id]');
     if (btn) openDetail(parseInt(btn.dataset.id, 10));
@@ -91,7 +90,7 @@ function resetInterval() { clearInterval(slideInterval); startInterval(); }
 
 // ---- CATALOG RENDER & FILTER ----
 
-// Helpers de datos (tolerantes con mayúsculas y campos vacíos)
+// helpers
 function normTipo(v) { return (v && v.tipo ? String(v.tipo) : '').toLowerCase().trim(); }
 function orTBC(x) {
   const s = (x == null ? '' : String(x)).trim();
@@ -182,7 +181,7 @@ document.querySelectorAll('.jh-filter-chip').forEach(btn => {
   });
 });
 
-// Abrir detalle al hacer clic o con Enter/Espacio en una tarjeta (delegación)
+// abrir detalle desde las tarjetas
 const catalogGrid = document.getElementById('catalogGrid');
 if (catalogGrid) {
   catalogGrid.addEventListener('click', (e) => {
@@ -251,14 +250,14 @@ function openDetail(id) {
   document.getElementById('dPrice').textContent = orTBC(auto.precio);
   document.getElementById('dDesc').textContent = orTBC(auto.unit_description);
 
-  // Highlights (se ignoran las etiquetas vacías)
+  // Highlights
   const highlightsHTML = (auto.feature_tags || [])
     .filter(h => h && String(h).trim())
     .map(h => `<div class="jh-vehicle-detail__highlight"><svg class="icon-sm"><use href="#icon-check"></use></svg>${h}</div>`)
     .join('');
   document.getElementById('dHighlights').innerHTML = highlightsHTML;
 
-  // Specs (muestra "Por confirmar" en lo que falte)
+  // Specs
   const specsHTML = Object.entries(auto.tech_specs || {}).map(([k, v]) => `
     <div class="jh-specs-grid__item">
       <div class="jh-specs-grid__label">${k}</div>
@@ -346,7 +345,7 @@ document.getElementById('galleryNext').addEventListener('click', () => {
   setMainImage(newIndex);
 });
 
-// Seleccionar imagen desde las miniaturas (delegación)
+// miniaturas
 const detailThumbs = document.getElementById('detailThumbs');
 if (detailThumbs) {
   detailThumbs.addEventListener('click', (e) => {
@@ -424,7 +423,7 @@ function closeModal() {
 document.getElementById('detailClose').addEventListener('click', closeModal);
 document.getElementById('detailOverlay').addEventListener('click', closeModal);
 
-// Teclado dentro del modal: Escape cierra; flechas navegan la galería
+// teclado del modal
 document.addEventListener('keydown', (e) => {
   if (!modal.classList.contains('jh-vehicle-modal--active')) return;
   if (e.key === 'Escape') { closeModal(); return; }
@@ -556,7 +555,7 @@ document.querySelector('nav').addEventListener('mouseleave', () => {
   pill.style.opacity = '0';
 });
 
-// ---- LOADER / PANTALLA DE CARGA ----
+// pantalla de carga
 (function initLoader() {
   const loader = document.getElementById('jh-loader');
   if (!loader) return;
@@ -568,17 +567,16 @@ document.querySelector('nav').addEventListener('mouseleave', () => {
   const loaderText = loader.querySelector('.jh-loader-text');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Empezar siempre arriba del todo, sin restaurar scroll viejo
+  // arrancar arriba
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
 
-  // Bloquea el scroll táctil de fondo mientras el loader está visible
+  // bloquear scroll del fondo
   loader.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
 
-  // Barra de progreso decorativa
   if (bar) requestAnimationFrame(function () { bar.style.width = '100%'; });
 
-  // Revela el logo 3D y el botón de entrada (una sola vez)
+  // mostrar logo y boton
   let revealed = false;
   function revealEntry() {
     if (revealed) return;
@@ -592,21 +590,19 @@ document.querySelector('nav').addEventListener('mouseleave', () => {
   }
 
   if (logo) {
-    // Cuando el modelo 3D se hace visible, revelamos la entrada
     logo.addEventListener('model-visibility', function (evt) {
       if (evt.detail && evt.detail.visible) revealEntry();
     });
-    // Si el modelo falla, mostramos el logo de respaldo y no dejamos atrapado al usuario
+    // si falla el modelo, logo de respaldo
     logo.addEventListener('error', function () {
       if (logo.parentElement) logo.parentElement.classList.add('jh-model-failed');
       revealEntry();
     });
   }
 
-  // Red de seguridad: el botón SIEMPRE aparece, aunque el 3D tarde o falle
+  // por si el 3D tarda o falla, mostrar el boton igual
   setTimeout(revealEntry, reduceMotion ? 400 : 3500);
 
-  // Entrada al catálogo
   function enterSite() {
     loader.classList.add('jh-splash-screen--hidden');
     document.documentElement.classList.remove('loader-active');
@@ -617,7 +613,7 @@ document.querySelector('nav').addEventListener('mouseleave', () => {
       setTimeout(function () { el.classList.add('jh-reveal--visible'); }, reduceMotion ? 0 : i * 120);
     });
 
-    // Quitamos el loader del DOM para que no bloquee nada después de entrar
+    // quitar el loader del DOM
     setTimeout(function () { if (loader.parentNode) loader.remove(); }, 700);
   }
 
@@ -643,14 +639,12 @@ document.querySelector('nav').addEventListener('mouseleave', () => {
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function isMobile() { return window.innerWidth <= 768; }
 
-    // Fallback: si el modelo 3D falla, mostramos el logo como imagen limpia
+    // si falla el modelo, logo de respaldo
     logo.addEventListener('error', function () {
       if (logo.parentElement) logo.parentElement.classList.add('jh-model-failed');
     });
 
-    // Comportamiento del logo:
-    // - En reposo gira suave (así siempre se ve con luz, no una silueta oscura).
-    // - En desktop, al pasar el mouse sigue el cursor; al salir, retoma el giro.
+    // reposo: gira solo; desktop: sigue el mouse
     function applyMode() {
       if (reduceMotion) {
         logo.removeAttribute('auto-rotate');
@@ -668,12 +662,11 @@ document.querySelector('nav').addEventListener('mouseleave', () => {
       resizeTimer = setTimeout(applyMode, 200);
     });
 
-    // Seguimiento suave del mouse (solo desktop) con la cámara nativa.
-    // Parte de 0deg (cara frontal, bien iluminada).
+    // seguir el mouse (solo desktop)
     if (!reduceMotion) {
       section.addEventListener('mousemove', function (e) {
         if (isMobile()) return;
-        logo.removeAttribute('auto-rotate'); // pausa el giro para seguir el cursor
+        logo.removeAttribute('auto-rotate');
         var rect = section.getBoundingClientRect();
         var x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
         var y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
@@ -684,7 +677,7 @@ document.querySelector('nav').addEventListener('mouseleave', () => {
 
       section.addEventListener('mouseleave', function () {
         if (isMobile()) return;
-        logo.setAttribute('auto-rotate', ''); // retoma el giro suave
+        logo.setAttribute('auto-rotate', '');
       });
     }
 
@@ -697,7 +690,7 @@ document.querySelector('nav').addEventListener('mouseleave', () => {
       var sectionH   = section.offsetHeight;
       var wh         = window.innerHeight;
       var maxScroll  = sectionH - wh;
-      if (maxScroll <= 0) return; // sección no sticky (p. ej. móvil): sin cálculo de scroll
+      if (maxScroll <= 0) return; // en movil no es sticky
       var scrolled   = window.scrollY - sectionTop;
       var p = Math.min(Math.max(scrolled / maxScroll, 0), 1);
       logo.style.setProperty('--logo-scale', 1 + p * 0.25);

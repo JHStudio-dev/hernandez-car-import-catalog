@@ -2509,33 +2509,33 @@
   }
 }
 
-/* ─────────────── FASE 1 · Loader, scroll y entrada ─────────────── */
+/* loader */
 
-/* Mientras el loader está activo: nada de scroll de fondo (desktop y móvil) */
+/* sin scroll con el loader */
 html.loader-active,
 body.loader-active {
   overflow: hidden;
 }
 
-/* El overlay del loader no transfiere gestos de scroll al fondo */
+/* no pasar gestos al fondo */
 .jh-splash-screen {
   touch-action: none;
   overscroll-behavior: none;
 }
 
-/* Ocultado suave de barra y texto */
+/* fade */
 .jh-loader-bar {
   transition: opacity 0.5s ease;
 }
 
-/* Botón de entrada: mismo look en mayúsculas que el resto del sitio */
+/* boton entrar */
 .jh-btn-enter {
   text-transform: uppercase;
   justify-content: center;
   min-height: 48px;
 }
 
-/* Fallback: logo estático que se muestra SOLO si el modelo 3D falla */
+/* fallback si falla el 3d */
 .jh-model-fallback {
   display: none;
   object-fit: contain;
@@ -2556,7 +2556,7 @@ body.loader-active {
   height: 42vh;
 }
 
-/* Respeta a quien prefiere menos movimiento */
+/* menos movimiento */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .jh-reveal {
@@ -2573,16 +2573,16 @@ body.loader-active {
   }
 }
 
-/* ─────────────── FASE 2 · Modelo 3D (Historia) ─────────────── */
+/* logo 3d historia */
 
-/* El logo 3D no debe capturar el scroll táctil en móvil */
+/* que no trabe el scroll en movil */
 #logo-scroll {
   touch-action: pan-y;
 }
 
-/* ─────────────── FASE 3 · Foco, hitbox y estados ─────────────── */
+/* foco y botones */
 
-/* Anillo de foco visible solo con teclado (no molesta al usar mouse) */
+/* foco con teclado */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -2593,13 +2593,13 @@ input:focus-visible,
   outline-offset: 3px;
 }
 
-/* La tarjeta resalta su borde al enfocar con teclado */
+/* foco en tarjeta */
 .jh-unit-card:focus-visible {
   outline-offset: 0;
   border-color: var(--rojo);
 }
 
-/* Feedback al presionar */
+/* al presionar */
 .jh-btn--primary:active,
 .jh-btn--outline:active,
 .jh-btn--whatsapp:active,
@@ -2609,15 +2609,15 @@ input:focus-visible,
   transform: translateY(1px);
 }
 
-/* Los degradados decorativos nunca deben bloquear clics */
+/* que no bloqueen clics */
 .jh-showroom-stage__gradient,
 .jh-unit-card__gradient {
   pointer-events: none;
 }
 
-/* ─────────────── FASE 4 · Catálogo, filtros y búsqueda ─────────────── */
+/* catalogo */
 
-/* Sub-mensaje del estado "sin resultados" */
+/* texto sin resultados */
 .jh-stock-display__empty-hint {
   display: block;
   margin-top: 12px;
@@ -2631,30 +2631,30 @@ input:focus-visible,
   line-height: 1.5;
 }
 
-/* Imagen de respaldo cuando una foto no carga: logo centrado sobre fondo oscuro */
+/* imagen de respaldo */
 .jh-img-fallback {
   object-fit: contain !important;
   background: var(--negro-3);
   padding: 12%;
 }
 
-/* ─────────────── FASE 5 · Modal de detalles ─────────────── */
+/* modal movil */
 
-/* En móvil, respiro extra abajo para que el último botón no quede pegado al borde */
+/* respiro abajo en movil */
 @media (max-width: 992px) {
   .jh-vehicle-detail {
     padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
   }
 }
 
-/* ─────────────── FASE 6 · Pulido visual ─────────────── */
+/* detalles */
 
-/* Al navegar desde el menú, la sección queda debajo del header fijo (no tapada) */
+/* no tapar la seccion con el header */
 section[id] {
   scroll-margin-top: 96px;
 }
 
-/* Profundidad sutil en reposo para las tarjetas (sin sombra exagerada) */
+/* sombra sutil */
 .jh-unit-card {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
 }
