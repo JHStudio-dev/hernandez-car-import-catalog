@@ -29,7 +29,7 @@
       --font-mono: 'Barlow Condensed', sans-serif;
 
       /* Motion — una sola curva para toda la web */
-      --ease-out: var(--ease-out);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
       /* Radios */
       --radius-sm: 4px;
