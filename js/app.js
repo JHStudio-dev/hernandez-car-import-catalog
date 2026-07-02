@@ -3,12 +3,17 @@
 
 document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-// Header scroll effect
+// Header scroll effect (rAF para no saturar el scroll)
+let headerTick = false;
 window.addEventListener('scroll', () => {
-  const header = document.getElementById('header');
-  if (window.scrollY > 50) header.classList.add('jh-topbar--scrolled');
-  else header.classList.remove('jh-topbar--scrolled');
-});
+  if (headerTick) return;
+  headerTick = true;
+  requestAnimationFrame(() => {
+    const header = document.getElementById('header');
+    if (header) header.classList.toggle('jh-topbar--scrolled', window.scrollY > 60);
+    headerTick = false;
+  });
+}, { passive: true });
 
 // Intersection Observer for scroll animations
 const observer = new IntersectionObserver((entries) => {
@@ -520,27 +525,6 @@ renderEntregas();
 renderTestimonios();
 
 
-// Para el pill
-
-const pill = document.getElementById('navPill');
-const navItems = document.querySelectorAll('.jh-topbar__nav a');
-
-navItems.forEach(link => {
-  link.addEventListener('mouseenter', () => {
-    const rect = link.getBoundingClientRect();
-    const navRect = link.closest('nav').getBoundingClientRect();
-    pill.style.opacity = '1';
-    pill.style.width = rect.width + 16 + 'px';
-    pill.style.height = rect.height + 8 + 'px';
-    pill.style.left = (rect.left - navRect.left - 8) + 'px';
-    pill.style.top = (rect.top - navRect.top - 4) + 'px';
-  });
-});
-
-document.querySelector('nav').addEventListener('mouseleave', () => {
-  pill.style.opacity = '0';
-});
-
 // resaltar en la navbar la seccion visible
 (function initNavSpy() {
   const links = document.querySelectorAll('.jh-topbar__nav a[href^="#"]');
@@ -548,12 +532,16 @@ document.querySelector('nav').addEventListener('mouseleave', () => {
 
   const porSeccion = new Map();
   links.forEach(link => {
-    const seccion = document.querySelector(link.getAttribute('href'));
+    const href = link.getAttribute('href');
+    // "Inicio" (href="#") corresponde al hero
+    const seccion = href === '#'
+      ? document.querySelector('.jh-showroom-stage')
+      : document.querySelector(href);
     if (seccion) porSeccion.set(seccion, link);
   });
 
   // zonas sin link propio: al pasar por ellas se apaga el indicador
-  ['.jh-showroom-stage', '#historia-section', '#testimonios'].forEach(sel => {
+  ['#historia-section', '#testimonios'].forEach(sel => {
     const zona = document.querySelector(sel);
     if (zona && !porSeccion.has(zona)) porSeccion.set(zona, null);
   });
