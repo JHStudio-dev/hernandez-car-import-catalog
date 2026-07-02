@@ -141,11 +141,38 @@
         </a>
       </div>
 
-      <button class="jh-topbar__menu-toggle" id="menuToggle" type="button" aria-label="Menú" aria-expanded="false">
+      <button class="jh-topbar__menu-toggle" id="menuToggle" type="button" aria-label="Menú"
+        aria-expanded="false" aria-controls="mobileDrawer">
         <span></span><span></span><span></span>
       </button>
     </div>
   </header>
+
+  <!-- Drawer móvil estilo motorsport -->
+  <div class="mobile-nav-overlay" id="drawerOverlay"></div>
+  <nav class="mobile-motorsport-drawer" id="mobileDrawer" aria-label="Menú" aria-hidden="true">
+    <div class="mobile-drawer-brand">
+      <img src="Fotos/logo.png" alt="Hernández Car Import">
+      <button class="mobile-drawer-close" id="drawerClose" type="button" aria-label="Cerrar menú">
+        <svg class="icon"><use href="#icon-close"></use></svg>
+      </button>
+    </div>
+    <ul class="mobile-drawer-list">
+      <li><a class="mobile-drawer-item" href="#"><svg class="icon"><use href="#icon-home"></use></svg><span>Inicio</span></a></li>
+      <li><a class="mobile-drawer-item" href="#catalogo"><svg class="icon"><use href="#icon-car"></use></svg><span>Inventario</span></a></li>
+      <li><a class="mobile-drawer-item" href="#beneficios"><svg class="icon"><use href="#icon-shield"></use></svg><span>Beneficios</span></a></li>
+      <li><a class="mobile-drawer-item" href="#entregas"><svg class="icon"><use href="#icon-flag"></use></svg><span>Entregas</span></a></li>
+      <li><a class="mobile-drawer-item" href="#contacto"><svg class="icon"><use href="#icon-location"></use></svg><span>Contacto</span></a></li>
+    </ul>
+    <div class="mobile-drawer-cta">
+      <a class="mobile-drawer-cta__call" href="tel:+50432136000">
+        <svg class="icon-sm"><use href="#icon-phone"></use></svg> Llámanos
+      </a>
+      <a class="mobile-drawer-cta__wa" href="https://wa.me/message/YQKHNQ2VJWVZB1" target="_blank" rel="noopener">
+        <svg class="icon-sm"><use href="#icon-whatsapp"></use></svg> WhatsApp
+      </a>
+    </div>
+  </nav>
 
   <!-- Carousel principal -->
   <section class="jh-showroom-stage">

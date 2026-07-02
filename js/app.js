@@ -218,21 +218,36 @@ if (searchInput) {
   searchInput.addEventListener('keyup', performSearch);
 }
 
-// Hamburger menu
+// Drawer movil motorsport
 const menuToggle = document.getElementById('menuToggle');
-const navLinks = document.querySelector('.jh-topbar__nav');
-if (menuToggle && navLinks) {
+const drawer = document.getElementById('mobileDrawer');
+const drawerOverlay = document.getElementById('drawerOverlay');
+const drawerClose = document.getElementById('drawerClose');
+if (menuToggle && drawer && drawerOverlay) {
+  const isOpen = () => drawer.classList.contains('mobile-motorsport-drawer--open');
   const setMenu = (open) => {
     menuToggle.classList.toggle('jh-topbar__menu-toggle--active', open);
-    navLinks.classList.toggle('jh-topbar__nav--open', open);
+    drawer.classList.toggle('mobile-motorsport-drawer--open', open);
+    drawerOverlay.classList.toggle('mobile-nav-overlay--visible', open);
     menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
     document.body.style.overflow = open ? 'hidden' : '';
+    // mover el foco al abrir y devolverlo al cerrar
+    if (open && drawerClose) drawerClose.focus();
+    else if (!open && drawer.contains(document.activeElement)) menuToggle.focus();
   };
-  menuToggle.addEventListener('click', () => {
-    setMenu(!navLinks.classList.contains('jh-topbar__nav--open'));
-  });
-  navLinks.querySelectorAll('a').forEach(link => {
+  menuToggle.addEventListener('click', () => setMenu(!isOpen()));
+  drawerOverlay.addEventListener('click', () => setMenu(false));
+  if (drawerClose) drawerClose.addEventListener('click', () => setMenu(false));
+  drawer.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => setMenu(false));
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen()) setMenu(false);
+  });
+  // si pasa a desktop con el drawer abierto, cerrarlo
+  window.matchMedia('(min-width: 993px)').addEventListener('change', (e) => {
+    if (e.matches && isOpen()) setMenu(false);
   });
 }
 
@@ -525,11 +540,12 @@ renderEntregas();
 renderTestimonios();
 
 
-// resaltar en la navbar la seccion visible
+// resaltar en la navbar y el drawer la seccion visible
 (function initNavSpy() {
-  const links = document.querySelectorAll('.jh-topbar__nav a[href^="#"]');
+  const links = document.querySelectorAll('.jh-topbar__nav a[href^="#"], .mobile-drawer-list a[href^="#"]');
   if (!links.length || !('IntersectionObserver' in window)) return;
 
+  // cada seccion puede tener varios links (pod desktop + drawer movil)
   const porSeccion = new Map();
   links.forEach(link => {
     const href = link.getAttribute('href');
@@ -537,21 +553,22 @@ renderTestimonios();
     const seccion = href === '#'
       ? document.querySelector('.jh-showroom-stage')
       : document.querySelector(href);
-    if (seccion) porSeccion.set(seccion, link);
+    if (!seccion) return;
+    if (!porSeccion.has(seccion)) porSeccion.set(seccion, []);
+    porSeccion.get(seccion).push(link);
   });
 
   // zonas sin link propio: al pasar por ellas se apaga el indicador
   ['#historia-section', '#testimonios'].forEach(sel => {
     const zona = document.querySelector(sel);
-    if (zona && !porSeccion.has(zona)) porSeccion.set(zona, null);
+    if (zona && !porSeccion.has(zona)) porSeccion.set(zona, []);
   });
 
   const spy = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       links.forEach(l => l.classList.remove('jh-nav-current'));
-      const link = porSeccion.get(entry.target);
-      if (link) link.classList.add('jh-nav-current');
+      porSeccion.get(entry.target).forEach(l => l.classList.add('jh-nav-current'));
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
 

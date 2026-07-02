@@ -496,6 +496,12 @@
   position: relative;
 }
 
+    /* drawer movil: solo existe bajo 992px */
+    .mobile-nav-overlay,
+    .mobile-motorsport-drawer {
+      display: none;
+    }
+
     /* Menu de hamburguesa para celular (Para evitar la barra de navegacion que se muestra en la version de pc)*/
     .jh-topbar__menu-toggle {
       display: none;
@@ -2012,110 +2018,212 @@
         display: none;
       }
 
+      /* el nav del pod no se usa en movil: lo reemplaza el drawer */
       .jh-topbar__nav {
         display: none;
+      }
+
+      /* ── DRAWER MOVIL MOTORSPORT ── */
+      .mobile-nav-overlay {
+        display: block;
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(10, 10, 10, 0.94);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        inset: 0;
         z-index: 150;
+        background: rgba(0, 0, 0, 0.55);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.35s ease, visibility 0.35s;
+      }
+
+      .mobile-nav-overlay--visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* pieza vertical tipo cockpit, entra desde la derecha */
+      .mobile-motorsport-drawer {
+        display: flex;
         flex-direction: column;
+        position: fixed;
+        top: 10px;
+        bottom: 10px;
+        right: 10px;
+        z-index: 160;
+        width: min(80vw, 340px);
+        background: linear-gradient(180deg, #1e1e1e 0%, #101010 40%, #0a0a0a 100%);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 24px 16px 24px 16px;
+        box-shadow:
+          -18px 0 50px rgba(0, 0, 0, 0.6),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        transform: translateX(calc(100% + 30px));
+        visibility: hidden;
+        transition: transform 0.45s var(--ease-out), visibility 0.45s;
+        overflow: hidden;
+        overscroll-behavior: contain;
+      }
+
+      .mobile-motorsport-drawer--open {
+        transform: translateX(0);
+        visibility: visible;
+      }
+
+      /* filo rojo del lado interno */
+      .mobile-motorsport-drawer::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 8%;
+        bottom: 8%;
+        width: 2px;
+        border-radius: 2px;
+        background: linear-gradient(180deg, transparent, var(--rojo) 20%, var(--rojo) 80%, transparent);
+        box-shadow: 0 0 4px rgba(230, 0, 0, 0.9), 0 0 12px rgba(230, 0, 0, 0.4);
+        pointer-events: none;
+      }
+
+      /* cabecera de marca con textura carbono y corte diagonal */
+      .mobile-drawer-brand {
+        position: relative;
+        display: flex;
         align-items: center;
         justify-content: center;
-        gap: 35px;
-        padding: 0;
+        padding: 24px 16px 28px;
+        background:
+          repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0 2px, transparent 2px 7px),
+          linear-gradient(180deg, #191919, #0d0d0d);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 12px));
+      }
+
+      .mobile-drawer-brand img {
+        height: 56px;
+        width: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 0 6px rgba(230, 0, 0, 0.35));
+      }
+
+      .mobile-drawer-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px 8px 12px 8px;
+        color: var(--blanco);
+        cursor: pointer;
+        transition: background 0.25s;
+      }
+
+      .mobile-drawer-close:active {
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      /* lista segmentada */
+      .mobile-drawer-list {
+        list-style: none;
+        flex: 1;
+        overflow-y: auto;
+        padding: 6px 0;
         margin: 0;
       }
-      .jh-topbar__nav--open {
-        display: flex;
+
+      .mobile-drawer-list li + li {
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
       }
 
-      .jh-topbar__nav--open::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(204,0,0,0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-      .jh-topbar__nav--open a {
-  flex-direction: row;
-  min-width: 0;
-  min-height: 0;
-  background: none;
-  box-shadow: none;
-  border-radius: 0;
-  font-size: 32px;
-  font-weight: 600;
-  letter-spacing: 4px;
-  color: var(--gris-cla);
-  position: relative;
-  transition: color 0.3s, transform 0.3s;
-  padding: 8px 0;
-}
+      .mobile-drawer-item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        min-height: 56px;
+        padding: 8px 22px;
+        font-family: var(--font-display);
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        color: var(--gris-cla);
+        text-decoration: none;
+        transition: color 0.25s, background 0.25s;
+      }
 
-/* en el menu movil no van iconos ni subrayado */
-.jh-topbar__nav--open a .icon {
-  display: none;
-}
+      .mobile-drawer-item .icon {
+        width: 22px;
+        height: 22px;
+        flex-shrink: 0;
+      }
 
-.jh-topbar__nav--open a::after {
-  display: none;
-}
+      .mobile-drawer-item:active {
+        background: rgba(255, 255, 255, 0.04);
+      }
 
-.jh-topbar__nav--open a::before {
-  content: '';
-  position: absolute;
-  left: -24px;
-  top: 50%;
-  transform: translateY(-50%) scaleX(0);
-  width: 16px;
-  height: 2px;
-  background: var(--rojo);
-  transition: transform 0.3s var(--ease-out);
-  transform-origin: left;
-}
+      /* linea roja vertical del item activo */
+      .mobile-drawer-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 18%;
+        bottom: 18%;
+        width: 3px;
+        border-radius: 2px;
+        background: var(--rojo-vivo);
+        box-shadow: 0 0 8px rgba(230, 0, 0, 0.6);
+        transform: scaleY(0);
+        transition: transform 0.3s var(--ease-out);
+      }
 
-.jh-topbar__nav--open a:hover {
-  color: var(--blanco);
-  transform: translateX(8px);
-}
+      .mobile-drawer-item.jh-nav-current {
+        color: var(--blanco);
+        background: linear-gradient(90deg, rgba(230, 0, 0, 0.08), transparent 65%);
+      }
 
-.jh-topbar__nav--open a:hover::before {
-  transform: translateY(-50%) scaleX(1);
-}
+      .mobile-drawer-item.jh-nav-current::before {
+        transform: scaleY(1);
+      }
 
-.jh-topbar__nav--open a.jh-nav-current {
-  color: var(--blanco);
-  background: none;
-  box-shadow: none;
-}
+      /* zocalo de CTAs con corte diagonal invertido */
+      .mobile-drawer-cta {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 26px 16px 16px;
+        background: linear-gradient(180deg, #0d0d0d, #151515);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        clip-path: polygon(0 12px, 100% 0, 100% 100%, 0 100%);
+      }
 
-.jh-topbar__nav--open a.jh-nav-current span {
-  font-size: inherit;
-  letter-spacing: inherit;
-}
+      .mobile-drawer-cta a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 48px;
+        border-radius: 10px 6px 10px 6px;
+        font-family: var(--font-body);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-decoration: none;
+      }
 
-.jh-topbar__nav--open a.jh-nav-current::before {
-  transform: translateY(-50%) scaleX(1);
-}
-.jh-topbar__nav--open li {
-  opacity: 0;
-  animation: slideUp 0.5s var(--ease-out) forwards;
-  border-left: none;
-}
+      .mobile-drawer-cta__call {
+        color: var(--blanco);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.04);
+      }
 
-.jh-topbar__nav--open li:nth-child(1) { animation-delay: 0.05s; }
-.jh-topbar__nav--open li:nth-child(2) { animation-delay: 0.10s; }
-.jh-topbar__nav--open li:nth-child(3) { animation-delay: 0.15s; }
-.jh-topbar__nav--open li:nth-child(4) { animation-delay: 0.20s; }
-.jh-topbar__nav--open li:nth-child(5) { animation-delay: 0.25s; }
+      .mobile-drawer-cta__wa {
+        color: #fff;
+        background: #25D366;
+      }
 
       section[id] {
         scroll-margin-top: 80px;
@@ -2750,7 +2858,10 @@ body.loader-active {
   .jh-pod__tip--cta .icon,
   .jh-pod__tip--brand img,
   .jh-topbar__nav a,
-  .jh-topbar__nav a .icon {
+  .jh-topbar__nav a .icon,
+  .mobile-motorsport-drawer,
+  .mobile-nav-overlay,
+  .mobile-drawer-item::before {
     transition-duration: 0.01ms;
   }
   .jh-topbar__nav a:hover {
