@@ -2008,18 +2008,8 @@
         pointer-events: auto;
       }
 
-      /* el pod se desarma: solo sobrevive el nav para el menu */
-      .jh-pod,
-      .jh-pod__screen {
-        display: contents;
-      }
-
-      .jh-pod__tip {
-        display: none;
-      }
-
-      /* el nav del pod no se usa en movil: lo reemplaza el drawer */
-      .jh-topbar__nav {
+      /* el pod desktop no se usa en movil: lo reemplaza el drawer */
+      .jh-pod {
         display: none;
       }
 
