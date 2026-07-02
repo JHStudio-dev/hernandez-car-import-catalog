@@ -180,12 +180,14 @@
     }
 
     /* ── POD DE NAVEGACION (carroceria F1) ── */
+    /* En el hero flota centrado; al scrollear crece a "race control bar" */
     .jh-pod {
       pointer-events: auto;
       position: relative;
       margin: 0 auto;
       display: flex;
       align-items: stretch;
+      flex-grow: 0;
       padding: 8px;
       background: linear-gradient(180deg, #2e2e2e 0%, #191919 42%, #0b0b0b 100%);
       border: 1px solid rgba(255, 255, 255, 0.07);
@@ -194,7 +196,8 @@
         0 18px 40px rgba(0, 0, 0, 0.55),
         inset 0 1px 0 rgba(255, 255, 255, 0.08),
         inset 0 -3px 8px rgba(0, 0, 0, 0.7);
-      transition: padding 0.35s var(--ease-out), box-shadow 0.35s ease;
+      transition: flex-grow 0.45s var(--ease-out), padding 0.35s var(--ease-out),
+                  border-radius 0.35s var(--ease-out), box-shadow 0.35s ease;
     }
 
     /* sheen metalico superior */
@@ -207,14 +210,40 @@
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
       pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    /* linea roja de race control (solo en la barra scrolled) */
+    .jh-pod::after {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 40px;
+      right: 40px;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, transparent, var(--rojo) 18%, var(--rojo) 82%, transparent);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
     }
 
     .jh-topbar--scrolled .jh-pod {
+      flex-grow: 1;
       padding: 5px;
+      border-radius: 12px 8px 12px 8px;
       box-shadow:
         0 8px 24px rgba(0, 0, 0, 0.8),
         inset 0 1px 0 rgba(255, 255, 255, 0.08),
         inset 0 -3px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    .jh-topbar--scrolled .jh-pod::before {
+      opacity: 0;
+    }
+
+    .jh-topbar--scrolled .jh-pod::after {
+      opacity: 1;
     }
 
     /* puntas tipo endplate: sobresalen del cuerpo */
@@ -336,17 +365,22 @@
       position: relative;
       display: flex;
       align-items: center;
+      justify-content: center;
+      flex-grow: 0;
       padding: 5px 8px;
       background: linear-gradient(180deg, #060606, #0f0f0f);
       border-radius: 16px 10px 16px 10px;
       box-shadow:
         inset 0 2px 10px rgba(0, 0, 0, 0.85),
         inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-      transition: padding 0.35s var(--ease-out);
+      transition: flex-grow 0.45s var(--ease-out), padding 0.35s var(--ease-out),
+                  border-radius 0.35s var(--ease-out);
     }
 
     .jh-topbar--scrolled .jh-pod__screen {
+      flex-grow: 1;
       padding: 4px 6px;
+      border-radius: 8px 6px 8px 6px;
     }
 
     .jh-topbar__nav {
