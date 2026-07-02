@@ -541,6 +541,35 @@ document.querySelector('nav').addEventListener('mouseleave', () => {
   pill.style.opacity = '0';
 });
 
+// resaltar en la navbar la seccion visible
+(function initNavSpy() {
+  const links = document.querySelectorAll('.jh-topbar__nav a[href^="#"]');
+  if (!links.length || !('IntersectionObserver' in window)) return;
+
+  const porSeccion = new Map();
+  links.forEach(link => {
+    const seccion = document.querySelector(link.getAttribute('href'));
+    if (seccion) porSeccion.set(seccion, link);
+  });
+
+  // zonas sin link propio: al pasar por ellas se apaga el indicador
+  ['.jh-showroom-stage', '#historia-section', '#testimonios'].forEach(sel => {
+    const zona = document.querySelector(sel);
+    if (zona && !porSeccion.has(zona)) porSeccion.set(zona, null);
+  });
+
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      links.forEach(l => l.classList.remove('jh-nav-current'));
+      const link = porSeccion.get(entry.target);
+      if (link) link.classList.add('jh-nav-current');
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+
+  porSeccion.forEach((_, seccion) => spy.observe(seccion));
+})();
+
 // pantalla de carga
 (function initLoader() {
   const loader = document.getElementById('jh-loader');
