@@ -148,7 +148,7 @@
       left: 0;
       right: 0;
       z-index: 100;
-      padding-top: 18px;
+      padding-top: 0;
       pointer-events: none;
       /* aislar su layout del resto del documento */
       contain: layout style;
@@ -2068,14 +2068,14 @@
 
       .jh-topbar__container {
         height: 64px;
-        padding: 0 16px;
+        padding: 0 0 0 16px;
         pointer-events: auto;
       }
 
       /* en movil la barra no cambia con el scroll */
       .jh-topbar--scrolled .jh-topbar__container {
         max-width: 100%;
-        padding: 0 16px;
+        padding: 0 0 0 16px;
       }
 
       .jh-topbar__brand {
