@@ -3,14 +3,26 @@
 
 document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-// Header scroll effect (rAF para no saturar el scroll)
+// Header scroll effect (rAF + histeresis para que el morph no parpadee cerca del umbral)
+const header = document.getElementById('header');
 let headerTick = false;
+let headerCompact = false;
+
+function syncHeaderState() {
+  if (!header) return;
+  const shouldCompact = headerCompact ? window.scrollY > 36 : window.scrollY > 72;
+  if (shouldCompact === headerCompact) return;
+  headerCompact = shouldCompact;
+  header.classList.toggle('jh-topbar--scrolled', headerCompact);
+}
+
+syncHeaderState();
+
 window.addEventListener('scroll', () => {
   if (headerTick) return;
   headerTick = true;
   requestAnimationFrame(() => {
-    const header = document.getElementById('header');
-    if (header) header.classList.toggle('jh-topbar--scrolled', window.scrollY > 60);
+    syncHeaderState();
     headerTick = false;
   });
 }, { passive: true });
