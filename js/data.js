@@ -142,7 +142,7 @@
         estado: "disponible",
         unit_condition: "nuevo",
         tipo: "suv",
-        is_featured_unit: true,
+        is_featured_unit: false,
         thumb_preview: "Fotos/Crv 2016.png",
         gallery_assets: [
           "https://images.unsplash.com/photo-1617886322168-72b886573c35?w=800&q=80",
@@ -198,7 +198,7 @@
         estado: "disponible",
         unit_condition: "nuevo",
         tipo: "sedan",
-        is_featured_unit: true,
+        is_featured_unit: false,
         thumb_preview: "Fotos/Elantra render (1).png",
         gallery_assets: [
           "https://images.unsplash.com/photo-1617886322168-72b886573c35?w=800&q=80",
@@ -226,7 +226,7 @@
         estado: "disponible",
         unit_condition: "nuevo",
         tipo: "suv",
-        is_featured_unit: true,
+        is_featured_unit: false,
         thumb_preview: "Fotos/explorer k.png",
         gallery_assets: [
           "https://images.unsplash.com/photo-1617886322168-72b886573c35?w=800&q=80",
@@ -254,7 +254,7 @@
         estado: "disponible",
         unit_condition: "nuevo",
         tipo: "suv",
-        is_featured_unit: true,
+        is_featured_unit: false,
         thumb_preview: "Fotos/jeep che.png",
         gallery_assets: [
           "Fotos/Jeep/1.jpeg",
@@ -283,7 +283,7 @@
         estado: "disponible",
         unit_condition: "nuevo",
         tipo: "suv",
-        is_featured_unit: true,
+        is_featured_unit: false,
         thumb_preview: "Fotos/renegade.png",
         gallery_assets: [
           "https://images.unsplash.com/photo-1617886322168-72b886573c35?w=800&q=80",
@@ -311,7 +311,7 @@
         estado: "disponible",
         unit_condition: "nuevo",
         tipo: "suv",
-        is_featured_unit: true,
+        is_featured_unit: false,
         thumb_preview: "Fotos/Crv 2008.png",
         gallery_assets: [
           "https://images.unsplash.com/photo-1617886322168-72b886573c35?w=800&q=80",
@@ -339,7 +339,7 @@
         estado: "disponible",
         unit_condition: "nuevo",
         tipo: "suv",
-        is_featured_unit: true,
+        is_featured_unit: false,
         thumb_preview: "Fotos/mercury render1.png",
         gallery_assets: [
           "https://images.unsplash.com/photo-1617886322168-72b886573c35?w=800&q=80",
