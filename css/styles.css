@@ -148,7 +148,9 @@
       z-index: 100;
       padding-top: 18px;
       pointer-events: none;
-      transition: padding 0.5s var(--ease-out);
+      /* aislar su layout del resto del documento */
+      contain: layout style;
+      transition: padding 0.4s var(--ease-out);
     }
 
     /* scrolled: pegada al borde superior */
@@ -163,7 +165,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: max-width 0.5s var(--ease-out), padding 0.5s var(--ease-out);
+      transition: max-width 0.4s var(--ease-out), padding 0.4s var(--ease-out);
     }
 
     /* scrolled: la barra llega a los bordes de la ventana */
@@ -204,9 +206,10 @@
         0 18px 40px rgba(0, 0, 0, 0.55),
         inset 0 1px 0 rgba(255, 255, 255, 0.08),
         inset 0 -3px 8px rgba(0, 0, 0, 0.7);
-      transition: flex-grow 0.5s var(--ease-out), padding 0.5s var(--ease-out),
-                  border-radius 0.5s var(--ease-out), border-color 0.5s ease,
-                  box-shadow 0.5s ease;
+      /* capa propia: el morph no repinta el resto de la pagina */
+      will-change: transform;
+      transition: flex-grow 0.4s var(--ease-out), padding 0.4s var(--ease-out),
+                  border-radius 0.4s var(--ease-out), border-color 0.4s ease;
     }
 
     /* sheen metalico superior */
@@ -273,7 +276,7 @@
       background: linear-gradient(180deg, #242424, #0d0d0d);
       border: 1px solid rgba(255, 255, 255, 0.05);
       transform: skewX(-16deg);
-      transition: width 0.5s var(--ease-out), margin 0.5s var(--ease-out), background 0.3s;
+      transition: width 0.4s var(--ease-out), margin 0.4s var(--ease-out), background 0.3s;
     }
 
     .jh-topbar--scrolled .jh-pod__tip {
@@ -302,7 +305,7 @@
     .jh-pod__tip--cta .icon {
       width: 20px;
       height: 20px;
-      transition: width 0.5s var(--ease-out), height 0.5s var(--ease-out);
+      transition: width 0.4s var(--ease-out), height 0.4s var(--ease-out);
     }
 
     .jh-pod__tip--cta span {
@@ -332,7 +335,7 @@
       width: auto;
       object-fit: contain;
       filter: drop-shadow(0 0 6px rgba(230, 0, 0, 0.35));
-      transition: height 0.5s var(--ease-out);
+      transition: height 0.4s var(--ease-out);
     }
 
     .jh-topbar--scrolled .jh-pod__tip--brand img {
@@ -340,14 +343,14 @@
     }
 
     /* acento rojo: arco en la nariz izquierda, filo en la cola derecha */
+    /* glow con box-shadow puro (sin filter, mas barato de pintar) */
     .jh-pod__tip--brand::before,
     .jh-pod__tip--brand::after,
     .jh-pod__tip--cta::after {
       content: '';
       position: absolute;
       background: var(--rojo-vivo);
-      filter: blur(1px);
-      box-shadow: 0 0 8px rgba(230, 0, 0, 0.55);
+      box-shadow: 0 0 4px rgba(230, 0, 0, 0.9), 0 0 10px rgba(230, 0, 0, 0.45);
       border-radius: 2px;
       pointer-events: none;
     }
@@ -386,8 +389,8 @@
       box-shadow:
         inset 0 2px 10px rgba(0, 0, 0, 0.85),
         inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-      transition: flex-grow 0.5s var(--ease-out), padding 0.5s var(--ease-out),
-                  border-radius 0.5s var(--ease-out);
+      transition: flex-grow 0.4s var(--ease-out), padding 0.4s var(--ease-out),
+                  border-radius 0.4s var(--ease-out);
     }
 
     .jh-topbar--scrolled .jh-pod__screen {
@@ -427,8 +430,8 @@
       color: var(--gris-cla);
       text-decoration: none;
       transition: color 0.3s, background 0.3s, transform 0.25s var(--ease-out),
-                  min-height 0.5s var(--ease-out), min-width 0.5s var(--ease-out),
-                  padding 0.5s var(--ease-out), gap 0.5s var(--ease-out);
+                  min-height 0.4s var(--ease-out), min-width 0.4s var(--ease-out),
+                  padding 0.4s var(--ease-out), gap 0.4s var(--ease-out);
     }
 
     .jh-topbar--scrolled .jh-topbar__nav a {
@@ -441,7 +444,7 @@
     .jh-topbar__nav a .icon {
       width: 20px;
       height: 20px;
-      transition: width 0.5s var(--ease-out), height 0.5s var(--ease-out);
+      transition: width 0.4s var(--ease-out), height 0.4s var(--ease-out);
     }
 
     .jh-topbar--scrolled .jh-topbar__nav a .icon {
