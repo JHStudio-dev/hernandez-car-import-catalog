@@ -2513,6 +2513,20 @@
   transition: scale 0.15s ease-out;
 }
 
+.jh-logo-model {
+  background: transparent;
+  --poster-color: transparent;
+  --progress-bar-color: transparent;
+  --progress-bar-height: 0px;
+  --progress-mask: transparent;
+  --interaction-prompt-display: none;
+}
+
+.jh-logo-model::part(default-progress-bar),
+.jh-model-progress {
+  display: none;
+}
+
 /* Badge del año activo */
 .jh-hs-year {
     background: var(--rojo);

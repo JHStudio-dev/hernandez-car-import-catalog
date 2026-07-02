@@ -29,7 +29,9 @@
   <div id="jh-loader" class="jh-splash-screen">
     <div class="jh-splash-content">
       <model-viewer id="loader-logo"
+        class="jh-logo-model"
         src="Modelos/LOGO 3D.glb"
+        poster="Fotos/logo.png"
         loading="eager"
         autoplay
         auto-rotate
@@ -37,7 +39,9 @@
         interaction-prompt="none"
         camera-orbit="0deg 90deg auto"
         exposure="1.4"
-        aria-hidden="true"></model-viewer>
+        aria-hidden="true">
+        <div class="jh-model-progress" slot="progress-bar"></div>
+      </model-viewer>
       <img id="loaderFallback" class="jh-model-fallback" src="Fotos/logo.png" alt="Hernández Car Import">
 
 
@@ -229,7 +233,9 @@
       <div class="jh-hs-logo-wrap">
         <model-viewer
           id="logo-scroll"
+          class="jh-logo-model"
           src="Modelos/LOGO 3D.glb"
+          poster="Fotos/logo.png"
           loading="lazy"
           autoplay
           auto-rotate-delay="0"
@@ -238,7 +244,9 @@
           interaction-prompt="none"
           camera-orbit="0deg 90deg auto"
           interpolation-decay="200"
-          aria-hidden="true"></model-viewer>
+          aria-hidden="true">
+          <div class="jh-model-progress" slot="progress-bar"></div>
+        </model-viewer>
         <img id="historyFallback" class="jh-model-fallback" src="Fotos/logo.png" alt="Hernández Car Import">
       </div>
  
