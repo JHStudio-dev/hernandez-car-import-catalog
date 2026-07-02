@@ -39,10 +39,49 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.jh-reveal').forEach(el => observer.observe(el));
 
+function isLocalPhoto(src) {
+  return typeof src === 'string' && /^Fotos\/(?!optimized\/).+\.(png|jpe?g)$/i.test(src);
+}
+
+function optimizedSrc(src, variant) {
+  const raw = src || 'Fotos/logo.png';
+  if (!isLocalPhoto(raw)) return raw;
+  return raw
+    .replace(/^Fotos\//, `Fotos/optimized/${variant}/`)
+    .replace(/\.(png|jpe?g)$/i, '.jpg');
+}
+
+function optimizedImgAttrs(src, variant) {
+  const raw = src || 'Fotos/logo.png';
+  const optimized = optimizedSrc(raw, variant);
+  const fallback = optimized !== raw ? ` data-fallback-src="${raw}"` : '';
+  return `src="${optimized}"${fallback}`;
+}
+
+function setOptimizedImage(img, src, variant) {
+  if (!img) return;
+  const raw = src || 'Fotos/logo.png';
+  const optimized = optimizedSrc(raw, variant);
+  delete img.dataset.optimizedFallbackApplied;
+  delete img.dataset.fallbackApplied;
+  img.classList.remove('jh-img-fallback');
+  if (optimized !== raw) img.dataset.fallbackSrc = raw;
+  else delete img.dataset.fallbackSrc;
+  img.src = optimized;
+}
+
 // si una imagen falla, mostrar el logo
 document.addEventListener('error', function (e) {
   const img = e.target;
-  if (img && img.tagName === 'IMG' && !img.dataset.fallbackApplied) {
+  if (!img || img.tagName !== 'IMG') return;
+
+  if (img.dataset.fallbackSrc && !img.dataset.optimizedFallbackApplied) {
+    img.dataset.optimizedFallbackApplied = '1';
+    img.src = img.dataset.fallbackSrc;
+    return;
+  }
+
+  if (!img.dataset.fallbackApplied) {
     img.dataset.fallbackApplied = '1';
     img.src = 'Fotos/logo.png';
     img.classList.add('jh-img-fallback');
@@ -54,13 +93,22 @@ const destacados = VEHICULOS.filter(v => v.is_featured_unit);
 const heroCarousel = document.getElementById('heroCarousel');
 let currentSlide = 0;
 let slideInterval;
+let heroTrimTimer;
 
 function renderHero() {
   if (destacados.length === 0) return; // Fallback handled by css default if needed
 
-  heroCarousel.innerHTML = destacados.map((auto, i) => `
-    <div class="jh-showroom-stage__slide ${i === 0 ? 'jh-showroom-stage__slide--active' : ''}">
-      <img src="${auto.thumb_preview || auto.gallery_assets[0] || ''}" class="jh-showroom-stage__backdrop" alt="${auto.marca}">
+  heroCarousel.innerHTML = destacados.map((auto, i) => {
+    const rawSrc = auto.thumb_preview || auto.gallery_assets[0] || 'Fotos/logo.png';
+    const heroSrc = optimizedSrc(rawSrc, 'hero');
+    const fallbackAttr = heroSrc !== rawSrc ? ` data-fallback-src="${rawSrc}"` : '';
+    const sourceAttr = i === 0
+      ? `src="${heroSrc}" fetchpriority="high" loading="eager"`
+      : `data-src="${heroSrc}" loading="lazy"`;
+
+    return `
+    <div class="jh-showroom-stage__slide ${i === 0 ? 'jh-showroom-stage__slide--active' : ''}" data-slide-index="${i}">
+      <img ${sourceAttr}${fallbackAttr} class="jh-showroom-stage__backdrop" alt="${auto.marca}" decoding="async">
       <div class="jh-showroom-stage__gradient"></div>
       <div class="jh-showroom-stage__content">
         <div class="jh-showroom-stage__text">
@@ -73,7 +121,8 @@ function renderHero() {
       </div>
       <div class="jh-showroom-stage__counter"><span class="jh-showroom-stage__counter-current">${i + 1}</span> / ${destacados.length}</div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 
   // Arrow events
   document.getElementById('heroPrev').addEventListener('click', () => {
@@ -91,6 +140,7 @@ function renderHero() {
     if (btn) openDetail(parseInt(btn.dataset.id, 10));
   });
 
+  warmHeroWindow(0);
   startInterval();
 }
 
@@ -100,10 +150,47 @@ function nextSlide(dir) {
   slides[currentSlide].classList.remove('jh-showroom-stage__slide--active');
   currentSlide = (currentSlide + dir + slides.length) % slides.length;
   slides[currentSlide].classList.add('jh-showroom-stage__slide--active');
+  warmHeroWindow(currentSlide);
 }
 
 function startInterval() { slideInterval = setInterval(() => nextSlide(1), 6000); }
 function resetInterval() { clearInterval(slideInterval); startInterval(); }
+
+function heroDistance(a, b, total) {
+  const direct = Math.abs(a - b);
+  return Math.min(direct, total - direct);
+}
+
+function loadHeroImage(index) {
+  const slides = document.querySelectorAll('.jh-showroom-stage__slide');
+  const slide = slides[index];
+  if (!slide) return;
+  const img = slide.querySelector('.jh-showroom-stage__backdrop');
+  if (img && !img.getAttribute('src') && img.dataset.src) {
+    delete img.dataset.optimizedFallbackApplied;
+    delete img.dataset.fallbackApplied;
+    img.classList.remove('jh-img-fallback');
+    img.src = img.dataset.src;
+  }
+}
+
+function warmHeroWindow(activeIndex) {
+  const slides = document.querySelectorAll('.jh-showroom-stage__slide');
+  if (!slides.length) return;
+  const total = slides.length;
+  loadHeroImage(activeIndex);
+  loadHeroImage((activeIndex + 1) % total);
+  loadHeroImage((activeIndex - 1 + total) % total);
+
+  clearTimeout(heroTrimTimer);
+  heroTrimTimer = setTimeout(() => {
+    slides.forEach((slide, index) => {
+      if (heroDistance(index, activeIndex, total) <= 1) return;
+      const img = slide.querySelector('.jh-showroom-stage__backdrop');
+      if (img && img.dataset.src && img.getAttribute('src')) img.removeAttribute('src');
+    });
+  }, 1300);
+}
 
 // ---- CATALOG RENDER & FILTER ----
 
@@ -151,7 +238,7 @@ function renderList(filtered, emptyMsg) {
   grid.innerHTML = filtered.map((auto, i) => `
     <div class="jh-unit-card jh-reveal" style="transition-delay: ${i * 0.08}s" data-id="${auto.id}" role="button" tabindex="0" aria-label="Ver detalles: ${auto.marca} ${auto.modelo} ${auto.anio}">
       <div class="jh-unit-card__media">
-        <img src="${auto.thumb_preview || auto.gallery_assets[0] || ''}" class="jh-unit-card__photo" alt="${auto.modelo}" loading="lazy">
+        <img ${optimizedImgAttrs(auto.thumb_preview || auto.gallery_assets[0] || '', 'card')} class="jh-unit-card__photo" alt="${auto.modelo}" loading="lazy" decoding="async">
         <div class="jh-unit-card__badges">
           ${auto.unit_condition === 'nuevo' ? '<span class="jh-badge jh-badge--new">Nuevo</span>' : ''}
           ${auto.estado !== 'disponible' ? `<span class="jh-badge jh-badge--status">${auto.estado}</span>` : ''}
@@ -335,15 +422,13 @@ function renderGallery() {
     return;
   }
 
-  mainWrap.innerHTML = currentGalleryImages.map((src, i) => {
-    const objFit = isFitContain ? 'contain' : 'cover';
-    const bg = isFitContain ? '#000' : 'transparent';
-    return `<img src="${src}" class="jh-gallery__slide ${i === 0 ? 'jh-gallery__slide--active' : ''}" id="mainImg-${i}" alt="${currentVehicleName}" style="object-fit: ${objFit}; background-color: ${bg};">`;
-  }).join('');
+  const objFit = isFitContain ? 'contain' : 'cover';
+  const bg = isFitContain ? '#000' : 'transparent';
+  mainWrap.innerHTML = `<img ${optimizedImgAttrs(currentGalleryImages[currentImageIndex], 'gallery')} class="jh-gallery__slide jh-gallery__slide--active" id="mainImg" alt="${currentVehicleName}" decoding="async" style="object-fit: ${objFit}; background-color: ${bg};">`;
 
   if (currentGalleryImages.length > 1) {
     thumbsWrap.innerHTML = currentGalleryImages.map((src, i) =>
-      `<div class="jh-gallery__thumb ${i === 0 ? 'jh-gallery__thumb--active' : ''}" data-index="${i}"><img src="${src}" alt=""></div>`
+      `<div class="jh-gallery__thumb ${i === currentImageIndex ? 'jh-gallery__thumb--active' : ''}" data-index="${i}"><img ${optimizedImgAttrs(src, 'thumb')} alt="" loading="lazy" decoding="async"></div>`
     ).join('');
     thumbsWrap.style.display = 'flex';
     navBtns.forEach(btn => btn.style.display = 'flex');
@@ -354,12 +439,16 @@ function renderGallery() {
 }
 
 window.setMainImage = function (index) {
+  if (index < 0 || index >= currentGalleryImages.length) return;
   currentImageIndex = index;
-  document.querySelectorAll('.jh-gallery__slide').forEach(el => el.classList.remove('jh-gallery__slide--active'));
   document.querySelectorAll('.jh-gallery__thumb').forEach(el => el.classList.remove('jh-gallery__thumb--active'));
 
-  const mainImg = document.getElementById(`mainImg-${index}`);
-  if (mainImg) mainImg.classList.add('jh-gallery__slide--active');
+  const mainImg = document.getElementById('mainImg');
+  if (mainImg) {
+    mainImg.classList.remove('jh-gallery__slide--active');
+    setOptimizedImage(mainImg, currentGalleryImages[index], 'gallery');
+    requestAnimationFrame(() => mainImg.classList.add('jh-gallery__slide--active'));
+  }
 
   const thumbs = document.querySelectorAll('.jh-gallery__thumb');
   if (thumbs[index]) {
@@ -453,6 +542,13 @@ function closeModal() {
   modal.classList.remove('jh-vehicle-modal--active');
   unlockScroll();
   if (lastFocused && lastFocused.focus) { lastFocused.focus({ preventScroll: true }); lastFocused = null; }
+  setTimeout(() => {
+    if (modal.classList.contains('jh-vehicle-modal--active')) return;
+    document.getElementById('detailMainImgWrap').innerHTML = '';
+    document.getElementById('detailThumbs').innerHTML = '';
+    currentGalleryImages = [];
+    currentImageIndex = 0;
+  }, 450);
 }
 
 document.getElementById('detailClose').addEventListener('click', closeModal);
@@ -506,7 +602,7 @@ function renderEntregas() {
 
   track.innerHTML = infiniteData.map((e, i) => `
     <div class="jh-showcase-card jh-reveal" style="transition-delay: ${(i % data.length) * 0.1}s">
-      <img src="${e.imagen}" class="jh-showcase-card__photo" alt="Entrega ${e.titulo}">
+      <img ${optimizedImgAttrs(e.imagen, 'card')} class="jh-showcase-card__photo" alt="Entrega ${e.titulo}" loading="lazy" decoding="async">
       <div class="jh-showcase-card__overlay">
         <div class="jh-showcase-card__title">${e.titulo}</div>
         <div class="jh-showcase-card__subtitle">${e.vehiculo}</div>
@@ -676,7 +772,8 @@ renderTestimonios();
       if (logo.parentElement) logo.parentElement.classList.add('jh-model-failed');
     });
 
-    // reposo: gira solo; desktop: sigue el mouse
+    // reposo: gira solo cuando la seccion esta cerca del viewport
+    var logoInView = false;
     function applyMode() {
       if (reduceMotion) {
         logo.removeAttribute('auto-rotate');
@@ -684,9 +781,21 @@ renderTestimonios();
         return;
       }
       logo.setAttribute('rotation-per-second', isMobile() ? '45deg' : '30deg');
-      logo.setAttribute('auto-rotate', '');
+      if (logoInView) logo.setAttribute('auto-rotate', '');
+      else logo.removeAttribute('auto-rotate');
     }
     applyMode();
+
+    if ('IntersectionObserver' in window) {
+      var logoVisibility = new IntersectionObserver(function (entries) {
+        logoInView = entries.some(function (entry) { return entry.isIntersecting; });
+        applyMode();
+      }, { rootMargin: '180px 0px' });
+      logoVisibility.observe(section);
+    } else {
+      logoInView = true;
+      applyMode();
+    }
 
     var resizeTimer;
     window.addEventListener('resize', function () {
@@ -697,7 +806,7 @@ renderTestimonios();
     // seguir el mouse (solo desktop)
     if (!reduceMotion) {
       section.addEventListener('mousemove', function (e) {
-        if (isMobile()) return;
+        if (isMobile() || !logoInView) return;
         logo.removeAttribute('auto-rotate');
         var rect = section.getBoundingClientRect();
         var x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
@@ -708,7 +817,7 @@ renderTestimonios();
       });
 
       section.addEventListener('mouseleave', function () {
-        if (isMobile()) return;
+        if (isMobile() || !logoInView) return;
         logo.setAttribute('auto-rotate', '');
       });
     }

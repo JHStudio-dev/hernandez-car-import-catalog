@@ -628,6 +628,15 @@
       box-shadow: var(--shadow-red);
     }
 
+    .jh-stock-section,
+    .jh-assurance-section,
+    .jh-showcase-section,
+    .jh-reviews-section,
+    .jh-contact-section {
+      content-visibility: auto;
+      contain-intrinsic-size: 900px;
+    }
+
     /* ─────────────────── HERO CAROUSEL ─────────────────── */
     .jh-showroom-stage {
       position: relative;
