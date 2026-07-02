@@ -148,11 +148,12 @@
       z-index: 100;
       padding-top: 18px;
       pointer-events: none;
-      transition: padding 0.35s var(--ease-out);
+      transition: padding 0.5s var(--ease-out);
     }
 
+    /* scrolled: pegada al borde superior */
     .jh-topbar--scrolled {
-      padding-top: 8px;
+      padding-top: 0;
     }
 
     .jh-topbar__container {
@@ -162,6 +163,13 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      transition: max-width 0.5s var(--ease-out), padding 0.5s var(--ease-out);
+    }
+
+    /* scrolled: la barra llega a los bordes de la ventana */
+    .jh-topbar--scrolled .jh-topbar__container {
+      max-width: 100%;
+      padding: 0;
     }
 
     /* marca y hamburguesa: solo en movil */
@@ -196,8 +204,9 @@
         0 18px 40px rgba(0, 0, 0, 0.55),
         inset 0 1px 0 rgba(255, 255, 255, 0.08),
         inset 0 -3px 8px rgba(0, 0, 0, 0.7);
-      transition: flex-grow 0.45s var(--ease-out), padding 0.35s var(--ease-out),
-                  border-radius 0.35s var(--ease-out), box-shadow 0.35s ease;
+      transition: flex-grow 0.5s var(--ease-out), padding 0.5s var(--ease-out),
+                  border-radius 0.5s var(--ease-out), border-color 0.5s ease,
+                  box-shadow 0.5s ease;
     }
 
     /* sheen metalico superior */
@@ -230,11 +239,14 @@
 
     .jh-topbar--scrolled .jh-pod {
       flex-grow: 1;
-      padding: 5px;
-      border-radius: 12px 8px 12px 8px;
+      /* padding lateral para que la punta skewada no se salga del viewport */
+      padding: 5px 14px;
+      border-radius: 0;
+      border-top-color: transparent;
+      border-left-color: transparent;
+      border-right-color: transparent;
       box-shadow:
         0 8px 24px rgba(0, 0, 0, 0.8),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08),
         inset 0 -3px 8px rgba(0, 0, 0, 0.7);
     }
 
@@ -244,6 +256,7 @@
 
     .jh-topbar--scrolled .jh-pod::after {
       opacity: 1;
+      top: 0;
     }
 
     /* puntas tipo endplate: sobresalen del cuerpo */
@@ -260,7 +273,7 @@
       background: linear-gradient(180deg, #242424, #0d0d0d);
       border: 1px solid rgba(255, 255, 255, 0.05);
       transform: skewX(-16deg);
-      transition: width 0.35s var(--ease-out), margin 0.35s var(--ease-out), background 0.3s;
+      transition: width 0.5s var(--ease-out), margin 0.5s var(--ease-out), background 0.3s;
     }
 
     .jh-topbar--scrolled .jh-pod__tip {
@@ -289,7 +302,7 @@
     .jh-pod__tip--cta .icon {
       width: 20px;
       height: 20px;
-      transition: width 0.35s var(--ease-out), height 0.35s var(--ease-out);
+      transition: width 0.5s var(--ease-out), height 0.5s var(--ease-out);
     }
 
     .jh-pod__tip--cta span {
@@ -319,7 +332,7 @@
       width: auto;
       object-fit: contain;
       filter: drop-shadow(0 0 6px rgba(230, 0, 0, 0.35));
-      transition: height 0.35s var(--ease-out);
+      transition: height 0.5s var(--ease-out);
     }
 
     .jh-topbar--scrolled .jh-pod__tip--brand img {
@@ -373,8 +386,8 @@
       box-shadow:
         inset 0 2px 10px rgba(0, 0, 0, 0.85),
         inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-      transition: flex-grow 0.45s var(--ease-out), padding 0.35s var(--ease-out),
-                  border-radius 0.35s var(--ease-out);
+      transition: flex-grow 0.5s var(--ease-out), padding 0.5s var(--ease-out),
+                  border-radius 0.5s var(--ease-out);
     }
 
     .jh-topbar--scrolled .jh-pod__screen {
@@ -414,8 +427,8 @@
       color: var(--gris-cla);
       text-decoration: none;
       transition: color 0.3s, background 0.3s, transform 0.25s var(--ease-out),
-                  min-height 0.35s var(--ease-out), min-width 0.35s var(--ease-out),
-                  padding 0.35s var(--ease-out);
+                  min-height 0.5s var(--ease-out), min-width 0.5s var(--ease-out),
+                  padding 0.5s var(--ease-out), gap 0.5s var(--ease-out);
     }
 
     .jh-topbar--scrolled .jh-topbar__nav a {
@@ -428,7 +441,7 @@
     .jh-topbar__nav a .icon {
       width: 20px;
       height: 20px;
-      transition: width 0.35s var(--ease-out), height 0.35s var(--ease-out);
+      transition: width 0.5s var(--ease-out), height 0.5s var(--ease-out);
     }
 
     .jh-topbar--scrolled .jh-topbar__nav a .icon {
@@ -1971,6 +1984,12 @@
         pointer-events: auto;
       }
 
+      /* en movil la barra no cambia con el scroll */
+      .jh-topbar--scrolled .jh-topbar__container {
+        max-width: 100%;
+        padding: 0 16px;
+      }
+
       .jh-topbar__brand {
         display: flex;
       }
@@ -2721,6 +2740,7 @@ body.loader-active {
   }
   /* el pod cambia de tamano sin animar */
   .jh-topbar,
+  .jh-topbar__container,
   .jh-pod,
   .jh-pod__tip,
   .jh-pod__screen,
