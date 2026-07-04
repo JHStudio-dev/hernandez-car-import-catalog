@@ -750,37 +750,63 @@ renderTestimonios();
 /*HISTORIA SECTION  */
 
 (function () {
-  var TOTAL = 4;
-
   function initHistoria() {
-    var section  = document.getElementById('historia-section');
+    var section = document.getElementById('historia-section');
     if (!section) return;
 
-    var logo     = document.getElementById('logo-scroll');
-    var track    = document.getElementById('jhHsTrack');
-    var yearEl   = document.getElementById('jhHsYear');
-    var chapters = section.querySelectorAll('.jh-hs-chapter');
-    var nodes    = section.querySelectorAll('.jh-hs-node');
-
-    if (!logo || chapters.length === 0) return;
+    var logo = document.getElementById('logo-scroll');
+    if (!logo) return;
 
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var logoInView = false;
+    var resizeTimer;
+    var rafId = 0;
+    var currentOrbit = { theta: 0, phi: 90 };
+    var targetOrbit = { theta: 0, phi: 90 };
+
     function isMobile() { return window.innerWidth <= 768; }
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
+    function setOrbit(theta, phi) {
+      logo.setAttribute('camera-orbit', theta.toFixed(2) + 'deg ' + phi.toFixed(2) + 'deg auto');
+    }
+
+    function animateOrbit() {
+      rafId = 0;
+      currentOrbit.theta += (targetOrbit.theta - currentOrbit.theta) * 0.12;
+      currentOrbit.phi += (targetOrbit.phi - currentOrbit.phi) * 0.12;
+      setOrbit(currentOrbit.theta, currentOrbit.phi);
+
+      if (
+        Math.abs(targetOrbit.theta - currentOrbit.theta) > 0.03 ||
+        Math.abs(targetOrbit.phi - currentOrbit.phi) > 0.03
+      ) {
+        rafId = requestAnimationFrame(animateOrbit);
+      }
+    }
+
+    function requestOrbitFrame() {
+      if (!rafId) rafId = requestAnimationFrame(animateOrbit);
+    }
 
     // si falla el modelo, logo de respaldo
     logo.addEventListener('error', function () {
       if (logo.parentElement) logo.parentElement.classList.add('jh-model-failed');
     });
 
-    // reposo: gira solo cuando la seccion esta cerca del viewport
-    var logoInView = false;
     function applyMode() {
       if (reduceMotion) {
         logo.removeAttribute('auto-rotate');
-        logo.setAttribute('camera-orbit', '0deg 90deg auto');
+        targetOrbit = { theta: 0, phi: 90 };
+        currentOrbit = { theta: 0, phi: 90 };
+        setOrbit(0, 90);
         return;
       }
-      logo.setAttribute('rotation-per-second', isMobile() ? '45deg' : '30deg');
+
+      logo.setAttribute('rotation-per-second', isMobile() ? '18deg' : '22deg');
       if (logoInView) logo.setAttribute('auto-rotate', '');
       else logo.removeAttribute('auto-rotate');
     }
@@ -797,13 +823,17 @@ renderTestimonios();
       applyMode();
     }
 
-    var resizeTimer;
     window.addEventListener('resize', function () {
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(applyMode, 200);
+      resizeTimer = setTimeout(function () {
+        targetOrbit = { theta: 0, phi: 90 };
+        currentOrbit = { theta: 0, phi: 90 };
+        setOrbit(0, 90);
+        applyMode();
+      }, 200);
     });
 
-    // seguir el mouse (solo desktop)
+    // seguir el mouse con interpolacion suave (solo desktop)
     if (!reduceMotion) {
       section.addEventListener('mousemove', function (e) {
         if (isMobile() || !logoInView) return;
@@ -811,56 +841,18 @@ renderTestimonios();
         var rect = section.getBoundingClientRect();
         var x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
         var y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-        var theta = 0 - (x * 22);
-        var phi = 90 - (y * 10);
-        logo.setAttribute('camera-orbit', theta + 'deg ' + phi + 'deg auto');
+        targetOrbit.theta = clamp(0 - (x * 16), -18, 18);
+        targetOrbit.phi = clamp(90 - (y * 7), 82, 98);
+        requestOrbitFrame();
       });
 
       section.addEventListener('mouseleave', function () {
         if (isMobile() || !logoInView) return;
+        targetOrbit = { theta: 0, phi: 90 };
+        requestOrbitFrame();
         logo.setAttribute('auto-rotate', '');
       });
     }
-
-    // ── Scroll logic (igual que antes) ──
-    var ticking = false;
-
-    function tick() {
-      ticking = false;
-      var sectionTop = section.offsetTop;
-      var sectionH   = section.offsetHeight;
-      var wh         = window.innerHeight;
-      var maxScroll  = sectionH - wh;
-      if (maxScroll <= 0) return; // en movil no es sticky
-      var scrolled   = window.scrollY - sectionTop;
-      var p = Math.min(Math.max(scrolled / maxScroll, 0), 1);
-      logo.style.setProperty('--logo-scale', 1 + p * 0.25);
-
-      if (track) track.style.height = (p * 100) + '%';
-
-      var zone = 1 / TOTAL;
-      var idx  = Math.min(Math.floor(p / zone), TOTAL - 1);
-
-      chapters.forEach(function (ch, i) {
-        ch.classList.toggle('jh-hs-chapter--active', i === idx);
-      });
-
-      nodes.forEach(function (nd, i) {
-        nd.classList.remove('jh-hs-node--active', 'jh-hs-node--done');
-        if      (i === idx) nd.classList.add('jh-hs-node--active');
-        else if (i  <  idx) nd.classList.add('jh-hs-node--done');
-      });
-
-      if (yearEl && chapters[idx]) {
-        yearEl.textContent = chapters[idx].dataset.year || '';
-      }
-    }
-
-    window.addEventListener('scroll', function () {
-      if (!ticking) { ticking = true; requestAnimationFrame(tick); }
-    }, { passive: true });
-
-    tick();
   }
 
   if (document.readyState === 'loading') {

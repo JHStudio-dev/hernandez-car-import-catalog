@@ -134,6 +134,7 @@
           <ul class="jh-topbar__nav">
             <li><a href="#"><svg class="icon"><use href="#icon-home"></use></svg><span>Inicio</span></a></li>
             <li><a href="#catalogo"><svg class="icon"><use href="#icon-car"></use></svg><span>Inventario</span></a></li>
+            <li><a href="#historia-section"><svg class="icon"><use href="#icon-clock"></use></svg><span>Historia</span></a></li>
             <li><a href="#beneficios"><svg class="icon"><use href="#icon-shield"></use></svg><span>Beneficios</span></a></li>
             <li><a href="#entregas"><svg class="icon"><use href="#icon-flag"></use></svg><span>Entregas</span></a></li>
             <li><a href="#contacto"><svg class="icon"><use href="#icon-location"></use></svg><span>Contacto</span></a></li>
@@ -164,6 +165,7 @@
     <ul class="mobile-drawer-list">
       <li><a class="mobile-drawer-item" href="#"><svg class="icon"><use href="#icon-home"></use></svg><span>Inicio</span></a></li>
       <li><a class="mobile-drawer-item" href="#catalogo"><svg class="icon"><use href="#icon-car"></use></svg><span>Inventario</span></a></li>
+      <li><a class="mobile-drawer-item" href="#historia-section"><svg class="icon"><use href="#icon-clock"></use></svg><span>Historia</span></a></li>
       <li><a class="mobile-drawer-item" href="#beneficios"><svg class="icon"><use href="#icon-shield"></use></svg><span>Beneficios</span></a></li>
       <li><a class="mobile-drawer-item" href="#entregas"><svg class="icon"><use href="#icon-flag"></use></svg><span>Entregas</span></a></li>
       <li><a class="mobile-drawer-item" href="#contacto"><svg class="icon"><use href="#icon-location"></use></svg><span>Contacto</span></a></li>
@@ -224,96 +226,72 @@
 
   <!--Seccion historia de hci-->
  
-<section id="historia-section" class="jh-history-section">
+<section id="historia-section" class="jh-history-section" aria-labelledby="historia-title">
  
   <div class="jh-hs-stage" id="jhHsStage">
  
-    <!-- IZQUIERDA: logo 3D + año + timeline vertical -->
     <div class="jh-hs-left">
-      <div class="jh-hs-logo-wrap">
-        <model-viewer
-          id="logo-scroll"
-          class="jh-logo-model"
-          src="Modelos/LOGO 3D.glb"
-          poster="Fotos/logo.png"
-          loading="lazy"
-          autoplay
-          auto-rotate-delay="0"
-          environment-image="neutral"
-          exposure="1.6"
-          interaction-prompt="none"
-          camera-orbit="0deg 90deg auto"
-          interpolation-decay="200"
-          aria-hidden="true">
-          <div class="jh-model-progress" slot="progress-bar"></div>
-        </model-viewer>
-        <img id="historyFallback" class="jh-model-fallback" src="Fotos/logo.png" alt="Hernández Car Import">
-      </div>
- 
-      <div class="jh-hs-year" id="jhHsYear">2019</div>
- 
-      <div class="jh-hs-track">
-        <div class="jh-hs-track__fill" id="jhHsTrack"></div>
-        <div class="jh-hs-track__nodes">
-          <div class="jh-hs-node" data-i="0"></div>
-          <div class="jh-hs-node" data-i="1"></div>
-          <div class="jh-hs-node" data-i="2"></div>
-          <div class="jh-hs-node" data-i="3"></div>
+      <div class="history-logo-stage">
+        <div class="history-logo-glow" aria-hidden="true"></div>
+        <div class="jh-hs-logo-wrap">
+          <model-viewer
+            id="logo-scroll"
+            class="jh-logo-model"
+            src="Modelos/LOGO 3D.glb"
+            poster="Fotos/logo.png"
+            loading="lazy"
+            autoplay
+            auto-rotate-delay="0"
+            environment-image="neutral"
+            exposure="1.55"
+            interaction-prompt="none"
+            camera-orbit="0deg 90deg auto"
+            interpolation-decay="180"
+            alt="Logo 3D Hernández Car Import">
+            <div class="jh-model-progress" slot="progress-bar"></div>
+          </model-viewer>
+          <img id="historyFallback" class="jh-model-fallback" src="Fotos/logo.png" alt="Hernández Car Import">
+        </div>
+        <div class="history-logo-platform" aria-hidden="true">
+          <div class="history-platform-body"></div>
+          <div class="history-platform-ring"></div>
+        </div>
+        <div class="history-since" aria-label="Desde 2019">
+          <span>Desde</span>
+          <strong>2019</strong>
         </div>
       </div>
     </div>
  
-    <!-- DERECHA: capítulos superpuestos, uno visible a la vez -->
     <div class="jh-hs-right">
- 
-      <div class="jh-hs-chapter" data-year="2019">
-        <div class="jh-hs-chapter__label">El Origen</div>
-        <h2 class="jh-hs-chapter__title">Un Sueño<br>Familiar</h2>
+      <div class="jh-hs-copy">
+        <div class="jh-hs-chapter__label">Nuestra historia</div>
+        <h2 class="jh-hs-chapter__title" id="historia-title">Un sueño familiar</h2>
+        <div class="history-copy-rule" aria-hidden="true"></div>
         <p class="jh-hs-chapter__text">
-          Hernández Car Import nació con un propósito claro: facilitar el acceso a vehículos de calidad mediante un proceso honesto y transparente. Lo que comenzó como un proyecto familiar se convirtió rápidamente en una promesa cumplida para cada cliente en Honduras.
+          Hernández Car Import nació como un proyecto familiar con una idea sencilla: ayudar a más personas en Honduras a encontrar un vehículo confiable, bien seleccionado y con un proceso claro desde el inicio.
         </p>
-        <div class="jh-hs-stat">
-          <span class="jh-hs-stat__num">1°</span>
-          <span class="jh-hs-stat__lbl">Importación directa<br>desde EE.UU.</span>
+        <p class="jh-hs-chapter__text">
+          Con el tiempo, ese proyecto se convirtió en una forma de trabajar basada en confianza, asesoría directa y atención cercana para cada cliente.
+        </p>
+        <div class="history-proof-grid" aria-label="Datos de Hernández Car Import">
+          <article class="history-proof-card">
+            <span class="history-proof-card__icon" aria-hidden="true"><svg class="icon-sm"><use href="#icon-clock"></use></svg></span>
+            <h3>Desde 2019</h3>
+            <p>Acompañando a nuestros clientes desde el inicio.</p>
+          </article>
+          <article class="history-proof-card">
+            <span class="history-proof-card__icon" aria-hidden="true"><svg class="icon-sm"><use href="#icon-car"></use></svg></span>
+            <h3>Importación directa</h3>
+            <p>Vehículos seleccionados desde EE. UU. para clientes en Honduras.</p>
+          </article>
+          <article class="history-proof-card">
+            <span class="history-proof-card__icon" aria-hidden="true"><svg class="icon-sm"><use href="#icon-shield"></use></svg></span>
+            <h3>Atención familiar</h3>
+            <p>Trato cercano, honesto y enfocado en tus necesidades.</p>
+          </article>
         </div>
       </div>
- 
-      <div class="jh-hs-chapter" data-year="2021">
-        <div class="jh-hs-chapter__label">El Crecimiento</div>
-        <h2 class="jh-hs-chapter__title">Confianza<br>Construida</h2>
-        <p class="jh-hs-chapter__text">
-          Con cada entrega, la confianza de nuestros clientes fue nuestra mejor publicidad. Consolidamos alianzas directas con subastas en Estados Unidos, garantizando precios competitivos sin intermediarios y documentación completamente transparente.
-        </p>
-        <div class="jh-hs-stat">
-          <span class="jh-hs-stat__num">50+</span>
-          <span class="jh-hs-stat__lbl">Familias hondureñas<br>con su vehículo ideal</span>
-        </div>
-      </div>
- 
-      <div class="jh-hs-chapter" data-year="2023">
-        <div class="jh-hs-chapter__label">La Promesa</div>
-        <h2 class="jh-hs-chapter__title">Calidad Sin<br>Compromiso</h2>
-        <p class="jh-hs-chapter__text">
-          Cada vehículo pasa por una rigurosa inspección mecánica y estructural. Nos encargamos de toda la documentación legal, internación y aduanas — te entregamos las llaves sin dolores de cabeza.
-        </p>
-        <div class="jh-hs-stat">
-          <span class="jh-hs-stat__num">100%</span>
-          <span class="jh-hs-stat__lbl">Trámites legales<br>incluidos</span>
-        </div>
-      </div>
- 
-      <div class="jh-hs-chapter" data-year="Hoy">
-        <div class="jh-hs-chapter__label">El Presente</div>
-        <h2 class="jh-hs-chapter__title">Tu Próximo<br>Vehículo</h2>
-        <p class="jh-hs-chapter__text">
-          Hoy seguimos con la misma pasión de siempre, ahora con más experiencia y un catálogo más amplio. Desde Tegucigalpa para Honduras — importamos directamente para que tú manejes con orgullo y tranquilidad.
-        </p>
-        <div class="jh-hs-stat">
-          <span class="jh-hs-stat__num">HCI</span>
-          <span class="jh-hs-stat__lbl">Tu socio de confianza<br>en importación</span>
-        </div>
-      </div>
- 
     </div>
   </div>
 </section>
