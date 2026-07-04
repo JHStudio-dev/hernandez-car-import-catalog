@@ -640,6 +640,7 @@
     /* ─────────────────── HERO CAROUSEL ─────────────────── */
     .jh-showroom-stage {
       position: relative;
+      right: 0;
       height: 100vh;
       min-height: 700px;
       width: 100%;
@@ -705,30 +706,40 @@
     .jh-showroom-stage__badge {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 6px 16px;
-      border-radius: var(--radius-pill);
-      margin-bottom: 24px;
-      backdrop-filter: blur(4px);
+      gap: 12px;
+      position: relative;
+      padding: 9px 18px;
+      background:
+        repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0 2px, transparent 2px 7px),
+        linear-gradient(180deg, rgba(28, 28, 28, 0.94), rgba(9, 9, 9, 0.94));
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-left: 3px solid var(--rojo-vivo);
+      border-radius: 3px;
+      box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+      margin-bottom: 26px;
+      backdrop-filter: blur(6px);
     }
 
     .jh-showroom-stage__badge .jh-showroom-stage__pulse {
-      width: 8px;
-      height: 8px;
-      background: whitesmoke;
+      width: 7px;
+      height: 7px;
+      background: var(--rojo-vivo);
       border-radius: 50%;
+      box-shadow: 0 0 8px rgba(230, 0, 0, 0.95);
       animation: pulse 2s infinite;
     }
 
     .jh-showroom-stage__badge span {
       font-family: var(--font-display);
-      font-size: 11px;
+      font-size: 12.5px;
       font-weight: 700;
-      letter-spacing: 0.5em;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
       color: var(--blanco);
+      padding-left: 12px;
+      border-left: 1px solid rgba(255, 255, 255, 0.16);
     }
 
     .jh-showroom-stage__title {
@@ -789,7 +800,7 @@
     .jh-showroom-stage__controls {
       position: absolute;
       bottom: 50px;
-      right: 40px;
+      right: 600px;
       z-index: 10;
       display: flex;
       gap: 12px;
@@ -799,8 +810,8 @@
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 0, 0, 0.425);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -837,26 +848,6 @@
 
     .jh-section-header__title-wrap {
       max-width: 600px;
-    }
-
-    .jh-section-header__label {
-      font-family: var(--font-display);
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--rojo);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .jh-section-header__label::before {
-      content: '';
-      width: 30px;
-      height: 2px;
-      background: var(--rojo);
     }
 
     .jh-section-header__title {
@@ -1810,7 +1801,7 @@
     }
 
     .jh-btn--whatsapp {
-      background: #25D366;
+      background: #d32525;
       color: #fff;
       padding: 16px;
       border-radius: var(--radius-sm);
@@ -1866,14 +1857,15 @@
       right: 30px;
       width: 60px;
       height: 60px;
-      background: #25D366;
+      background: #0f0f0f;
+      border: 1px solid rgba(255, 0, 0, 0.13);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
       text-decoration: none;
-      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+      box-shadow: 0 10px 30px rgba(211, 37, 37, 0.4);
       z-index: 90;
       transition: all 0.3s;
     }
@@ -1881,6 +1873,7 @@
     .jh-fab-whatsapp:hover {
       transform: scale(1.1);
       background: #1EBE5D;
+      box-shadow: 0 10px 30px rgba(37, 211, 89, 0.4);
     }
 
     .jh-fab-whatsapp svg {
@@ -1985,73 +1978,97 @@
     }
 
     .jh-review-bubble {
-      background: #056162;
-      border-radius: var(--radius-lg);
-      border-top-left-radius: 0;
-      padding: 16px;
       position: relative;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      padding: 18px 18px 14px;
+      border-radius: var(--radius-lg);
+      border-top-left-radius: 2px;
+      background:
+        repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.022) 0 2px, transparent 2px 7px),
+        linear-gradient(180deg, #1b1b1b, #0e0e0e);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
     }
 
+    /* filo rojo de firma en el borde superior (motorsport) */
+    .jh-review-bubble::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--rojo-vivo), rgba(230, 0, 0, 0) 62%);
+    }
+
+    /* colita del bubble (mensaje entrante) */
     .jh-review-bubble::before {
       content: '';
       position: absolute;
       top: 0;
-      left: -10px;
+      left: -9px;
       width: 0;
       height: 0;
-      border-right: 10px solid #056162;
-      border-bottom: 10px solid transparent;
+      border-right: 9px solid #1b1b1b;
+      border-bottom: 9px solid transparent;
     }
 
     .jh-review-bubble__header {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 8px;
+      gap: 11px;
+      margin-bottom: 10px;
     }
 
     .jh-review-bubble__avatar {
-      width: 32px;
-      height: 32px;
-      background: #dfe5e7;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #056162;
-      font-weight: bold;
+      color: var(--blanco);
+      font-weight: 700;
       font-family: var(--font-display);
-      font-size: 14px;
+      font-size: 15px;
+      background: linear-gradient(135deg, #2c2c2c, #151515);
+      border: 1px solid rgba(230, 0, 0, 0.45);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
     .jh-review-bubble__name {
       color: var(--blanco);
+      font-family: var(--font-display);
       font-weight: 600;
-      font-size: 15px;
+      font-size: 16px;
+      letter-spacing: 0.3px;
     }
 
     .jh-review-bubble__body {
-      color: rgba(255, 255, 255, 0.95);
+      color: rgba(255, 255, 255, 0.86);
+      font-family: var(--font-body);
       font-size: 14.5px;
-      line-height: 1.4;
-      margin-bottom: 6px;
+      line-height: 1.5;
+      margin-bottom: 8px;
     }
 
     .jh-review-bubble__footer {
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
     }
 
     .jh-review-bubble__time {
+      font-family: var(--font-body);
       font-size: 11px;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(255, 255, 255, 0.5);
     }
 
     .jh-review-bubble__ticks {
-      color: #53bdeb;
+      color: var(--rojo-vivo);
+      opacity: 0.85;
+      display: inline-flex;
     }
 
     /* ─────────────────── RESPONSIVE ─────────────────── */
